@@ -1,0 +1,41 @@
+/*菜单管理*/
+.tree-panel {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.tree-panel .search-div {
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.search-input {
+    height: 30px;
+    border-radius: 4px;
+    width: 190px;
+    border-style: none;
+    display: inline;
+}
+
+.layui-input-block{
+    min-height: 30px;
+    margin-right: 50px;
+    margin-left: 0px;
+}
+
+.site-h2 {
+    max-width: 100%;
+    overflow: hidden;
+    font-size: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    /*float: left;*/
+    margin: 0 10px 0 0;
+    line-height: 34px;
+    font-weight: 700;
+}

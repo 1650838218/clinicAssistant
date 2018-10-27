@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>药材管理</title>
+</head>
+<body>
+<div class="layui-card">
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="app-content-workorder">
+        <form class="layui-form search-form">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">药材名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" autocomplete="off" class="layui-input" placeholder="名称">
+                    </div>
+                </div>
+                <button type="button" class="layui-btn layui-btn-sm">查询</button>
+            </div>
+        </form>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm add">
+                <i class="layui-icon layui-icon-add-1"></i>添加
+            </button>
+        </div>
+        <table class="layui-hide" lay-skin="line" id="medicineTable"></table>
+        <script type="text/html" id="indexTpl">
+            {{d.LAY_TABLE_INDEX+1}}
+        </script>
+    </div>
+</div>
+<div id="layerContent" style="display: none">
+    <div class="form-panel">
+        <form class="layui-form" lay-filter="">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">药材名称</label>
+                    <div class="layui-input-inline" style="width: 300px">
+                        <input type="text" name="name" lay-verify="required" placeholder="请输入名称" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">简拼</label>
+                    <div class="layui-input-inline" style="width: 300px">
+                        <input type="text" name="abbreviation" lay-verify="required" autocomplete="off" placeholder="简拼" readonly class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">用量</label>
+                    <div class="layui-input-inline" style="width: 300px">
+                        <input type="text" name="dosage" lay-verify="required|number" placeholder="请输入用量"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-inline" style="width: 600px">
+                        <textarea name="description" placeholder="请输入药材描述" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<script src="/js/module/prescription/medicine/medicine.js"></script>
+<script src="/js/module/prescription/medicine/pinying.js"></script>
+</html>
