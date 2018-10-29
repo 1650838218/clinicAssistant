@@ -14,11 +14,11 @@ public class Prescribe {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false)
-    private int id;
+    private Integer id;
 
     /** 疾病ID */
     @Column(name = "DISEASE_ID", nullable = false)
-    private int diseaseId;
+    private Integer diseaseId;
 
     /** 疾病名称 */
     @Column(name = "NAME", nullable = false, length = 20)
@@ -36,19 +36,19 @@ public class Prescribe {
     @Column(name = "DETAILS", length = 1000)
     private String details;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getDiseaseId() {
+    public Integer getDiseaseId() {
         return diseaseId;
     }
 
-    public void setDiseaseId(int diseaseId) {
+    public void setDiseaseId(Integer diseaseId) {
         this.diseaseId = diseaseId;
     }
 

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description: 药材字典
  */
 @RestController
-@RequestMapping(value = "medicine")
+@RequestMapping(value = "/medicine")
 public class MedicineController {
 
     private Logger log = LoggerFactory.getLogger(MedicineController.class);
@@ -32,7 +32,7 @@ public class MedicineController {
      * @param page
      * @return
      */
-    @RequestMapping(value = "queryPage")
+    @RequestMapping(value = "/queryPage")
     public JSONObject queryPage(String name, Pageable page) {
         try {
             Page<Medicine> result = service.queryPage(name,page);

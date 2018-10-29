@@ -14,29 +14,29 @@ public class Disease {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false)
-    private int id;
+    private Integer id;
 
     /** 父ID */
     @Column(name = "PID", nullable = false)
-    private int pId;
+    private Integer pId;
 
     /** 疾病名称 */
     @Column(name = "NAME", nullable = false, length = 10)
     private String name;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getpId() {
+    public Integer getpId() {
         return pId;
     }
 
-    public void setpId(int pId) {
+    public void setpId(Integer pId) {
         this.pId = pId;
     }
 

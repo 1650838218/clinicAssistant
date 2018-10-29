@@ -1,130 +1,17 @@
 /*处方管理*/
-var functionSet = (function () {
+//@ sourceURL=prescribe.js
 
-    /**
-     * 疾病编辑
-     * @param flag
-     */
-    var editDisease = function (flag) {
-        // 获取目录树中已选择的疾病类别
-        var treeobj = $.fn.zTree.getZTreeObj("treeDisease");
-        var selectNodes = treeobj.getSelectedNodes();
-        if (flag == 0) {// 新增
-            $("form[lay-filter='diseaseForm']")[0].reset();
-            if (selectNodes.length > 0) {
-                // ztee 获取某节点的祖先节点，并用符号连接
-                layui.form.val('diseaseForm', {
-                    'pId':selectNodes[0].pId,
-                    'belong':getAncestorNodes(selectNodes[0])
-                });
-            } else {
-                layui.form.val('diseaseForm', {
-                    'pId':selectNodes[0].pId,
-                    'belong':'ROOT'
-                });
-            }
-            showEditWindow();
-        } else if (flag == 1) {// 修改
-            if (selectNodes.length > 0) {
-                layui.form.val('diseaseForm', {
-                    'id':selectNodes[0].id,
-                    'pId':selectNodes[0].pId,
-                    'name':selectNodes[0].name,
-                    'belong':getAncestorNodes(selectNodes[0])
-                });
-                showEditWindow();
-            }
-        }
-    }
-
-    /**
-     * 弹出疾病编辑框
-     */
-    var showEditWindow = function () {
-        // 将编辑面板移动到index.html的layerPanel中，不做这一步，遮罩会有问题
-        $("#layerPanel").append($("#layerContent div"));
-        layer.prompt({
-            skin:'layer-myskin',
-            title:'基本信息',
-            btn:['保存'],
-            content: $("#layerPanel"),
-            end:function () {
-                $("#layerContent").append($("#layerPanel div"));
-            },
-            yes:function () {
-                // 获取表单的数据，并保存
-            }
-        });
-    }
-    
-    /**
-     * ztree 获取祖先节点
-     * @param node
-     * @param connector
-     * @returns {null}
-     */
-    var getAncestorNodes = function (node,connector) {
-        if (node == null) return null;
-        if (connector == null || connector == '') {
-            connector = '->';
-        }
-        var newNode = node;
-        var str = connector + newNode.name;
-        while (newNode.getParentNode() != null) {
-            var parentNode = newNode.getParentNode();
-            str = connector + parentNode.name + str;
-            newNode = parentNode;
-        }
-        return str.substr(2);
-    }
-    
-    return {
-
-    }
-})();
-
-$(function () {
-    // tag-it 标签
-    $('#details').tagit({
-    });
-
-    // ztree 参数设置
-    var setting = {
-        view: {
-            showLine: false
-        },
-        data: {
-            simpleData: {
-                enable: true
-            }
-        },
-        callback: {
-            onClick: onClick
-        }
-    };
-
-    // 查询并加载菜单 tree
-    $.getJSON('/menu/queryTree', {}, function (zNodes) {
-        var menuTree = $.fn.zTree.init($("#treeMenu"), setting, zNodes);
-        menuTree.expandAll(true);
-    });
-
-    // 提交按钮监听事件
-    layui.form.on('submit(save)', function (data) {
-        $.post('/menu/save', data.field, function (data) {
-            if (data) {
-                layer.msg('保存成功', {time: 2000});
-            }
-        });
-    });
-
+/**
+ * ztree 回调方法
+ */
+var ztreeCallback = (function () {
     /**
      * 点击树节点（菜单）触发，在右侧表单中显示菜单详情
      * @param event
      * @param treeId
      * @param treeNode
      */
-    function onClick(event, treeId, treeNode) {
+    var onClick = function (event, treeId, treeNode) {
         var form = layui.form;
         //表单初始赋值
         form.val('menuForm', {
@@ -135,11 +22,238 @@ $(function () {
         })
     }
 
+    /**
+     * 点击编辑图标触发
+     */
+    var beforeEditName = function (treeId, treeNode) {
+        var event = {
+            data:{
+                flag:1,
+                treeNode:treeNode
+            }
+        };
+        diseaseFunSet.editDisease(event);
+        return false;
+    }
+
+    /**
+     * 点击删除图标触发
+     */
+    var beforeRemove = function (treeId, treeNode) {
+        if (treeNode) {
+            layer.confirm(MSG.delete_confirm + ' ' + treeNode.name + ' 吗?', {icon: 3, title:BTN.delete}, function(index){
+
+                layer.close(index);
+            });
+        }
+    }
+
+    /**
+     * 删除后触发
+     */
+    var onRemove = function (event, treeId, treeNode) {
+        
+    }
+    
+    return {
+        onClick: onClick,
+        beforeEditName:beforeEditName,
+        beforeRemove:beforeRemove,
+        onRemove:onRemove
+    }
+})();
+
+/**
+ * 疾病 处理方法集合
+ * @type
+ */
+var diseaseFunSet = (function () {
+    /**
+     * 疾病编辑
+     * @param event 按钮点击事件
+     */
+    var editDisease = function (event) {
+        if (!event || !event.data || (event.data.flag != 0 && event.data.flag != 1)) return;
+        var flag = event.data.flag;
+        if (flag == 0) {// 新增
+            // 获取目录树中已选择的疾病类别
+            var treeobj = $.fn.zTree.getZTreeObj('treeDisease');
+            var selectNodes = treeobj.getSelectedNodes();
+            if (selectNodes != null && selectNodes.length > 0) {
+                // ztee 获取某节点的祖先节点，并用符号连接
+                $('#layerContent').find("input[name='pId']").val(selectNodes[0].id);
+                $('#layerContent').find("input[name='belong']").val(getAncestorNodes(selectNodes[0],'',0));
+            } else {
+                $('#layerContent').find("input[name='pId']").val(-1);
+                $('#layerContent').find("input[name='belong']").val('顶级');
+            }
+            showEditWindow({title: '添加疾病名称'}, {save:save,validate:validate});
+        } else if (flag == 1) {// 修改
+            if (event.data.treeNode != null) {
+                var selectNode = event.data.treeNode;
+                $('#layerContent').find("input[name='id']").val(selectNode.id);
+                $('#layerContent').find("input[name='pId']").val(selectNode.pId);
+                $('#layerContent').find("input[name='name']").val(selectNode.name);
+                $('#layerContent').find("input[name='belong']").val(getAncestorNodes(selectNode,'',1));
+                showEditWindow({title: '修改疾病名称'}, {save:save,validate:validate});
+            }
+        }
+    }
+
+    /**
+     * 弹出疾病编辑框
+     */
+    var showEditWindow = function (option, callback) {
+        // 将编辑面板移动到index.html的layerPanel中，不做这一步，遮罩会有问题
+        $("#layerPanel").append($("#layerContent div"));
+        var localOption = {
+            skin: 'layer-myskin',
+            title: '基本信息',
+            btn: [BTN.save],
+            content: $("#layerPanel"),
+            end: function () {
+                // 重置所有输入项
+                $("#layerPanel").find("input").each(function (index, element) {
+                    $(element).val('');
+                });
+                // 将弹出框源码放到原位置
+                $("#layerContent").append($("#layerPanel div"));
+            },
+            yes: function (index, layero) {
+                // 获取表单的数据，并保存
+                var data = {};
+                $("#layerPanel").find("input").each(function (index, element) {
+                    data[$(element).attr('name')] = $(element).val();
+                });
+                if (callback.validate(data)) {
+                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    callback.save(data);// 回调方法，保存
+                }
+            }
+        };
+        layer.prompt($.extend(localOption, option));
+    }
+
+    /**
+     * ztree 获取祖先节点
+     * @param node 当前选中的节点
+     * @param connector 连接符
+     * @param flag 0 添加 1 修改
+     * @returns {*}
+     */
+    var getAncestorNodes = function (node, connector, flag) {
+        if (node == null) return null;
+        if (connector == null || connector == '') {
+            connector = '->';
+        }
+        var newNode = node;
+        var str = '';
+        if (flag == 0) {
+            str = connector + newNode.name;
+        }
+        while (newNode.getParentNode() != null) {
+            var parentNode = newNode.getParentNode();
+            str = connector + parentNode.name + str;
+            newNode = parentNode;
+        }
+        if (str.length == 0) {
+            return '顶级';
+        }
+        return str.substr(2);
+    }
+
+    /**
+     * 数据校验
+     * @param data
+     */
+    var validate = function (data) {
+        if (!data || !data.name) {
+            layer.msg('请填写疾病名称！',{icon:2,time:1000});
+            $("#layerPanel").find("input[name='name']").focus();
+            return false;
+        } else if (data.name.length > 10) {
+            layer.msg('疾病名称不能超过10个汉字！',{icon:2,time:2000});
+            $("#layerPanel").find("input[name='name']").focus();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 疾病保存
+     * @param data
+     */
+    var save = function (data) {
+        $.post('/prescription/disease/save', data, function (data, textStatus, jqXHR) {
+            if (data) {
+                layer.msg(MSG.save_success, {offset: 'rb', time: 2000});
+                // 增加节点并选中
+                var treeobj = $.fn.zTree.getZTreeObj('treeDisease');
+                var newNodes = [];
+                if (data.pId == -1) {
+                    newNodes = treeobj.addNodes(null,data);
+                } else {
+                    var parentNode = treeobj.getNodeByParam('id', data.pId, null);
+                    newNodes = treeobj.addNodes(parentNode, data);
+                }
+                treeobj.selectNode(newNodes[0]);
+            } else {
+                layer.msg(MSG.save_fail, {offset: 'rb', time: 2000});
+            }
+        })
+    }
+
+    return {
+        editDisease: editDisease   // 编辑疾病名称
+
+    }
+})();
+
+// ztree 参数设置
+var setting = {
+    view: {
+        showLine: false
+    },
+    edit: {
+        enable:true,
+        showRemoveBtn:true,
+        showRenameBtn:true,
+        removeTitle:BTN.delete,
+        renameTitle:BTN.edit
+    },
+    data: {
+        simpleData: {
+            enable: true
+        }
+    },
+    callback: {
+        onClick: ztreeCallback.onClick,
+        beforeEditName:ztreeCallback.beforeEditName,
+        beforeRemove:ztreeCallback.beforeRemove,
+        onRemove:ztreeCallback.onRemove
+    }
+};
+
+$(function () {
+    // tag-it 标签
+    $('#details').tagit({});
+
+    // 查询并加载菜单 tree
+    $.getJSON('/prescription/disease/queryTree', {}, function (zNodes) {
+        var menuTree = $.fn.zTree.init($("#treeDisease"), setting, zNodes);
+        // menuTree.expandAll(true);
+    });
+
+    // 提交按钮监听事件
+    layui.form.on('submit(save)', function (data) {
+        $.post('/menu/save', data.field, function (data) {
+            if (data) {
+                layer.msg(MSG.save_success, {time: 2000});
+            }
+        });
+    });
 
     // 新增疾病按钮点击事件
-    $("#addParentBtn").on('click', function () {
-
-    });
+    $("#addParentBtn").on('click', {flag: 0}, diseaseFunSet.editDisease);
 });
-
 
