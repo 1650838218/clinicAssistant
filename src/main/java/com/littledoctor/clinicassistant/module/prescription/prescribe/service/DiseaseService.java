@@ -23,4 +23,11 @@ public interface DiseaseService {
      * @return
      */
     public List<Disease> queryTree(String name);
+
+    /**
+     * 删除疾病及其下所有处方
+     * @param id
+     * @return
+     */
+    public boolean delete(Integer id);
 }

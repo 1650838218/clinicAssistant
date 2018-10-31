@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,6 +63,22 @@ public class DiseaseController {
         } catch (Exception e) {
             log.error(e.getMessage(),e);
             return new ArrayList<Disease>();
+        }
+    }
+
+    /**
+     * 删除疾病及其下所有处方
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    public boolean delete(@PathVariable(value = "id") Integer id) {
+        try {
+            Assert.isNull(id,"ID不能为空");
+            return diseaseService.delete(id);
+        } catch (Exception e){
+            log.error(e.getMessage(),e);
+            return false;
         }
     }
 }

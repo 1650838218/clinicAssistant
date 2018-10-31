@@ -12,13 +12,18 @@ var ztreeCallback = (function () {
      * @param treeNode
      */
     var onClick = function (event, treeId, treeNode) {
+        if (1) {// 是处方
+
+        }
         var form = layui.form;
         //表单初始赋值
-        form.val('menuForm', {
-            "name": treeNode.name
-            , "sort": treeNode.sort
-            , "url": treeNode.url
-            , 'id': treeNode.id
+        form.val('prescribeForm', {
+            'id':'',
+            'diseaseId':'',
+            'name': treeNode.name,
+            'abbreviation':'',
+            'doggerel':'',
+            'details':''
         })
     }
 
@@ -41,25 +46,32 @@ var ztreeCallback = (function () {
      */
     var beforeRemove = function (treeId, treeNode) {
         if (treeNode) {
-            layer.confirm(MSG.delete_confirm + ' ' + treeNode.name + ' 吗?', {icon: 3, title:BTN.delete}, function(index){
-
+            layer.confirm(MSG.delete_confirm + '名为' + treeNode.name + '的疾病类型及其处方吗?', {icon: 3, title:BTN.delete}, function(index){
+                // 后台删除
+                $.ajax({
+                    url:'/prescription/disease/save',
+                    data:{id:treeNode.id},
+                    type:'DELETE',
+                    success:function(data, textStatus, jqXHR) {
+                        layer.msg(MSG.delete_success, {offset: 'rb', time: 2000});
+                        // ztree删除节点
+                        var treeobj = $.fn.zTree.getZTreeObj(treeId);
+                        treeobj.removeNode(treeNode,false);// 不触发回调方法
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        layer.msg(MSG.delete_fail, {offset: 'rb', time: 2000});
+                    }
+                });
                 layer.close(index);
             });
         }
+        return false;
     }
 
-    /**
-     * 删除后触发
-     */
-    var onRemove = function (event, treeId, treeNode) {
-        
-    }
-    
     return {
         onClick: onClick,
         beforeEditName:beforeEditName,
-        beforeRemove:beforeRemove,
-        onRemove:onRemove
+        beforeRemove:beforeRemove
     }
 })();
 
@@ -87,7 +99,7 @@ var diseaseFunSet = (function () {
                 $('#layerContent').find("input[name='pId']").val(-1);
                 $('#layerContent').find("input[name='belong']").val('顶级');
             }
-            showEditWindow({title: '添加疾病名称'}, {save:save,validate:validate});
+            showEditWindow({title: '添加疾病类型'}, {save:save,validate:validate});
         } else if (flag == 1) {// 修改
             if (event.data.treeNode != null) {
                 var selectNode = event.data.treeNode;
@@ -95,7 +107,7 @@ var diseaseFunSet = (function () {
                 $('#layerContent').find("input[name='pId']").val(selectNode.pId);
                 $('#layerContent').find("input[name='name']").val(selectNode.name);
                 $('#layerContent').find("input[name='belong']").val(getAncestorNodes(selectNode,'',1));
-                showEditWindow({title: '修改疾病名称'}, {save:save,validate:validate});
+                showEditWindow({title: '修改疾病类型'}, {save:save,validate:validate});
             }
         }
     }
@@ -203,9 +215,24 @@ var diseaseFunSet = (function () {
         })
     }
 
-    return {
-        editDisease: editDisease   // 编辑疾病名称
+    /**
+     * 加载疾病类型树
+     * @param zNodes
+     */
+    var loadTree = function (zNodes) {
+        if (zNodes.length > 0) {
+            var diseaseTree = $.fn.zTree.init($("#treeDisease"), setting, zNodes);
+            diseaseTree.expandAll(true);
+            // 搜索框内容改变监听事件
+            fuzzySearch('treeDisease','.tree-panel .search-input',null,true); //初始化模糊搜索方法
+        } else {
+            // 提示信息
+        }
+    }
 
+    return {
+        editDisease: editDisease,   // 编辑疾病名称
+        loadTree: loadTree          // 加载疾病类型树
     }
 })();
 
@@ -229,21 +256,18 @@ var setting = {
     callback: {
         onClick: ztreeCallback.onClick,
         beforeEditName:ztreeCallback.beforeEditName,
-        beforeRemove:ztreeCallback.beforeRemove,
-        onRemove:ztreeCallback.onRemove
+        beforeRemove:ztreeCallback.beforeRemove
     }
 };
 
 $(function () {
+    // 查询并加载菜单 tree
+    $.getJSON('/prescription/disease/queryTree', {}, diseaseFunSet.loadTree);
+    // 新增疾病按钮点击事件
+    $("#addParentBtn").on('click', {flag: 0}, diseaseFunSet.editDisease);
+
     // tag-it 标签
     $('#details').tagit({});
-
-    // 查询并加载菜单 tree
-    $.getJSON('/prescription/disease/queryTree', {}, function (zNodes) {
-        var menuTree = $.fn.zTree.init($("#treeDisease"), setting, zNodes);
-        // menuTree.expandAll(true);
-    });
-
     // 提交按钮监听事件
     layui.form.on('submit(save)', function (data) {
         $.post('/menu/save', data.field, function (data) {
@@ -253,7 +277,6 @@ $(function () {
         });
     });
 
-    // 新增疾病按钮点击事件
-    $("#addParentBtn").on('click', {flag: 0}, diseaseFunSet.editDisease);
+
 });
 
