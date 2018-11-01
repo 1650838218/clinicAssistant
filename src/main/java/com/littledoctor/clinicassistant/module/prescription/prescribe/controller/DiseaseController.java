@@ -52,7 +52,7 @@ public class DiseaseController {
     }
 
     /**
-     * 查询疾病
+     * 加载疾病，处方目录树
      * @param name 疾病名
      * @return
      */

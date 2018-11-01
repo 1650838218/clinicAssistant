@@ -25,20 +25,21 @@
                 </div>
             </div>
             <ul id="treeDisease" class="ztree"></ul>
-            <div>
-                <span>暂无疾病类型。您现在可以</span>
-                <button class="layui-btn layui-btn-sm" style="margin-left: 8px;margin-top: 5px">
-                    <i class="layui-icon layui-icon-add-1"></i>
-                </button>
+            <div class="blank-text-div">
+                <span>暂无疾病类型。</span>
             </div>
         </div>
     </div>
     <div class="layui-col-md9 right-panel">
         <div class="form-panel">
             <div class="form-title">
-                <h2 class="site-h2">基本信息</h2>
+                <h2 class="site-h2">处方</h2>
             </div>
-
+            <!--<div>
+                <button>
+                    添加治疗疾病的处方
+                </button>
+            </div>-->
             <form class="layui-form" lay-filter="prescribeForm">
                 <input type="hidden" name="id">
                 <input type="hidden" name="diseaseId">
@@ -72,7 +73,7 @@
                     <div class="layui-input-block">
                         <button type="reset" style="display: none">新建</button>
                         <button type="button" class="layui-btn" lay-submit="" lay-filter="save">保存</button>
-                        <button type="button" class="layui-btn" lay-submit="" lay-filter="save">保存并新建</button>
+                        <button type="button" class="layui-btn" lay-submit="" lay-filter="saveAndReset">保存并新建</button>
                     </div>
                 </div>
             </form>

@@ -165,3 +165,9 @@ ul.tagit {
 input.no-border {
     border-style: none;
 }
+
+/*查询结果为空时显示的信息*/
+.blank-text-div {
+    display: none;
+    text-align: center;
+}

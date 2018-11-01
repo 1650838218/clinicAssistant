@@ -12,18 +12,15 @@ var ztreeCallback = (function () {
      * @param treeNode
      */
     var onClick = function (event, treeId, treeNode) {
-        if (1) {// 是处方
-
-        }
         var form = layui.form;
         //表单初始赋值
         form.val('prescribeForm', {
-            'id':'',
-            'diseaseId':'',
-            'name': treeNode.name,
+            // 'id':'',
+            'diseaseId':treeNode.id
+           /* 'name': treeNode.name,
             'abbreviation':'',
             'doggerel':'',
-            'details':''
+            'details':''*/
         })
     }
 
@@ -49,7 +46,7 @@ var ztreeCallback = (function () {
             layer.confirm(MSG.delete_confirm + '名为' + treeNode.name + '的疾病类型及其处方吗?', {icon: 3, title:BTN.delete}, function(index){
                 // 后台删除
                 $.ajax({
-                    url:'/prescription/disease/save',
+                    url:'/prescription/disease/delete',
                     data:{id:treeNode.id},
                     type:'DELETE',
                     success:function(data, textStatus, jqXHR) {
@@ -90,11 +87,16 @@ var diseaseFunSet = (function () {
         if (flag == 0) {// 新增
             // 获取目录树中已选择的疾病类别
             var treeobj = $.fn.zTree.getZTreeObj('treeDisease');
-            var selectNodes = treeobj.getSelectedNodes();
-            if (selectNodes != null && selectNodes.length > 0) {
-                // ztee 获取某节点的祖先节点，并用符号连接
-                $('#layerContent').find("input[name='pId']").val(selectNodes[0].id);
-                $('#layerContent').find("input[name='belong']").val(getAncestorNodes(selectNodes[0],'',0));
+            if (treeobj != null) {
+                var selectNodes = treeobj.getSelectedNodes();
+                if (selectNodes != null && selectNodes.length > 0) {
+                    // ztee 获取某节点的祖先节点，并用符号连接
+                    $('#layerContent').find("input[name='pId']").val(selectNodes[0].id);
+                    $('#layerContent').find("input[name='belong']").val(getAncestorNodes(selectNodes[0], '', 0));
+                } else {
+                    $('#layerContent').find("input[name='pId']").val(-1);
+                    $('#layerContent').find("input[name='belong']").val('顶级');
+                }
             } else {
                 $('#layerContent').find("input[name='pId']").val(-1);
                 $('#layerContent').find("input[name='belong']").val('顶级');
@@ -201,14 +203,18 @@ var diseaseFunSet = (function () {
                 layer.msg(MSG.save_success, {offset: 'rb', time: 2000});
                 // 增加节点并选中
                 var treeobj = $.fn.zTree.getZTreeObj('treeDisease');
-                var newNodes = [];
-                if (data.pId == -1) {
-                    newNodes = treeobj.addNodes(null,data);
+                if (treeobj != null) {
+                    var newNodes = [];
+                    if (data.pId == -1) {
+                        newNodes = treeobj.addNodes(null, data);
+                    } else {
+                        var parentNode = treeobj.getNodeByParam('id', data.pId, null);
+                        newNodes = treeobj.addNodes(parentNode, data);
+                    }
+                    treeobj.selectNode(newNodes[0]);
                 } else {
-                    var parentNode = treeobj.getNodeByParam('id', data.pId, null);
-                    newNodes = treeobj.addNodes(parentNode, data);
+                    $.getJSON('/prescription/disease/queryTree', {}, diseaseFunSet.loadTree);
                 }
-                treeobj.selectNode(newNodes[0]);
             } else {
                 layer.msg(MSG.save_fail, {offset: 'rb', time: 2000});
             }
@@ -227,6 +233,7 @@ var diseaseFunSet = (function () {
             fuzzySearch('treeDisease','.tree-panel .search-input',null,true); //初始化模糊搜索方法
         } else {
             // 提示信息
+            $('.tree-panel .blank-text-div').css('display','block');
         }
     }
 
@@ -268,9 +275,9 @@ $(function () {
 
     // tag-it 标签
     $('#details').tagit({});
-    // 提交按钮监听事件
+    // 处方 保存按钮监听事件
     layui.form.on('submit(save)', function (data) {
-        $.post('/menu/save', data.field, function (data) {
+        $.post('/prescription/prescribe/save', data.field, function (data) {
             if (data) {
                 layer.msg(MSG.save_success, {time: 2000});
             }
