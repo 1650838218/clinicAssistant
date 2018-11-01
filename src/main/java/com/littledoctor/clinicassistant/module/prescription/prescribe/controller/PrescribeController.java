@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description: 处方管理--处方
  */
 @RestController
-@RequestMapping(value = "/prescribe")
+@RequestMapping(value = "/prescription/prescribe")
 public class PrescribeController {
 
     private Logger log = LoggerFactory.getLogger(PrescribeController.class);

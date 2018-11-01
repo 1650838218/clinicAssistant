@@ -20,7 +20,7 @@ public class Prescribe {
     @Column(name = "DISEASE_ID", nullable = false)
     private Integer diseaseId;
 
-    /** 疾病名称 */
+    /** 处方名称 */
     @Column(name = "NAME", nullable = false, length = 20)
     private String name;
 
@@ -35,6 +35,9 @@ public class Prescribe {
     /** 处方内容 */
     @Column(name = "DETAILS", length = 1000)
     private String details;
+
+    @Column(name = "TYPE")
+    private int type;
 
     public Integer getId() {
         return id;
@@ -82,5 +85,13 @@ public class Prescribe {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

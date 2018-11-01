@@ -7,7 +7,7 @@
 <body>
 <div class="layui-card">
     <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="app-content-workorder">
-        <form class="layui-form">
+        <form class="layui-form search-form">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">日期选择</label>
@@ -27,15 +27,24 @@
         </form>
     </div>
     <div class="layui-card-body">
-        <script type="text/html" id="toolbarDemo">
+        <!--<script type="text/html" id="toolbarDemo">
             <div class="layui-btn-group" id="toolbar">
                 <button class="layui-btn layui-btn-sm " style="border-radius: 4px">
                     <i class="layui-icon layui-icon-add-1"></i>添加
                 </button>
             </div>
         </script>
-        <!--<table id="test"></table>-->
-        <table class="layui-hide" lay-skin="line" id="test"></table>
+        &lt;!&ndash;<table id="test"></table>&ndash;&gt;
+        <table class="layui-hide" lay-skin="line" id="test"></table>-->
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm add">
+                <i class="layui-icon layui-icon-add-1"></i>添加
+            </button>
+        </div>
+        <table class="layui-hide" lay-skin="line" id="dictionaryTable"></table>
+        <script type="text/html" id="indexTpl">
+            {{d.LAY_TABLE_INDEX+1}}
+        </script>
     </div>
 </div>
 </body>

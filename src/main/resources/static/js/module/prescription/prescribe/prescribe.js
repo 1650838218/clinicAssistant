@@ -279,7 +279,7 @@ $(function () {
     layui.form.on('submit(save)', function (data) {
         $.post('/prescription/prescribe/save', data.field, function (data) {
             if (data) {
-                layer.msg(MSG.save_success, {time: 2000});
+                layer.msg(MSG.save_success, {offset: 'rb', time: 2000});
             }
         });
     });
