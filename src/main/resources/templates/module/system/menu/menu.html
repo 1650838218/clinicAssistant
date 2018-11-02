@@ -17,12 +17,15 @@
                     <i class="layui-icon layui-icon-search"></i>
                 </div>
                 <div class="layui-col-md2">
-                    <button class="layui-btn layui-btn-sm" style="margin-left: 8px;margin-top: 5px">
+                    <button id="addMenuBtn" class="layui-btn layui-btn-sm" style="margin-left: 8px;margin-top: 5px">
                         <i class="layui-icon layui-icon-add-1"></i>
                     </button>
                 </div>
             </div>
-            <ul id="treeMenu" class="ztree"></ul>
+            <ul id="menuTree" class="ztree"></ul>
+            <div class="blank-text-div">
+                <span>暂无导航菜单，请添加。</span>
+            </div>
         </div>
     </div>
     <div class="layui-col-md9 right-panel">
@@ -33,6 +36,7 @@
 
             <form class="layui-form" lay-filter="menuForm">
                 <input type="hidden" name="id">
+                <input type="hidden" name="pId">
                 <div class="layui-form-item">
                     <label class="layui-form-label">菜单名称</label>
                     <div class="layui-input-inline" style="width: 300px">
@@ -55,15 +59,16 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
+                        <button type="reset" class="layui-btn" style="display: none">重置</button>
                         <button type="button" class="layui-btn" lay-submit="" lay-filter="save">保存</button>
-                        <button type="reset" class="layui-btn">重置</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<script src="/zTree_v3/js/jquery.ztree.core.js"></script>
+<script src="/zTree_v3/js/jquery.ztree.all.js"></script>
+<script src="/zTree_v3/js/fuzzysearch.js"></script>
 <script src="/js/module/system/menu/menu.js"></script>
 </body>
 </html>

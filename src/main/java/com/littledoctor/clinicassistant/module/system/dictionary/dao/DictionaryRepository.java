@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Date: 2018/11/1 21:19
  * @Description:
  */
-public interface DictionaryRepository extends JpaRepository<Dictionary,> {
+public interface DictionaryRepository extends JpaRepository {
 }
