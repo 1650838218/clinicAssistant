@@ -9,10 +9,10 @@
         },
         cols: [
             [
-                {title: '序号', type: 'numbers', templet: '#indexTpl'}
-                , {field: 'name', width: 100, title: '名称'}
-                , {field: 'dosage', width: 80, title: '用量(g)'}
-                , {field: 'description', title: '描述'}
+                {title: '序号', type: 'numbers', templet: '#indexTpl'},
+                {field: 'code', width: 100, title: '字典编码'},
+                {field: 'text', width: 80, title: '显示值'},
+                {field: 'value', title: '真实值'}
             ]
         ],
         page: true
