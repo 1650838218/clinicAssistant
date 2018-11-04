@@ -1,23 +1,16 @@
 package com.littledoctor.clinicassistant.module.prescription.prescribe.controller;
 
-import com.littledoctor.clinicassistant.common.util.ControllerUtils;
-import com.littledoctor.clinicassistant.module.prescription.medicine.entity.Medicine;
 import com.littledoctor.clinicassistant.module.prescription.prescribe.entity.Disease;
 import com.littledoctor.clinicassistant.module.prescription.prescribe.service.DiseaseService;
-import com.littledoctor.clinicassistant.module.system.menu.entity.Menu;
-import net.sf.json.JSONObject;
+import net.sf.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Auther: 周俊林
@@ -53,21 +46,20 @@ public class DiseaseController {
 
     /**
      * 加载疾病，处方目录树
-     * @param name 疾病名
      * @return
      */
-    @RequestMapping(value = "/queryTree", method = RequestMethod.GET)
-    public List<Disease> queryTree(String name) {
+    @RequestMapping(value = "/loadTree", method = RequestMethod.GET)
+    public JSONArray queryTree() {
         try {
-            return diseaseService.queryTree(name);
+            return diseaseService.loadTree();
         } catch (Exception e) {
             log.error(e.getMessage(),e);
-            return new ArrayList<Disease>();
+            return new JSONArray();
         }
     }
 
     /**
-     * 删除疾病及其下所有处方
+     * 删除疾病
      * @param id
      * @return
      */

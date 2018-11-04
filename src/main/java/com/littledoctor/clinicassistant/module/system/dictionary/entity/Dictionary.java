@@ -11,9 +11,17 @@ import javax.persistence.*;
 @Table(name = "dictionary")
 public class Dictionary {
 
-    @EmbeddedId
-    private DictionaryKey key;
+    /** 主键ID */
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", nullable = false)
+    private Integer id;
 
+    /** 类型编码 eg：sex */
+    @Column(name = "CODE", nullable = false, length = 20)
+    private String code;
+
+    /** 类型编码 eg：sex */
     @Column(name = "name", length = 50)
     private String name;
 
@@ -21,9 +29,33 @@ public class Dictionary {
     @Column(name = "TEXT", nullable = false, length = 50)
     private String text;
 
-    /** 所属模块的ID，即菜单ID */
-    @Column(name = "BELONG")
-    private Integer belong;
+    /** 字典值 */
+    @Column(name = "VALUE", nullable = false, length = 10)
+    private String value;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getText() {
         return text;
@@ -33,27 +65,11 @@ public class Dictionary {
         this.text = text;
     }
 
-    public Integer getBelong() {
-        return belong;
+    public String getValue() {
+        return value;
     }
 
-    public void setBelong(Integer belong) {
-        this.belong = belong;
-    }
-
-    public DictionaryKey getKey() {
-        return key;
-    }
-
-    public void setKey(DictionaryKey key) {
-        this.key = key;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setValue(String value) {
+        this.value = value;
     }
 }

@@ -1,10 +1,7 @@
 package com.littledoctor.clinicassistant.module.system.dictionary.service;
 
-import com.littledoctor.clinicassistant.module.prescription.medicine.entity.Medicine;
-import com.littledoctor.clinicassistant.module.system.dictionary.controller.DictionaryController;
 import com.littledoctor.clinicassistant.module.system.dictionary.dao.DictionaryRepository;
 import com.littledoctor.clinicassistant.module.system.dictionary.entity.Dictionary;
-import com.littledoctor.clinicassistant.module.system.dictionary.entity.DictionaryKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,6 +72,7 @@ public class DictionaryServiceImpl implements DictionaryService {
      */
     @Override
     public boolean delete(Integer id) {
+        dictionaryRepository.deleteById(id);
         return false;
     }
 }

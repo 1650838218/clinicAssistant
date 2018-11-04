@@ -2,6 +2,10 @@ package com.littledoctor.clinicassistant.module.prescription.prescribe.service;
 
 import com.littledoctor.clinicassistant.module.prescription.prescribe.dao.DiseaseRepository;
 import com.littledoctor.clinicassistant.module.prescription.prescribe.entity.Disease;
+import com.littledoctor.clinicassistant.module.prescription.prescribe.entity.Prescribe;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +20,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.*;
-import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * @Auther: 周俊林
@@ -36,45 +39,31 @@ public class DiseaseServiceImpl implements DiseaseService{
         return diseaseRepository.saveAndFlush(disease);
     }
 
+    /**
+     * 加载疾病处方树
+     * @return
+     */
     @Override
-    public List<Disease> queryTree(String name) {
-        return diseaseRepository.findAll(new Specification<Disease>() {
-            @Override
-            public Predicate toPredicate(Root<Disease> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                if (!StringUtils.isEmpty(name)) {
-                    return cb.like(root.get("name"), name);
+    public JSONArray loadTree() {
+        List<Disease> diseaseList = diseaseRepository.findAll();
+        JSONArray jsonArray = new JSONArray();
+        for (Disease disease: diseaseList) {
+            jsonArray.add(disease.toJSON());
+            List<Prescribe> prescribeList = disease.getPrescribeList();
+            if (prescribeList != null && prescribeList.size() > 0) {
+                for (Prescribe prescribe : prescribeList) {
+                    jsonArray.add(prescribe.toJSON(disease.getId()));
                 }
-                return null;
             }
-        });
+        }
+        return jsonArray;
     }
 
     @Override
     @Transactional
     public boolean delete(Integer id) {
         if (id != null) {
-            List<Disease> deleteList = new ArrayList<>();// 保存所有待删除的疾病类型
-            List<Integer> leafIds = new ArrayList<>();// 保存叶子节点的id，用来删除处方
-            Deque<Integer> stack = new ArrayDeque<Integer>();// 保存子节点的id
-            stack.push(id);
-            while (!stack.isEmpty()) {
-                // 查询
-                Disease disease = new Disease();
-                disease.setpId(stack.pop());
-                Example<Disease> example = Example.of(disease);
-                List<Disease> diseaseList = diseaseRepository.findAll(example);
-                if (diseaseList.size() > 0) {
-                    deleteList.addAll(diseaseList);
-                    for (Disease d:diseaseList) {// 入栈
-                        stack.push(d.getId());
-                    }
-                } else {
-                    leafIds.add(disease.getpId());
-                }
-            }
             diseaseRepository.deleteById(id);
-            diseaseRepository.deleteAll(deleteList);
-            // 删除处方
             return true;
         } else {
             return false;

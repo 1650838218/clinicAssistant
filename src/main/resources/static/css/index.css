@@ -92,7 +92,8 @@ html {
 
 .form-panel .form-title {
     padding: 13px 48px 13px 0;
-    margin: 0;background: #fff;
+    margin: 0;
+    background: #fff;
     border-bottom: 1px solid #eee;
 }
 
@@ -135,7 +136,7 @@ html {
     display: inline;
 }
 
-.layui-input-block{
+.layui-input-block {
     min-height: 30px;
     margin-right: 50px;
     margin-left: 0px;
@@ -170,4 +171,24 @@ input.no-border {
 .blank-text-div {
     display: none;
     text-align: center;
+}
+
+.tree-panel .blank-text-div {
+    height: 300px;
+}
+
+.tree-panel .blank-text-div span {
+    line-height: 300px;
+}
+
+.form-panel .blank-text-div {
+    height: 200px;
+}
+
+.form-panel .blank-text-div span {
+    line-height: 200px;
+}
+
+.layui-form-item .layui-input-inline {
+    width: auto;
 }

@@ -1,8 +1,7 @@
 package com.littledoctor.clinicassistant.module.prescription.prescribe.service;
 
 import com.littledoctor.clinicassistant.module.prescription.prescribe.entity.Disease;
-
-import java.util.List;
+import net.sf.json.JSONArray;
 
 /**
  * @Auther: 周俊林
@@ -18,11 +17,10 @@ public interface DiseaseService {
     public Disease save(Disease disease);
 
     /**
-     * 查询疾病
-     * @param name 疾病名称
+     * 加载疾病处方树
      * @return
      */
-    public List<Disease> queryTree(String name);
+    public JSONArray loadTree();
 
     /**
      * 删除疾病及其下所有处方

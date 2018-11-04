@@ -1,5 +1,7 @@
 package com.littledoctor.clinicassistant.module.prescription.prescribe.entity;
 
+import net.sf.json.JSONObject;
+
 import javax.persistence.*;
 
 /**
@@ -16,9 +18,9 @@ public class Prescribe {
     @Column(name = "ID", nullable = false)
     private Integer id;
 
-    /** 疾病ID */
+/*    *//** 疾病ID *//*
     @Column(name = "DISEASE_ID", nullable = false)
-    private Integer diseaseId;
+    private Integer diseaseId;*/
 
     /** 处方名称 */
     @Column(name = "NAME", nullable = false, length = 20)
@@ -36,8 +38,20 @@ public class Prescribe {
     @Column(name = "DETAILS", length = 1000)
     private String details;
 
+    /** 处方类型
+     *  0 中药处方
+     *  1 针灸处方
+     *  2 中成药处方
+     */
     @Column(name = "TYPE")
     private int type;
+
+    /**
+     * 懒加载，不能为null
+     */
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "DISEASE_ID", nullable = false, referencedColumnName = "id")
+    private Disease disease;
 
     public Integer getId() {
         return id;
@@ -45,14 +59,6 @@ public class Prescribe {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getDiseaseId() {
-        return diseaseId;
-    }
-
-    public void setDiseaseId(Integer diseaseId) {
-        this.diseaseId = diseaseId;
     }
 
     public String getName() {
@@ -93,5 +99,25 @@ public class Prescribe {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public Disease getDisease() {
+        return disease;
+    }
+
+    public void setDisease(Disease disease) {
+        this.disease = disease;
+    }
+
+    public JSONObject toJSON(Integer pId) {
+        JSONObject json = new JSONObject();
+        json.put("id",this.getId());
+        json.put("pId",pId);
+        json.put("name",this.getName());
+        json.put("abbreviation", this.getAbbreviation());
+        json.put("details", this.getDetails());
+        json.put("type", this.getType());
+        json.put("isDisease", false);
+        return json;
     }
 }

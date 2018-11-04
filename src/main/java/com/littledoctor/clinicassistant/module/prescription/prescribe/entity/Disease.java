@@ -1,6 +1,11 @@
 package com.littledoctor.clinicassistant.module.prescription.prescribe.entity;
 
+import net.sf.json.JSON;
+import net.sf.json.JSONObject;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Auther: 周俊林
@@ -24,6 +29,9 @@ public class Disease {
     @Column(name = "NAME", nullable = false, length = 10)
     private String name;
 
+    @OneToMany(mappedBy = "disease", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
+    private List<Prescribe> prescribeList = new ArrayList<Prescribe>();
+
     public Integer getId() {
         return id;
     }
@@ -46,5 +54,26 @@ public class Disease {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Prescribe> getPrescribeList() {
+        return prescribeList;
+    }
+
+    public void setPrescribeList(List<Prescribe> prescribeList) {
+        this.prescribeList = prescribeList;
+    }
+
+    /**
+     * 转换成JSON
+     * @return
+     */
+    public JSONObject toJSON() {
+        JSONObject json = new JSONObject();
+        json.put("id", this.getId());
+        json.put("pId", this.getpId());
+        json.put("name", this.getName());
+        json.put("isDisease", true);
+        return json;
     }
 }
