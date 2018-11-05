@@ -251,11 +251,14 @@ $(function () {
         var form = layui.form;
         $('.form-panel').find("form[lay-filter='prescribeForm']").show();
         $('.form-panel').find("button[type='reset']").click();
+        $('.form-panel').find(("select[name='abbreviation']")).empty();
+        $('#details').tagit('removeAll');
         if (treeNode.isDisease) {// 疾病类型
             // 重置表单，初始化疾病名称和diseaseId
             form.val('prescribeForm', {
                 'disease.name': treeNode.name,
-                'disease.id': treeNode.id
+                'disease.id': treeNode.id,
+                'id':''
             });
         } else {// 处方
             form.val('prescribeForm', {
@@ -268,9 +271,7 @@ $(function () {
             });
             // 动态初始化 select和tag
             var select = $('.form-panel').find(("select[name='abbreviation']"));
-            select.empty();
             select.append('<option value="'+ treeNode.abbreviation +'" selected>'+ treeNode.abbreviation +'</option>');
-            $('#details').tagit('removeAll');
             var tags = treeNode.details.split(',');
             $.each(tags, function (index, tag) {
                 $('#details').tagit('createTag', tag);
@@ -339,7 +340,32 @@ $(function () {
      * @param data
      */
     function savePrescribe(data) {
-        var diseaseId = data.field.disease.id;
+        ajaxSavePrescribe(data, function (node) {
+            var treeobj = $.fn.zTree.getZTreeObj('diseaseTree');
+            treeobj.selectNode(node);
+            treeobj.setting.callback.onClick(null,treeobj.setting.treeId,node);
+        });
+    }
+
+    /**
+     * 保存并新建
+     * @param data
+     */
+    function saveAndResetPrescribe(data) {
+        ajaxSavePrescribe(data, function (node) {
+            var treeobj = $.fn.zTree.getZTreeObj('diseaseTree');
+            treeobj.selectNode(node.getParentNode());
+            treeobj.setting.callback.onClick(null,treeobj.setting.treeId,node.getParentNode());
+        });
+    }
+
+    /**
+     * ajax 保存 处方
+     * @param data
+     * @param callback
+     */
+    function ajaxSavePrescribe(data,callback) {
+        var diseaseId = data.field['disease.id'];
         $.ajax({
             url:'/prescription/prescribe/save',
             data:data.field,
@@ -353,15 +379,14 @@ $(function () {
                         var newNodes = [];
                         var parentNode = treeobj.getNodeByParam('id', diseaseId, null);
                         newNodes = treeobj.addNodes(parentNode, data);
-                        treeobj.selectNode(newNodes[0]);
-                        treeobj.setting.callback.onClick(null,treeobj.setting.treeId,newNodes[0]);
+                        callback(newNodes[0]);
                     } else {// 修改
                         oldNode.name = data.name;
                         oldNode.abbreviation = data.abbreviation;
                         oldNode.type = data.type;
                         oldNode.details = data.details;
                         treeobj.updateNode(oldNode);
-                        treeobj.setting.callback.onClick(null,treeobj.setting.treeId,oldNode);
+                        callback(oldNode);
                     }
                     layer.msg(MSG.save_success, {offset: 'rb', time: 2000});
                 } else {
@@ -369,26 +394,6 @@ $(function () {
                 }
             },
             error: function () {
-                layer.msg(MSG.save_fail, {offset: 'rb', time: 2000});
-            }
-        });
-    }
-
-    /**
-     * 保存并新建
-     * @param data
-     */
-    function saveAndResetPrescribe(data) {
-        $.post('/prescription/prescribe/save',data.field,function (result) {
-            if (result) {
-                layer.msg(MSG.save_success, {offset: 'rb', time: 2000});
-                // 重置
-                $('.form-panel').find("button[type='reset']").click();
-                $('.form-panel').find(("select[name='abbreviation']")).empty();
-                $('#details').tagit('removeAll');
-                $("input[name='disease.id']").val(data.field.disease.id);
-                $("input[name='disease.name']").val(data.field.disease.name);
-            } else {
                 layer.msg(MSG.save_fail, {offset: 'rb', time: 2000});
             }
         });
