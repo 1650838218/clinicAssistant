@@ -64,9 +64,9 @@ public class DiseaseController {
      * @return
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public boolean delete(@PathVariable(value = "id") Integer id) {
+    public boolean delete(@PathVariable("id") Integer id) {
         try {
-            Assert.isNull(id,"ID不能为空");
+            Assert.notNull(id,"ID不能为空");
             return diseaseService.delete(id);
         } catch (Exception e){
             log.error(e.getMessage(),e);

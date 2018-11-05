@@ -29,7 +29,7 @@ public class Disease {
     @Column(name = "NAME", nullable = false, length = 10)
     private String name;
 
-    @OneToMany(mappedBy = "disease", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
+    @OneToMany(mappedBy = "disease", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
     private List<Prescribe> prescribeList = new ArrayList<Prescribe>();
 
     public Integer getId() {

@@ -29,4 +29,19 @@ public class PrescribeServiceImpl implements PrescribeService {
     public Prescribe save(Prescribe prescribe) {
         return prescribeRepository.saveAndFlush(prescribe);
     }
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean delete(Integer id) {
+        if (id != null) {
+            prescribeRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

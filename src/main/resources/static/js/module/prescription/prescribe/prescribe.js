@@ -16,6 +16,7 @@ $(function () {
     input.keyup({input:input,select:select},toPinYin);
     // 处方 保存按钮监听事件
     layui.form.on('submit(save)', savePrescribe);
+    layui.form.on('submit(saveAndReset)', saveAndResetPrescribe);
 
 
     // ztree 参数设置
@@ -27,7 +28,7 @@ $(function () {
         edit: {
             enable: true,
             showRemoveBtn: true,
-            showRenameBtn: true,
+            showRenameBtn: setRenameBtn,
             removeTitle: BTN.delete,
             renameTitle: BTN.edit
         },
@@ -61,6 +62,18 @@ $(function () {
         }
     }
 
+    /**
+     * 是否显示编辑按钮
+     *      当前节点是疾病  显示编辑按钮
+     *      当前节点是处方，不显示编辑按钮
+     * @param treeId
+     * @param treeNode
+     * @returns {boolean}
+     */
+    function setRenameBtn(treeId, treeNode) {
+        return treeNode.isDisease;
+    }
+    
     /**
      * 选中第一个节点
      */
@@ -250,9 +263,14 @@ $(function () {
                 'disease.id': treeNode.getParentNode().id,
                 'id': treeNode.id,
                 'name': treeNode.name,
-                'abbreviation': treeNode.abbreviation,
+                // 'abbreviation': treeNode.abbreviation,
                 'type': treeNode.type
             });
+            // 动态初始化 select和tag
+            var select = $('.form-panel').find(("select[name='abbreviation']"));
+            select.empty();
+            select.append('<option value="'+ treeNode.abbreviation +'" selected>'+ treeNode.abbreviation +'</option>');
+            $('#details').tagit('removeAll');
             var tags = treeNode.details.split(',');
             $.each(tags, function (index, tag) {
                 $('#details').tagit('createTag', tag);
@@ -282,19 +300,28 @@ $(function () {
             if (treeNode.children) {// 有子节点
                 layer.msg('请先删除子节点！',{time:2000});
             } else {
-                layer.confirm(MSG.delete_confirm + '名为' + treeNode.name + '的疾病类型及其处方吗?', {
-                    icon: 3,
-                    title: BTN.delete
-                }, function (index) {
+                var msg = '',url = '';
+                if (treeNode.isDisease) {
+                    msg = MSG.delete_confirm + '名为' + treeNode.name + '的疾病类型及其处方吗?';
+                    url = '/prescription/disease/delete/';
+                } else {
+                    msg = MSG.delete_confirm + '名为' + treeNode.name + '的处方吗?';
+                    url = '/prescription/prescribe/delete/';
+                }
+                layer.confirm(msg, {icon: 3, title: BTN.delete }, function (index) {
                     // 后台删除
                     $.ajax({
-                        url: '/prescription/disease/delete/' + treeNode.id,
+                        url: url + treeNode.id,
                         type: 'DELETE',
                         success: function (data, textStatus, jqXHR) {
-                            layer.msg(MSG.delete_success, {offset: 'rb', time: 2000});
-                            // ztree删除节点
-                            var treeobj = $.fn.zTree.getZTreeObj(treeId);
-                            treeobj.removeNode(treeNode, false);// 不触发回调方法
+                            if (data) {
+                                layer.msg(MSG.delete_success, {offset: 'rb', time: 2000});
+                                // ztree删除节点
+                                var treeobj = $.fn.zTree.getZTreeObj(treeId);
+                                treeobj.removeNode(treeNode, false);// 不触发回调方法
+                            } else {
+                                layer.msg(MSG.delete_fail, {offset: 'rb', time: 2000});
+                            }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                             layer.msg(MSG.delete_fail, {offset: 'rb', time: 2000});
@@ -312,6 +339,7 @@ $(function () {
      * @param data
      */
     function savePrescribe(data) {
+        var diseaseId = data.field.disease.id;
         $.ajax({
             url:'/prescription/prescribe/save',
             data:data.field,
@@ -323,7 +351,7 @@ $(function () {
                     var oldNode = treeobj.getNodeByParam('id',data.id,null);
                     if (oldNode == null) {// 新增
                         var newNodes = [];
-                        var parentNode = treeobj.getNodeByParam('id', data.disease.id, null);
+                        var parentNode = treeobj.getNodeByParam('id', diseaseId, null);
                         newNodes = treeobj.addNodes(parentNode, data);
                         treeobj.selectNode(newNodes[0]);
                         treeobj.setting.callback.onClick(null,treeobj.setting.treeId,newNodes[0]);
@@ -341,6 +369,26 @@ $(function () {
                 }
             },
             error: function () {
+                layer.msg(MSG.save_fail, {offset: 'rb', time: 2000});
+            }
+        });
+    }
+
+    /**
+     * 保存并新建
+     * @param data
+     */
+    function saveAndResetPrescribe(data) {
+        $.post('/prescription/prescribe/save',data.field,function (result) {
+            if (result) {
+                layer.msg(MSG.save_success, {offset: 'rb', time: 2000});
+                // 重置
+                $('.form-panel').find("button[type='reset']").click();
+                $('.form-panel').find(("select[name='abbreviation']")).empty();
+                $('#details').tagit('removeAll');
+                $("input[name='disease.id']").val(data.field.disease.id);
+                $("input[name='disease.name']").val(data.field.disease.name);
+            } else {
                 layer.msg(MSG.save_fail, {offset: 'rb', time: 2000});
             }
         });

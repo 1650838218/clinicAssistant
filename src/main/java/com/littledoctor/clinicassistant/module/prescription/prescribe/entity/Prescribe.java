@@ -1,5 +1,6 @@
 package com.littledoctor.clinicassistant.module.prescription.prescribe.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.sf.json.JSONObject;
 
 import javax.persistence.*;
@@ -48,7 +49,9 @@ public class Prescribe {
 
     /**
      * 懒加载，不能为null
+     * 转换成JSON时忽略该属性
      */
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "DISEASE_ID", nullable = false, referencedColumnName = "id")
     private Disease disease;

@@ -15,4 +15,11 @@ public interface PrescribeService {
      * @return
      */
     Prescribe save(Prescribe prescribe);
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    boolean delete(Integer id);
 }
