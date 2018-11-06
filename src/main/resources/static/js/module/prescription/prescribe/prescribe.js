@@ -256,13 +256,13 @@ $(function () {
         if (treeNode.isDisease) {// 疾病类型
             // 重置表单，初始化疾病名称和diseaseId
             form.val('prescribeForm', {
-                'disease.name': treeNode.name,
+                'disease.name': getAncestorNodes(treeNode, '', 0),
                 'disease.id': treeNode.id,
                 'id':''
             });
         } else {// 处方
             form.val('prescribeForm', {
-                'disease.name': treeNode.getParentNode().name,
+                'disease.name': getAncestorNodes(treeNode.getParentNode(), '', 0),
                 'disease.id': treeNode.getParentNode().id,
                 'id': treeNode.id,
                 'name': treeNode.name,
