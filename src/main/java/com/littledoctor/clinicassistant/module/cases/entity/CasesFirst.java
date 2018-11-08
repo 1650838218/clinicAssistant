@@ -69,8 +69,13 @@ public class CasesFirst {
     @Column(name = "TOTAL_PRICE")
     private float totalPrice;
 
+    /** 复诊 */
     @OneToMany(mappedBy = "casesFirst", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
     private List<CasesNext> casesNexts = new ArrayList<>();
+
+    /** 回访 */
+    @OneToMany(mappedBy = "casesFirst", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
+    private List<CasesFollow> casesFollows = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -174,5 +179,13 @@ public class CasesFirst {
 
     public void setCasesNexts(List<CasesNext> casesNexts) {
         this.casesNexts = casesNexts;
+    }
+
+    public List<CasesFollow> getCasesFollows() {
+        return casesFollows;
+    }
+
+    public void setCasesFollows(List<CasesFollow> casesFollows) {
+        this.casesFollows = casesFollows;
     }
 }
