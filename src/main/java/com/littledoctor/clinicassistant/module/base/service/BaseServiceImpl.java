@@ -19,4 +19,9 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 
     @Autowired
     private BaseRepository baseRepository;
+
+    @Override
+    public T save(T t) {
+        return (T) baseRepository.saveAndFlush(t);
+    }
 }
