@@ -7,18 +7,20 @@
 
     // 动态加载表格
     layui.table.render({
-        elem: '#medicineTable',
-        url: '/medicine/queryPage',
+        elem: '#casesPeopleTable',
+        url: '/casesPeople/queryPage',
         where: $(".search-form").serialize(),
         request: {
             limitName: 'size'
         },
         cols: [
             [
-                {title: '序号', type: 'numbers', templet: '#indexTpl'}
-                , {field: 'name', width: 100, title: '名称'}
-                , {field: 'dosage', width: 80, title: '用量(g)'}
-                , {field: 'description', title: '描述'}
+                {title: '序号', type: 'numbers', templet: '#indexTpl'},
+                {field: 'name', width: 100, title: '姓名'},
+                {field: 'sex', width: 80, title: '性别'},
+                {field: 'phone', width: 80, title: '手机号'},
+                {field: 'weixin', width: 80, title: '微信'},
+                {field: 'address', title: '现居住地'},
             ]
         ],
         page: true
@@ -31,7 +33,7 @@
         layer.prompt({
             skin:'layer-myskin',
             title:'基本信息',
-            // btn:['保存'],
+            btn:['保存'],
             content: $("#layerPanel"),
             end:function () {
                 $("#layerContent").append($("#layerPanel div"));

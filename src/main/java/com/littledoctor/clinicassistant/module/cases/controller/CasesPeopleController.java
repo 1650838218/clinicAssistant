@@ -1,11 +1,23 @@
 package com.littledoctor.clinicassistant.module.cases.controller;
 
+import com.littledoctor.clinicassistant.common.util.ControllerUtils;
 import com.littledoctor.clinicassistant.module.base.Entity.Operator;
 import com.littledoctor.clinicassistant.module.base.Entity.QueryParam;
 import com.littledoctor.clinicassistant.module.base.controller.BaseController;
+import com.littledoctor.clinicassistant.module.base.service.BaseService;
 import com.littledoctor.clinicassistant.module.cases.entity.CasesPeople;
+import com.littledoctor.clinicassistant.module.cases.service.CasesPeopleService;
+import net.sf.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -19,21 +31,43 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(value = "/casesPeople")
-public class CasesPeopleController extends BaseController<CasesPeople> {
+public class CasesPeopleController{
 
-    @Override
-    protected List<QueryParam> toQueryParam(Map<String, Object> queryParamMap) {
-        if (queryParamMap == null || queryParamMap.size() == 0) return null;
-        List<QueryParam> queryParamList = new ArrayList<>();
-        for (Map.Entry entry: queryParamMap.entrySet()) {
-            if (!StringUtils.isEmpty(entry.getKey())) {
-                QueryParam queryParam = new QueryParam();
-                queryParam.setKey(entry.getKey().toString());
-                queryParam.setValue(entry.getValue().toString());
-                queryParam.setOperator(Operator.LIKE);
-                queryParamList.add(queryParam);
-            }
+    private Logger log = LoggerFactory.getLogger(BaseController.class);
+
+    @Autowired
+    private CasesPeopleService casesPeopleService;
+
+    /**
+     * 保存
+     * @param entity
+     * @return
+     */
+    @RequestMapping(name = "/save", method = RequestMethod.POST)
+    public CasesPeople save(CasesPeople entity) {
+        try {
+            Assert.notNull(entity,"被保存的实体不能为空");
+            return casesPeopleService.save(entity);
+        } catch (Exception e) {
+            log.info(e.getMessage(),e);
+            return null;
         }
-        return queryParamList;
+    }
+
+    /**
+     * 分页查询
+     * @param name 查询条件
+     * @param page
+     * @return
+     */
+    @RequestMapping(value = "/queryPage", method = RequestMethod.GET)
+    public JSONObject queryPage(String name, Pageable page) {
+        try {
+            Page<CasesPeople> result = casesPeopleService.queryPage(name,page);
+            return ControllerUtils.pageToJSON(result);
+        } catch (Exception e) {
+            log.error(e.getMessage(),e);
+            return ControllerUtils.errorJSON();
+        }
     }
 }

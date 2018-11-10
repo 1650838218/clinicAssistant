@@ -12,13 +12,13 @@ import java.util.Map;
  * @Date: 2018/11/8
  * @Description: 基本服务接口
  */
-public interface BaseService<T> {
+public interface BaseService<E, ID> {
     /**
      * 保存
-     * @param t
+     * @param entity
      * @return
      */
-    public T save(T t);
+    public E save(E entity);
 
     /**
      * 分页查询
@@ -26,5 +26,5 @@ public interface BaseService<T> {
      * @param page
      * @return
      */
-    public Page<T> queryPage(List<QueryParam> queryParams, Pageable page);
+    public Page<E> queryPage(List<QueryParam> queryParams, Pageable page);
 }

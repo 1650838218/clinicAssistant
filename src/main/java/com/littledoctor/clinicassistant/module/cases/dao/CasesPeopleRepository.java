@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * @Date: 2018/11/8
  * @Description: 患者基本信息
  */
-public interface CasesPeopleRepository extends JpaRepository<CasesPeople, Integer>, JpaSpecificationExecutor<CasesPeople> {
+public interface CasesPeopleRepository extends JpaRepository<CasesPeople,Integer>, JpaSpecificationExecutor<CasesPeople> {
 }

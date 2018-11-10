@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
  * @Auther: 周俊林
+ *
  * @Date: 2018/11/8
  * @Description: 基础Dao
  */
-public interface BaseRepository<T> extends JpaRepository<T, Integer>, JpaSpecificationExecutor<T> {
+public interface BaseRepository<E,ID> {
 }

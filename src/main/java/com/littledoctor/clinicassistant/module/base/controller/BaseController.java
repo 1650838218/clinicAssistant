@@ -25,23 +25,22 @@ import java.util.Map;
  * @Date: 2018/11/6 19:29
  * @Description: 基础Controller类
  */
-public class BaseController<T> {
+public abstract class BaseController<E, ID> {
 
     private Logger log = LoggerFactory.getLogger(BaseController.class);
 
-    @Autowired
-    private BaseService<T> baseService;
+    protected abstract <S extends BaseService<E, ID>> S getService();
 
     /**
      * 保存
-     * @param t
+     * @param entity
      * @return
      */
     @RequestMapping(name = "/save", method = RequestMethod.POST)
-    public T save(T t) {
+    public E save(E entity) {
         try {
-            Assert.notNull(t,"被保存的实体不能为空");
-            return baseService.save(t);
+            Assert.notNull(entity,"被保存的实体不能为空");
+            return getService().save(entity);
         } catch (Exception e) {
             log.info(e.getMessage(),e);
             return null;
@@ -58,7 +57,7 @@ public class BaseController<T> {
     @RequestMapping(value = "/queryPage", method = RequestMethod.GET)
     public JSONObject queryPage(@RequestParam Map<String, Object> queryParam, Pageable page) {
         try {
-            Page<T> result = baseService.queryPage(toQueryParam(queryParam),page);
+            Page<E> result = getService().queryPage(toQueryParam(queryParam),page);
             return ControllerUtils.pageToJSON(result);
         } catch (Exception e) {
             log.error(e.getMessage(),e);

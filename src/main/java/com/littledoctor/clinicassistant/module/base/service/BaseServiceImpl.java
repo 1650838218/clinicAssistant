@@ -1,22 +1,26 @@
 package com.littledoctor.clinicassistant.module.base.service;
 
-import com.littledoctor.clinicassistant.module.base.Entity.Operator;
 import com.littledoctor.clinicassistant.module.base.Entity.QueryParam;
-import com.littledoctor.clinicassistant.module.base.dao.BaseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Auther: 周俊林
@@ -24,23 +28,26 @@ import java.util.List;
  * @Description: 基础服务类
  */
 @Service
-public class BaseServiceImpl<T> implements BaseService<T> {
+public abstract class BaseServiceImpl<E, ID> implements BaseService<E, ID> {
 
     private Logger log = LoggerFactory.getLogger(BaseServiceImpl.class);
 
-    @Autowired
-    private BaseRepository<T> baseRepository;
+//    protected abstract <R extends JpaRepository<E,ID>, ID extends Serializable> R getJpaRepository();
+//    protected abstract <S extends JpaSpecificationExecutor<E>> S getJpaSpecificationExecutor();
+
+    @Resource
+    private SimpleJpaRepository<E,ID> simpleJpaRepository;
 
     @Override
-    public T save(T t) {
-        return baseRepository.saveAndFlush(t);
+    public E save(E entity) {
+        return simpleJpaRepository.saveAndFlush(entity);
     }
 
     @Override
-    public Page<T> queryPage(List<QueryParam> queryParams, Pageable page) {
-        return baseRepository.findAll(new Specification<T>() {
+    public Page<E> queryPage(List<QueryParam> queryParams, Pageable page) {
+        return simpleJpaRepository.findAll(new Specification<E>() {
             @Override
-            public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+            public Predicate toPredicate(Root<E> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 if (queryParams == null || queryParams.size() == 0) return null;
                 List<Predicate> predicates = new ArrayList<>();
                 for (QueryParam qp: queryParams) {
