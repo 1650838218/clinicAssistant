@@ -1,10 +1,6 @@
 package com.littledoctor.clinicassistant.module.cases.controller;
 
 import com.littledoctor.clinicassistant.common.util.ControllerUtils;
-import com.littledoctor.clinicassistant.module.base.Entity.Operator;
-import com.littledoctor.clinicassistant.module.base.Entity.QueryParam;
-import com.littledoctor.clinicassistant.module.base.controller.BaseController;
-import com.littledoctor.clinicassistant.module.base.service.BaseService;
 import com.littledoctor.clinicassistant.module.cases.entity.CasesPeople;
 import com.littledoctor.clinicassistant.module.cases.service.CasesPeopleService;
 import net.sf.json.JSONObject;
@@ -14,15 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @Auther: 周俊林
@@ -33,7 +23,7 @@ import java.util.Map;
 @RequestMapping(value = "/casesPeople")
 public class CasesPeopleController{
 
-    private Logger log = LoggerFactory.getLogger(BaseController.class);
+    private Logger log = LoggerFactory.getLogger(CasesPeopleController.class);
 
     @Autowired
     private CasesPeopleService casesPeopleService;

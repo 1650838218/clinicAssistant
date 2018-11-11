@@ -1,9 +1,5 @@
 package com.littledoctor.clinicassistant.module.cases.service;
 
-import com.littledoctor.clinicassistant.module.base.Entity.QueryParam;
-import com.littledoctor.clinicassistant.module.base.controller.BaseController;
-import com.littledoctor.clinicassistant.module.base.dao.BaseRepository;
-import com.littledoctor.clinicassistant.module.base.service.BaseServiceImpl;
 import com.littledoctor.clinicassistant.module.cases.dao.CasesPeopleRepository;
 import com.littledoctor.clinicassistant.module.cases.entity.CasesPeople;
 import org.slf4j.Logger;
@@ -19,9 +15,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Auther: 周俊林

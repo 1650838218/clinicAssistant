@@ -1,6 +1,5 @@
 package com.littledoctor.clinicassistant.module.cases.service;
 
-import com.littledoctor.clinicassistant.module.base.service.BaseService;
 import com.littledoctor.clinicassistant.module.cases.entity.CasesPeople;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

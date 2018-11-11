@@ -53,11 +53,11 @@
                     </dl>-->
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:void(0)" url="/prescription/prescribe/prescribe">处方管理</a>
-                    <!--<dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0)" url="">处方</a></dd>
+                    <a href="javascript:void(0)" url="">处方管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:void(0)" url="/prescription/prescribe/prescribe">处方</a></dd>
                         <dd><a href="javascript:void(0)" url="/prescription/medicine/medicine">药材</a></dd>
-                    </dl>-->
+                    </dl>
                 </li>
                 <li class="layui-nav-item"><a href="javascript:void(0)">账目管理</a></li>
                 <li class="layui-nav-item"><a href="javascript:void(0)">会员管理</a></li>
@@ -90,7 +90,12 @@
         </div>
     </div>
 </div>
-<div id="layerPanel" style="display: none;border-radius: 6px;"></div>
+<div id="layerPanel" style="display: none;border-radius: 6px;">
+    <form class="layui-form">
+        <button type="reset" style="display: none"></button>
+
+    </form>
+</div>
 <script src="/jquery/jquery-1.8.3.min.js" charset="utf-8"></script>
 <script src="/layui/layui.all.js" charset="utf-8"></script>
 <script src="/js/common/index.js"></script>

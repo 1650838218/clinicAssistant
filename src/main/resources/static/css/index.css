@@ -60,7 +60,7 @@ html {
 
 .layui-card {
     margin-bottom: 0px;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 .layui-card-header {
@@ -109,7 +109,7 @@ html {
 }
 
 /* 表单 */
-.layui-form {
+.form-panel .layui-form {
     padding-top: 15px;
 }
 
@@ -134,12 +134,6 @@ html {
     width: 190px;
     border-style: none;
     display: inline;
-}
-
-.layui-input-block {
-    min-height: 30px;
-    margin-right: 50px;
-    margin-left: 0px;
 }
 
 .site-h2 {
