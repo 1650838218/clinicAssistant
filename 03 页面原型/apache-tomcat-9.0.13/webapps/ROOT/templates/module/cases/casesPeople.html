@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>病历管理--患者个人信息</title>
+</head>
+<body>
+<div class="layui-card">
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="app-content-workorder">
+        <form class="layui-form search-form">
+            <div class="layui-row">
+                <div class="layui-col-md4">
+                    <label class="layui-form-label">患者姓名</label>
+                    <input type="text" name="name" class="layui-input" style="width: 220px" placeholder="姓名">
+                </div>
+                <div class="layui-col-md1">
+                    <button type="button" class="layui-btn layui-btn-sm">查询</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm add">
+                <i class="layui-icon layui-icon-add-1"></i>添加
+            </button>
+        </div>
+        <table class="layui-hide" lay-skin="line" id="casesPeopleTable"></table>
+        <script type="text/html" id="indexTpl">
+            {{d.LAY_TABLE_INDEX+1}}
+        </script>
+    </div>
+</div>
+<div id="layerContent" style="display: none">
+    <div class="form-panel">
+        <input type="hidden" name="id">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">患者姓名</label>
+                <div class="layui-input-inline" style="width: 300px">
+                    <input type="text" name="name" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-inline" style="width: 300px">
+                    <input type="radio" name="sex" value="0" title="男" checked="">
+                    <input type="radio" name="sex" value="1" title="女">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">电话</label>
+                <div class="layui-input-inline" style="width: 300px">
+                    <input type="text" name="phone" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">微信</label>
+                <div class="layui-input-inline" style="width: 300px">
+                    <input type="text" name="weixin" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">现居住地</label>
+                <div class="layui-input-inline" style="width: 600px">
+                    <input type="text" name="address" class="layui-input">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/module/cases/casesPeople.js"></script>
+</body>
+</html>

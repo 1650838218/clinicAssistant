@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>采购入库</title>
+    <style type="text/css">
+        .div-search {
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+
+        input.form-control[readonly] {
+            background-color: #fff;
+        }
+
+        .div-search input.form-control[readonly] {
+            width: 130px;
+        }
+
+        .div-search label,
+        .div-detail label {
+            margin-right: 7px;
+        }
+
+        .div-search,
+        .div-detail {
+            margin-left: -15px;
+            margin-right: -15px;
+            border-radius: 6px;
+            background-color: white;
+            padding: 10px 15px;
+        }
+
+        .div-detail {
+            margin-top: 10px;
+        }
+
+        .div-detail .col-sm-3 {
+            padding-right: 0px;
+        }
+
+        .form-title {
+            margin: 0px 0px 5px 0px;
+            padding-bottom: 8px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-title h5 {
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .form-group {
+            margin-right: 14px;
+        }
+
+        .fixed-table-toolbar .bs-bars, .fixed-table-toolbar .columns, .fixed-table-toolbar .search {
+            margin-top: 0px;
+        }
+
+        hr {
+            margin-top: 10px;
+        }
+
+        .row {
+            margin-right: 0px;
+            margin-left: 15px;
+        }
+
+        .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+            padding-left: 0px;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="div-search">
+        <div class="form-title">
+            <h5>查询订单</h5>
+            <span id="toggleSearch" style="float: right" class="glyphicon glyphicon-chevron-down"
+                  aria-hidden="true"></span>
+        </div>
+        <form class="form-inline">
+            <div class="form-group">
+                <label>日期范围</label>
+                <input type="text" class="form-control" name="startDate" placeholder="开始年月" readonly>
+                至
+                <input type="text" class="form-control" name="endDate" placeholder="结束年月" readonly>
+            </div>
+            <div class="form-group">
+                <label>订单类型</label>
+                <select class="form-control" name="type">
+                    <option value="0">全部</option>
+                    <option value="1">草稿</option>
+                    <option value="2">已入库</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>订单名称</label>
+                <select class="selectpicker" data-live-search="true" title="选择订单"></select>
+            </div>
+            <div class="btn-group" style="float: right">
+                <button id="addOrderBtn" type="button" class="btn btn-info" data-toggle="modal"
+                        data-target="#orderModal" data-whatever="create">新建订单
+                </button>
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">下拉按钮</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li id="editOrderBtn"><a href="#">修改订单</a></li>
+                    <li id="delOrderBtn"><a href="#">删除订单</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">订单入库</a></li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <div class="div-detail">
+        <div class="form-title">
+            <h5>订单详情</h5>
+        </div>
+        <form class="form-inline">
+            <input type="hidden" name="orderId" value="">
+            <div class="form-group">
+                <label class="">日期：</label>
+                <p class="form-control-static" name="date"></p>
+            </div>
+            <div class="form-group">
+                <label class="">供货商：</label>
+                <p class="form-control-static" name="dealer"></p>
+            </div>
+            <div class="form-group">
+                <label class="">联系电话：</label>
+                <p class="form-control-static" name="phone"></p>
+            </div>
+            <div class="form-group">
+                <label class="">总价：</label>
+                <p class="form-control-static" name="totalPrice"></p>
+            </div>
+        </form>
+        <div>
+            <div id="toolbar">
+                <!--<div class="btn-group">-->
+                    <button id="addOrderDetailBtn" type="button" class="btn btn-info" data-toggle="modal"
+                            data-target="#orderDetailModal" data-whatever="create">添加订单明细
+                    </button>
+                    <button id="storageBtn" type="button" class="btn btn-info">订单入库
+                    </button>
+                    <!--<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">下拉按钮</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li id="editOrderDetailBtn" data-toggle="modal" data-target="#orderDetailModal" data-whatever="update"><a href="#">导入订单明细</a></li>
+                        <li id="dowOrderDetailBtn"><a href="#">下载模板</a></li>
+                    </ul>
+                </div>-->
+            </div>
+            <table id="orderTable"
+                   data-toolbar="#toolbar"
+                   data-pagination="true"
+                   data-search="true"
+                   data-show-refresh="true"
+                   data-show-columns="true">
+                <thead>
+                <tr>
+                    <th data-field="name" data-align="center" data-width="10%">名称</th>
+                    <th data-field="specifications" data-align="center" data-width="10%">规格</th>
+                    <th data-field="type" data-align="center" data-width="">分类</th>
+                    <th data-field="dosageForm" data-align="center" data-width="">药品剂型</th>
+                    <th data-field="validDate" data-align="center" data-width="">有效期至</th>
+                    <th data-field="purchaseCount" data-align="center" data-width="">进货数量</th>
+                    <th data-field="purchaseUnit" data-align="center" data-width="">进货单位</th>
+                    <th data-field="purchasePrice" data-align="center" data-width="">进货单价(元)</th>
+                    <th data-field="totalPrice" data-align="center" data-width="">总价(元)</th>
+                    <th data-field="profitPercent" data-align="center" data-width="">加成(%)</th>
+                    <th data-field="sellingPrice" data-align="center" data-width="">售价(元)</th>
+                    <th data-field="sellUnit" data-align="center" data-width="">零售单位</th>
+                    <th data-field="id" data-align="center" data-width="" data-events="operateEvents"
+                        data-formatter="operateFormatter">操作
+                    </th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<!--订单模态框-->
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">添加订单</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <input type="hidden" name="id" value="">
+                    <input type="hidden" name="type" value="">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">订单名称</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="name" maxlength="50" placeholder="订单名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">日期</label>
+                        <div class="col-sm-8">
+                            <input type="text" style="background-color: #fff;" class="form-control" name="date"
+                                   placeholder="日期" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">供货商</label>
+                        <div class="col-sm-8">
+                            <!--<input type="text" class="form-control" name="dealer" placeholder="供货商">-->
+                            <select class="selectpicker" name="dealer">
+                                <option value="1">周俊晓</option>
+                                <option value="2">神威</option>
+                                <option value="3">老百姓大药房</option>
+                                <option value="4">哈药六厂</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">联系电话</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="phone" placeholder="联系电话">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">总价(元)</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="totalPrice" placeholder="总价">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveOrderBtn">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--订单明细模态框 bs-example-modal-lg modal-lg-->
+<div class="modal fade bs-example-modal-lg" id="orderDetailModal" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">添加订单明细</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal row">
+                    <input type="hidden" name="id" value="">
+                    <div class="col-md-4">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-3 control-label">条形码</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="barCode" placeholder="条形码">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-2 control-label"><label style="color:red">*</label>药品名称</label>
+                            <div class="col-sm-6" style="padding-right: 0px">
+                                <input type="text" class="form-control"
+                                       style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-right-style: none"
+                                       name="name" placeholder="药品名称">
+                            </div>
+                            <div class="col-sm-4" style="padding-left: 0px">
+                                <select name="pinyin" class="form-control" style="border-top-left-radius: 0px;border-bottom-left-radius: 0px" name="name" placeholder="拼音简称">
+                                    <option>LHQWJN</option>
+                                    <option>GC</option>
+                                    <option>HQ</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-3 control-label">药品规格</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="specifications" placeholder="药品规格">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-3 control-label"><label style="color:red">*</label>药品分类</label>
+                            <div class="col-sm-7" style="padding-right: 10px">
+                                <select name="type" class="form-control" placeholder="药品分类">
+                                    <option value="0">中草药</option>
+                                    <option value="1">中成药</option>
+                                    <option value="2">西药</option>
+                                    <option value="3">膏药</option>
+                                    <option value="4">足浴</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-1">
+                                <a id="typeConfig" href="javascript:void(0);" title="维护药品分类" data-toggle="modal"
+                                   data-target="#dictionaryModal">
+                                    <span class="glyphicon glyphicon-cog control-label" aria-hidden="true" style="font-size: 18px"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-3 control-label">药品剂型</label>
+                            <div class="col-sm-7" style="padding-right: 10px">
+                                <select name="dosageForm" class="form-control" placeholder="药品剂型">
+                                    <option value="0">丸</option>
+                                    <option value="1">胶囊</option>
+                                    <option value="2">粉</option>
+                                    <option value="3">膏</option>
+                                    <option value="4">糖浆</option>
+                                </select>
+                                <!--<input type="text" class="form-control" name="name" maxlength="50" placeholder="药品剂型">-->
+                            </div>
+                            <div class="col-sm-1">
+                                <a id="dosageFormConfig" href="javascript:void(0)" title="维护药品剂型">
+                                    <span class="glyphicon glyphicon-cog control-label" aria-hidden="true" style="font-size: 18px"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-3 control-label">生产日期</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="productionDate" placeholder="生产日期" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-3 control-label"><label style="color:red">*</label>有效期至</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="validDate" placeholder="有效期至" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-2 control-label">产地/厂家</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="producer" placeholder="产地/厂家">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><hr></div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-4 control-label"><label style="color:red">*</label>进价(元)</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="purchasePrice" placeholder="进价">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-4 control-label"><label style="color:red">*</label>数量</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="purchaseCount" placeholder="数量">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-4 control-label"><label style="color:red">*</label>单位</label>
+                            <div class="col-sm-6"  style="padding-right: 10px">
+                                <select name="purchaseUnit" class="form-control" placeholder="单位">
+                                    <option value="0">千克</option>
+                                    <option value="1">斤</option>
+                                    <option value="2">箱</option>
+                                    <option value="3">盒</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-1">
+                                <a id="purchaseUnitConfig" href="javascript:void(0)" title="维护单位">
+                                    <span class="glyphicon glyphicon-cog control-label" aria-hidden="true" style="font-size: 18px"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-4 control-label"><label style="color:red">*</label>总价(元)</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="totalPrice" placeholder="总价">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><hr></div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-4 control-label">零售单位</label>
+                            <div class="col-sm-6" style="padding-right: 10px">
+                                <select name="sellUnit" class="form-control" placeholder="零售单位">
+                                    <option value="0">克</option>
+                                    <option value="3">盒</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-1">
+                                <a id="sellUnitConfig" href="javascript:void(0)" title="维护零售单位">
+                                    <span class="glyphicon glyphicon-cog control-label" aria-hidden="true" style="font-size: 18px"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-4 control-label">单位换算</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="unitConvert" placeholder="单位换算">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-4 control-label">利润(%)</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="profitPercent" placeholder="利润">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-4 control-label">售价(元)</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="sellingPrice" placeholder="售价">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-4 control-label">库存单位</label>
+                            <div class="col-sm-6" style="padding-right: 10px">
+                                <select name="stockUnit" class="form-control" placeholder="库存单位">
+                                    <option value="0">克</option>
+                                    <option value="3">盒</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-1">
+                                <a id="stockUnitConfig" href="javascript:void(0)" title="维护库存单位">
+                                    <span class="glyphicon glyphicon-cog control-label" aria-hidden="true" style="font-size: 18px"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-4 control-label">库存</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="stock" placeholder="库存">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-4 control-label">库存预警</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="stockWarn" placeholder="库存预警">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveOrderDetailBtn">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="static/js/module/dispensary/order/order.js"></script>
+</body>
+</html>

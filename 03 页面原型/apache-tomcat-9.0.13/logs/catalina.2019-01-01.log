@@ -1,0 +1,43 @@
+01-Jan-2019 11:17:31.165 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Server version:        Apache Tomcat/9.0.13
+01-Jan-2019 11:17:31.506 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Nov 2 2018 14:27:55 UTC
+01-Jan-2019 11:17:31.508 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Server number:         9.0.13.0
+01-Jan-2019 11:17:31.509 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 10
+01-Jan-2019 11:17:31.510 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+01-Jan-2019 11:17:31.526 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+01-Jan-2019 11:17:31.527 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             D:\Program Files\Java\jre1.8.0_131
+01-Jan-2019 11:17:31.527 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_131-b11
+01-Jan-2019 11:17:31.532 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+01-Jan-2019 11:17:31.532 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         E:\诊所助手\03 页面原型\apache-tomcat-9.0.13
+01-Jan-2019 11:17:31.533 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         E:\诊所助手\03 页面原型\apache-tomcat-9.0.13
+01-Jan-2019 11:17:31.534 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=E:\诊所助手\03 页面原型\apache-tomcat-9.0.13\conf\logging.properties
+01-Jan-2019 11:17:31.535 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+01-Jan-2019 11:17:31.538 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+01-Jan-2019 11:17:31.539 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+01-Jan-2019 11:17:31.540 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+01-Jan-2019 11:17:31.556 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=E:\诊所助手\03 页面原型\apache-tomcat-9.0.13
+01-Jan-2019 11:17:31.557 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=E:\诊所助手\03 页面原型\apache-tomcat-9.0.13
+01-Jan-2019 11:17:31.559 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=E:\诊所助手\03 页面原型\apache-tomcat-9.0.13\temp
+01-Jan-2019 11:17:31.560 信息 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded APR based Apache Tomcat Native library [1.2.18] using APR version [1.6.5].
+01-Jan-2019 11:17:31.561 信息 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+01-Jan-2019 11:17:31.562 信息 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+01-Jan-2019 11:17:31.930 信息 [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+01-Jan-2019 11:17:36.398 信息 [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+01-Jan-2019 11:17:37.494 信息 [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+01-Jan-2019 11:17:37.597 信息 [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+01-Jan-2019 11:17:37.611 信息 [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+01-Jan-2019 11:17:37.619 信息 [main] org.apache.catalina.startup.Catalina.load Initialization processed in 11869 ms
+01-Jan-2019 11:17:38.056 信息 [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+01-Jan-2019 11:17:38.057 信息 [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet Engine: Apache Tomcat/9.0.13
+01-Jan-2019 11:17:38.291 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [E:\诊所助手\03 页面原型\apache-tomcat-9.0.13\webapps\docs]
+01-Jan-2019 11:17:44.765 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [E:\诊所助手\03 页面原型\apache-tomcat-9.0.13\webapps\docs] has finished in [6,472] ms
+01-Jan-2019 11:17:44.767 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [E:\诊所助手\03 页面原型\apache-tomcat-9.0.13\webapps\examples]
+01-Jan-2019 11:17:54.406 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [E:\诊所助手\03 页面原型\apache-tomcat-9.0.13\webapps\examples] has finished in [9,639] ms
+01-Jan-2019 11:17:54.456 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [E:\诊所助手\03 页面原型\apache-tomcat-9.0.13\webapps\host-manager]
+01-Jan-2019 11:17:54.647 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [E:\诊所助手\03 页面原型\apache-tomcat-9.0.13\webapps\host-manager] has finished in [191] ms
+01-Jan-2019 11:17:54.648 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [E:\诊所助手\03 页面原型\apache-tomcat-9.0.13\webapps\manager]
+01-Jan-2019 11:17:54.801 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [E:\诊所助手\03 页面原型\apache-tomcat-9.0.13\webapps\manager] has finished in [154] ms
+01-Jan-2019 11:17:54.802 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [E:\诊所助手\03 页面原型\apache-tomcat-9.0.13\webapps\ROOT]
+01-Jan-2019 11:17:54.981 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [E:\诊所助手\03 页面原型\apache-tomcat-9.0.13\webapps\ROOT] has finished in [179] ms
+01-Jan-2019 11:17:54.987 信息 [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+01-Jan-2019 11:17:55.093 信息 [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+01-Jan-2019 11:17:55.109 信息 [main] org.apache.catalina.startup.Catalina.start Server startup in 17487 ms

@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
+    <head>
+    　　<title>网站标题 - Admin10000.com </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Language" content="zh-CN" />
+        <link type="text/css" rel="stylesheet" href="CSS文件路径" />
+        <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+		<script type="text/javascript" src="js/jquery.serializeExtend-1.0.1.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				
+				// 载入表单一预设数据
+				$("#loadData").click(function(){
+				
+					var json = {
+						userName:"小二郎",
+						Age:"6",
+						sex:"0",
+						like:"1,2", // 或者 like:[1,2],
+						'class':3,
+						Members:1,
+						desc:"\t\t\n小丫么小二郎"
+					};
+					
+					$("#div1").fillData(json);
+				});
+				
+				// 获取表单一数据
+				$("#getData").click(function(){
+				
+					var data = $("#div1").getJsonData();
+					
+					alert(JSON.stringify(data));
+				});
+				
+				// 重置表单一
+				$("#resetData").click(function(){
+				
+					$("#div1").reset();
+				});
+				
+				// 获取表单二数据(table 中每一行的 name 相同)
+				$("#getTableData1").click(function(){
+				
+					var data = $("#tableData1").getTableData();
+					
+					alert(JSON.stringify(data));
+				});
+				
+				// 获取表单二数据(table 中每一行的 name 相同)
+				$("#getTableData2").click(function(){
+					
+					var data = $("#tableData2").getTableData({Suffix:"_"});
+					
+					alert(JSON.stringify(data));
+				});
+			})
+		</script>
+    </head>
+    <body>
+		<form >
+			<h2>表单一</h2>
+			<div id="div1" style="width:100%;border:solid #111 1px;padding:20px">
+				<table cellpadding="10" style="width:100%">
+					<tr>
+						<td>姓名:</td><td><input type="text" id="userName" name="userName"></td>
+						<td>年龄:</td><td><input type="text" id="Age" name="Age"></td>
+						<td>性别:</td>
+						<td>
+							男<input type="radio" id="sex" name="sex" value="0"/>&#12288;
+							女<input type="radio" id="sex1" name="sex" value="1"/>
+						</td>
+					</tr>
+					<tr>
+						<td>爱好:</td>
+						<td>
+							篮球<input name="like" type="checkbox" value="1"/>
+							足球<input name="like" type="checkbox" value="2"/>
+							看书<input name="like" type="checkbox" value="3"/>
+							撩妹<input name="like" type="checkbox" value="4"/>
+						</td>
+						<td>班级:</td>
+						<td>
+							<select id="class" name="class">
+								<option value="">请选择</option>
+								<option value="1">1班</option>
+								<option value="2">2班</option>
+								<option value="3">3班</option>
+								<option value="4">4班</option>
+							</select>
+						</td>
+						<td>团员:</td><td><input name="Members" type="checkbox" value="1"/></td>
+					</tr>
+					<tr>
+						<td>个人简介：</td>
+						<td colspan="5">
+							<textarea id="desc" name="desc" style="width:100%;height:50px"></textarea>
+						</td>
+					</tr>
+				</table>
+				<input type="button" id="loadData" value="载入表单一预设数据"/>&#12288;
+				<input type="button" id="getData" value="获取表单一数据"/>&#12288;
+				<input type="button" id="resetData" value="重置表单一"/>&#12288;
+			</div>
+			
+			
+			<h2>表单二(table 中每一行的 name 相同)</h2>
+			<div  id="tableData1" style="width:100%;border:solid #111 1px;padding:20px 20px">
+				<table cellpadding="10" border="1" style="width:100%;">
+					<thead>
+						<tr>
+							<td>序号</td>
+							<td>姓名</td>
+							<td>年龄</td>
+							<td>爱好</td>
+							<td>班级</td>
+							<td>团员</td>
+							<td>个人简介</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td><input type="text" id="userName" name="userName" value="小明"></td>
+							<td><input type="text" id="Age" name="Age" value="18"></td>
+							<td>
+								篮球<input name="like" type="checkbox" value="1"/>
+								足球<input name="like" type="checkbox" value="2"/>
+								看书<input name="like" type="checkbox" value="3" checked/>
+								撩妹<input name="like" type="checkbox" value="4" checked/>
+							</td>
+							<td>
+								<select id="class" name="class">
+									<option value="">请选择</option>
+									<option value="1">1班</option>
+									<option value="2">2班</option>
+									<option value="3" selected>3班</option>
+									<option value="4">4班</option>
+								</select>
+							</td>
+							<td><input name="Members" type="checkbox" value="1"/></td>
+							<td><textarea id="desc" name="desc">这个孩子好淘气</textarea></td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td><input type="text" id="userName" name="userName" value="小红"></td>
+							<td><input type="text" id="Age" name="Age" value="3"></td>
+							<td>
+								篮球<input name="like" type="checkbox" value="1"/>
+								足球<input name="like" type="checkbox" value="2" checked/>
+								看书<input name="like" type="checkbox" value="3" />
+								撩妹<input name="like" type="checkbox" value="4" />
+							</td>
+							<td>
+								<select id="class" name="class">
+									<option value="">请选择</option>
+									<option value="1">1班</option>
+									<option value="2" selected>2班</option>
+									<option value="3">3班</option>
+									<option value="4">4班</option>
+								</select>
+							</td>
+							<td><input name="Members" type="checkbox" value="1" checked/></td>
+							<td><textarea id="desc" name="desc">萌萌哒</textarea></td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td><input type="text" id="userName" name="userName" value="刚刚"></td>
+							<td><input type="text" id="Age" name="Age" value="19"></td>
+							<td>
+								篮球<input name="like" type="checkbox" value="1" checked/>
+								足球<input name="like" type="checkbox" value="2" checked/>
+								看书<input name="like" type="checkbox" value="3" />
+								撩妹<input name="like" type="checkbox" value="4" />
+							</td>
+							<td>
+								<select id="class" name="class">
+									<option value="">请选择</option>
+									<option value="1"  selected>1班</option>
+									<option value="2">2班</option>
+									<option value="3">3班</option>
+									<option value="4">4班</option>
+								</select>
+							</td>
+							<td><input name="Members" type="checkbox" value="1"/></td>
+							<td><textarea id="desc" name="desc">虎了吧唧的</textarea></td>
+						</tr>
+					</tbody>
+				</table>
+				<input type="button" id="getTableData1" value="获取表单二数据"/>&#12288;
+			</div>
+			
+			
+			
+			<h2>表单三(table 中每一行的 name 不同，但拥有共同的后缀"_ + 行号")</h2>
+			<div id="tableData2" style="width:100%;border:solid #111 1px;padding:20px 20px">
+				<table cellpadding="10" border="1" style="width:100%;">
+					<thead>
+						<tr>
+							<td>序号</td>
+							<td>姓名</td>
+							<td>年龄</td>
+							<td>性别</td>
+							<td>爱好</td>
+							<td>班级</td>
+							<td>团员</td>
+							<td>个人简介</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td><input type="text" id="userName_1" name="userName_1" value="小明"></td>
+							<td><input type="text" id="Age_1" name="Age_1" value="18"></td>
+							<td>
+								男<input type="radio" id="sex1" name="sex_1" value="0" checked/>&#12288;
+								女<input type="radio" id="sex11" name="sex_1" value="1"/>
+							</td>
+							<td>
+								篮球<input name="like_1" type="checkbox" value="1"/>
+								足球<input name="like_1" type="checkbox" value="2"/>
+								看书<input name="like_1" type="checkbox" value="3" checked/>
+								撩妹<input name="like_1" type="checkbox" value="4" checked/>
+							</td>
+							<td>
+								<select id="class_1" name="class_1">
+									<option value="">请选择</option>
+									<option value="1">1班</option>
+									<option value="2">2班</option>
+									<option value="3" selected>3班</option>
+									<option value="4">4班</option>
+								</select>
+							</td>
+							<td><input name="Members_1" type="checkbox" value="1"/></td>
+							<td><textarea id="desc_1" name="desc_1">这个孩子好淘气</textarea></td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td><input type="text" id="userName_2" name="userName_2" value="小红"></td>
+							<td><input type="text" id="Age_2" name="Age_2" value="3"></td>
+							<td>
+								男<input type="radio" name="sex_2" value="0" />&#12288;
+								女<input type="radio" name="sex_2" value="1" checked/>
+							</td>
+							<td>
+								篮球<input name="like_2" type="checkbox" value="1"/>
+								足球<input name="like_2" type="checkbox" value="2" checked/>
+								看书<input name="like_2" type="checkbox" value="3" />
+								撩妹<input name="like_2" type="checkbox" value="4" />
+							</td>
+							<td>
+								<select id="class_2" name="class_2">
+									<option value="">请选择</option>
+									<option value="1">1班</option>
+									<option value="2" selected>2班</option>
+									<option value="3">3班</option>
+									<option value="4">4班</option>
+								</select>
+							</td>
+							<td><input name="Members_2" type="checkbox" value="1" checked/></td>
+							<td><textarea id="desc_2" name="desc_2">萌萌哒</textarea></td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td><input type="text" id="userName_3" name="userName_3" value="刚刚"></td>
+							<td><input type="text" id="Age_3" name="Age3_" value="19"></td>
+							<td>
+								男<input type="radio" id="sex_3" name="sex_3" value="0" checked/>&#12288;
+								女<input type="radio" id="sex1_3" name="sex_3" value="1"/>
+							</td>
+							<td>
+								篮球<input name="like_3" type="checkbox" value="1" checked/>
+								足球<input name="like_3" type="checkbox" value="2" checked/>
+								看书<input name="like_3" type="checkbox" value="3" />
+								撩妹<input name="like_3" type="checkbox" value="4" />
+							</td>
+							<td>
+								<select id="class_3" name="class_3">
+									<option value="">请选择</option>
+									<option value="1" selected>1班</option>
+									<option value="2">2班</option>
+									<option value="3">3班</option>
+									<option value="4">4班</option>
+								</select>
+							</td>
+							<td><input name="Members_3" type="checkbox" value="1"/></td>
+							<td><textarea id="desc_3" name="desc_3">虎了吧唧的</textarea></td>
+						</tr>
+					</tbody>
+				</table>
+				<input type="button" id="getTableData2" value="获取表单二数据"/>&#12288;
+			</div>
+		</form>
+    </body>
+</html>

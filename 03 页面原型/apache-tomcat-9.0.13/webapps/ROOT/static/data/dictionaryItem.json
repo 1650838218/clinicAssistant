@@ -1,0 +1,6 @@
+[
+  {"id": 1211, "pId": 121,"name": "克","type":3, "code": "g"},
+  {"id": 1212, "pId": 121,"name": "千克","type":3,"code":"kg"},
+  {"id": 1212, "pId": 121,"name": "箱（件）","type":3,"code":"xiang"},
+  {"id": 1212, "pId": 121,"name": "盒","type":3,"code":"he"}
+]
