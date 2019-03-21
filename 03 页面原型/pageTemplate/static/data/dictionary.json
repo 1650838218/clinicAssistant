@@ -1,0 +1,11 @@
+[
+  {"id": 0, "pId": null,"name": "公共字典","type":1},
+  {"id": 1, "pId": null,"name": "药房管理","type":1},
+  {"id": 11, "pId": 1,"name": "进货商名片","type":1},
+  {"id": 12, "pId": 1,"name": "采购入库","type":1},
+  {"id": 121, "pId": 12,"name": "单位","type":2, "code": "unit"},
+  {"id": 122, "pId": 12,"name": "剂型","type":2,"code":"jx"},
+  {"id": 123, "pId": 12,"name": "药品分类","type":2, "code": "ypfl"},
+  {"id": 13, "pId": 1,"name": "库存","type":1},
+  {"id": 14, "pId": 1,"name": "统计","type":1}
+]

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>诊所助手</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/layui/css/modules/layer/myskin/style.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">诊所助手</div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="javascript:void(0)">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed layui-this">
+                    <a href="javascript:void(0)">
+                        <i class="layui-icon layui-icon-home" style="font-size: 20px;margin-right: 10px;"></i>首页
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:void(0)" url="">药房管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:void(0)">进货商名片</a></dd>
+                        <dd><a href="javascript:void(0)">进货单</a></dd>
+                        <dd><a href="javascript:void(0)">药品价格</a></dd>
+                        <dd><a href="javascript:void(0)">药品统计</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:void(0)" url="/cases/casesPeople">病历管理</a>
+                    <!--<dl class="layui-nav-child">
+                        <dd><a href="javascript:void(0)">患者管理</a></dd>
+                        <dd><a href="javascript:void(0)">就诊情况</a></dd>
+                        <dd><a href="javascript:void(0)">病情跟踪</a></dd>
+                    </dl>-->
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:void(0)" url="">处方管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:void(0)" url="/prescription/prescribe/prescribe">处方</a></dd>
+                        <dd><a href="javascript:void(0)" url="/prescription/medicine/medicine">药材</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:void(0)">账目管理</a></li>
+                <li class="layui-nav-item"><a href="javascript:void(0)">会员管理</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:void(0)">系统管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:void(0)" url="system/menu/menu">菜单管理</a></dd>
+                        <dd><a href="javascript:void(0)" url="system/dictionary/dictionary">数据字典</a></dd>
+                        <dd><a href="javascript:void(0)">系统日志</a></dd>
+                        <dd><a href="javascript:void(0)">修改登录口令</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 内容主体区域 -->
+    <div class="layui-body">
+        <!--面包屑-->
+        <div class="layui-card layadmin-header">
+            <div class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility: visible;">
+                <a lay-href="">主页</a><span lay-separator="">/</span>
+                <a><cite>设置</cite></a><span lay-separator="">/</span>
+                <a><cite>邮件服务</cite></a>
+            </div>
+        </div>
+        <!--页面内容-->
+        <div class="layui-fluid" id="bodyContent">
+
+        </div>
+    </div>
+</div>
+<div id="layerPanel" style="display: none;border-radius: 6px;">
+    <form class="layui-form">
+        <button type="reset" style="display: none"></button>
+
+    </form>
+</div>
+<script src="/jquery/jquery-1.8.3.min.js" charset="utf-8"></script>
+<script src="/layui/layui.all.js" charset="utf-8"></script>
+<script src="/js/common/index.js"></script>
+<script src="/js/common/constant.js"></script>
+<script>
+
+</script>
+</body>
+</html>

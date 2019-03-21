@@ -1,0 +1,21 @@
+{
+  "id": 9874651736217263,
+  "name": "白术",
+  "specifications": "斤",
+  "type":0,
+  "dosageForm":0,
+  "productionDate":"2018-12-13",
+  "validDate":"2021-12-13",
+  "producer":"周楼",
+  "purchasePrice":500,
+  "purchaseCount":5,
+  "purchaseUnit":1,
+  "totalPrice":2500,
+  "sellUnit":0,
+  "unitConvert":500,
+  "profitPercent":10,
+  "sellingPrice":1.1,
+  "stockUnit":0,
+  "stock":2500,
+  "stockWarn":100
+}

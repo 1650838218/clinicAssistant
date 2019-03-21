@@ -1,0 +1,109 @@
+[
+  {
+    "id": 1,
+    "name": "主页",
+    "icon": "icon iconfont icon-zhuye1",
+    "url": "javascript:void(0);",
+    "children": []
+  },
+  {
+    "id": 2,
+    "name": "病历管理",
+    "icon": "icon iconfont icon-37menzhenbingli",
+    "url": "javascript:void(0);",
+    "children": []
+  },
+  {
+    "id": 3,
+    "name": "药房管理",
+    "icon": "icon iconfont icon-yaofangguanli1",
+    "url": "javascript:void(0);",
+    "children": [
+      {
+        "id": 31,
+        "name": "进货商名片",
+        "url": "javascript:void(0);"
+      },
+      {
+        "id": 32,
+        "name": "采购入库",
+        "url": "dispensary/order/order.html"
+      },
+      {
+        "id": 33,
+        "name": "库存",
+        "url": "javascript:void(0);"
+      },
+      {
+        "id": 34,
+        "name": "统计",
+        "url": "javascript:void(0);"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "知识库",
+    "icon": "icon iconfont icon-zhishiku2",
+    "url": "javascript:void(0);",
+    "children": [
+      {
+        "id": 41,
+        "name": "药材",
+        "url": "javascript:void(0);"
+      },
+      {
+        "id": 42,
+        "name": "处方",
+        "url": "prescription/prescribe/prescribe.html"
+      },
+      {
+        "id": 43,
+        "name": "穴位",
+        "url": "javascript:void(0);"
+      },
+      {
+        "id": 44,
+        "name": "电子书",
+        "url": "javascript:void(0);"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "会员管理",
+    "icon": "icon iconfont icon-huiyuan",
+    "url": "javascript:void(0);",
+    "children": []
+  },
+  {
+    "id": 6,
+    "name": "账簿",
+    "icon": "icon iconfont icon-wenjian-zhangbu",
+    "url": "javascript:void(0);",
+    "children": []
+  },
+  {
+    "id": 7,
+    "name": "系统设置",
+    "icon": "icon iconfont icon-xitongshezhi",
+    "url": "javascript:void(0);",
+    "children": [
+      {
+        "id": 71,
+        "name": "修改登录口令",
+        "url": "javascript:void(0);"
+      },
+      {
+        "id": 72,
+        "name": "菜单管理",
+        "url": "javascript:void(0);"
+      },
+      {
+        "id": 73,
+        "name": "数据字典",
+        "url": "system/dictionary/dictionary.html"
+      }
+    ]
+  }
+]

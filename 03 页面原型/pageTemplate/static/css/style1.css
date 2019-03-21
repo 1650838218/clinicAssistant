@@ -1,0 +1,254 @@
+html,
+body {
+    overflow-x: hidden;
+    background: #f4f7f9;
+    min-width: 300px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+body a {
+    transition: 0.5s all ease;
+    -webkit-transition: 0.5s all ease;
+    -moz-transition: 0.5s all ease;
+    -o-transition: 0.5s all ease;
+    -ms-transition: 0.5s all ease;
+    text-decoration: none;
+}
+
+body a:hover {
+    text-decoration: none;
+}
+
+a {
+    -webkit-transition: color .1s;
+    transition: color .1s
+}
+
+a:hover,
+a:focus {
+    text-decoration: none
+}
+
+a:focus {
+    outline: 0
+}
+
+nav {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none
+}
+
+nav ul,
+nav li {
+    margin: 0;
+    padding: 0;
+    outline: 0
+}
+
+nav.main-menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    width: 60px;
+    overflow: hidden;
+    -webkit-transition: width .05s linear;
+    transition: width .05s linear;
+    -webkit-transform: translateZ(0) scale(1, 1);
+    background: #00bcd4;
+    z-index: 11;
+}
+
+nav.main-menu > ul {
+    margin: 7px 0
+}
+
+nav.main-menu > ul.logout {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+nav.main-menu li {
+    position: relative;
+    display: block;
+    width: 200px;
+}
+
+nav.main-menu li > a {
+    position: relative;
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 0;
+    color: #fff;
+    -webkit-transform: translateZ(0) scale(1, 1);
+    -webkit-transition: all .1s linear;
+    transition: all .1s linear;
+}
+
+nav.main-menu .nav-icon {
+    position: relative;
+    display: table-cell;
+    width: 60px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 18px;
+    padding: .7em 0;
+}
+
+nav.main-menu .nav-text {
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    width: 140px;
+    padding: .7em 0;
+}
+
+nav.main-menu:hover {
+    width: 200px;
+    overflow: visible
+}
+
+nav.main-menu li ul {
+    position: absolute;
+    display: inline-block;
+    background: #00bcd4;
+    top: 0;
+    right: -160px;
+    width: 0;
+    overflow: hidden;
+    -webkit-transition: width 0s .05s linear;
+    transition: width 0s .05s linear;
+}
+
+nav.main-menu li li {
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 160px
+}
+
+nav.main-menu li li > a {
+    width: 160px;
+    color: #FFFFFF;
+    padding: .7em 0;
+}
+
+nav.main-menu li li .subnav-text {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 20px;
+    padding-right: 40px;
+}
+
+nav.main-menu li li:hover a {
+    color: #fff;
+    background-color: #00acc1;
+}
+
+nav.main-menu li:hover > a,
+nav.main-menu li.active > a {
+    color: #fff;
+    background-color: #00acc1;
+}
+
+nav.main-menu li:hover ul,
+nav.main-menu li.active ul {
+    width: 160px;
+}
+
+nav.main-menu .nav-text.icon-right {
+    width: 120px !important;
+}
+
+nav.main-menu .icon-i-arrow-right,
+.icon-angle-down {
+    display: table-cell;
+    width: 20px;
+    vertical-align: middle;
+    font-size: 16px
+}
+
+.dashboard-page .title-bar {
+    position: relative;
+    display: block;
+    background-color: #fff;
+    -webkit-box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.05);
+    padding: 1em;
+}
+
+.logo {
+    float: left;
+    width: 15%;
+}
+
+.logo h1 a img {
+    margin-right: .5em;
+}
+
+.logo h1 a {
+    font-size: .9em;
+    color: #000;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.scrollable {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-left: 60px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.main-grid {
+    padding: 1em 1.5em 0 1.5em;
+}
+
+.main-grid {
+    padding: 1em;
+}
+
+.banner {
+    background: #fff;
+    display: block;
+    padding: 1em;
+    border: 1px solid #ebeff6;
+    border-color: #ebeff6;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    margin-bottom: 1em;
+}
+
+.banner h2 {
+    font-size: 0.9em;
+}
+
+.banner h2 a {
+    color: #00bcd4;
+    text-decoration: none;
+    padding: 0.3em;
+}
+
+.banner h2 i {
+    color: #000;
+    vertical-align: middle;
+    padding: 0.3em;
+}
+
+.banner h2 span {
+    color: #000;
+    padding: 0.3em;
+}
