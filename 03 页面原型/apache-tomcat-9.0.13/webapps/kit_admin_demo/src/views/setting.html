@@ -1,0 +1,41 @@
+<div class="layui-fluid">
+  <div class="layui-row">
+    <div class="layui-col-xs12">
+      <form class="layui-form" action="">
+        <input type="radio" name="loadType" lay-filter="loadType_hash" data-id="spa" value="SPA" title="单页面方式" checked>
+        <input type="radio" name="loadType" lay-filter="loadType_hash" data-id="tabs" value="TABS" title="选择卡方式">
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  layui.use(['form', 'utils'], function() {
+    var form = layui.form,
+      $ = layui.jquery,
+      utils = layui.utils,
+      localStorage = utils.localStorage;
+
+    form.render();
+    var key = 'KITADMIN_SETTING_LOADTYPE';
+    var setting = localStorage.getItem(key);
+    if (setting !== null) {
+      if (setting.loadType === 'SPA') {
+        $('input[data-id="spa"]')[0].checked = true;
+      } else {
+        $('input[data-id="tabs"]')[0].checked = true;
+      }
+      form.render('radio');
+    }
+    form.on('radio(loadType_hash)', function(data) {
+      var val = data.value;
+      localStorage.setItem(key, {
+        loadType: val
+      });
+      // 重新加载
+      location.reload();
+    });
+  });
+</script>
+<style scoped>
+
+</style>
