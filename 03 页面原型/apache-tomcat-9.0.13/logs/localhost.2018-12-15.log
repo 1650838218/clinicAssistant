@@ -1,3 +1,0 @@
-15-Dec-2018 11:01:13.147 信息 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
-15-Dec-2018 11:01:13.147 信息 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
-15-Dec-2018 11:01:13.163 信息 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@489115ef')
