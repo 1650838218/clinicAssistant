@@ -23,4 +23,10 @@ public interface Constant {
      * 动态表格 查询结果数
      */
     public static final short CONTROLLER_TABLE_COUNT = 0;
+
+    /** 所有树形结构的根节点ID */
+    public static final Integer ROOT_NODE_ID = 0;
+
+    /** 字符串分隔符 */
+    public static final String SPLIT_STR = ",";
 }

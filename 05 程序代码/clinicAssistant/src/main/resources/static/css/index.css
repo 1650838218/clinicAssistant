@@ -1,188 +1,103 @@
-html {
-    background-color: #f2f2f2;
-    color: #666;
-}
-
-/*面包屑*/
-.layadmin-header {
-    height: 40px;
-    line-height: 40px;
-    margin-bottom: 0;
-    border-radius: 0;
-    padding: 0px 15px;
-}
-
-.layadmin-header .layui-breadcrumb {
-    border-top: 1px solid #f6f6f6;
-    padding: 0 15px;
-}
-
-/*横向导航栏（覆盖layui原有样式）*/
-.layui-header {
-    height: 50px;
-}
-
-.layui-layout-admin .layui-logo {
-    line-height: 50px;
-}
-
-.layui-nav .layui-nav-item {
-    line-height: 50px;
-}
-
-/*垂直导航 （覆盖layui原有样式）*/
-.layui-layout-admin .layui-side {
-    top: 50px;
-    width: 170px;
-}
-
-.layui-side-scroll {
-    width: 190px;
-}
-
-.layui-nav-tree {
-    width: 170px;
-}
-
-/*主体区域*/
-.layui-layout-admin .layui-body {
-    top: 50px;
+.kit-theme-default .layui-layout-admin .layui-body {
     bottom: 0px;
 }
 
 .layui-body {
-    left: 170px;
+    left: 0px;
 }
 
-.layui-fluid {
-    padding: 15px 15px 0px 15px;
+.layui-header .layui-nav .layui-this:after, .layui-layout-admin .layui-header .layui-nav-bar {
+    top: 0 !important;
+    bottom: auto;
+    height: 3px;
 }
 
-.layui-card {
-    margin-bottom: 0px;
-    border-radius: 6px;
+.layadmin-pagetabs .layui-tab-title li:first-child .layui-tab-close, .layadmin-tabs-select.layui-nav .layui-nav-bar, .layadmin-tabs-select.layui-nav .layui-nav-more {
+    display: none
 }
 
-.layui-card-header {
-    padding: 15px 15px;
-}
-
-/*按钮*/
-.layui-btn {
+.layui-input, .layui-select, .layui-textarea, .layui-btn {
     border-radius: 4px;
 }
 
-.layui-btn-container .layui-btn {
-    margin-bottom: 0px;
+/*.layui-btn {*/
+    /*float: right;*/
+    /*margin-right: 10px;*/
+/*}*/
+
+.kit-theme-default .layui-layout-admin .layui-header .layui-logo-brand {
+    padding-left: 0px;
 }
 
-/** 主内容区，左右栅格布局 */
-.layui-row .right-panel {
-    padding: 0px 20px;
+.kit-theme-default .layui-layout-admin .layui-header .layui-logo-brand a {
+    padding-left: 0px;
 }
 
-.form-panel {
+.kit-theme-default .layui-layout-admin .layui-header .layui-logo {
+    text-align: center;
+}
+
+.kit-theme-default .layui-layout-admin .layui-header .layui-layout-left .kit-nav {
+    line-height: 49px;
+    background-color: #373d41;
+}
+
+/*左侧搜索栏*/
+.left-panel {
+    margin: 10px;
+    padding: 10px;
     background-color: white;
     border-radius: 6px;
 }
 
-.layui-row .right-panel .form-panel {
-    padding: 0px 20px;
-}
-
-.form-panel .form-title {
-    padding: 13px 48px 13px 0;
-    margin: 0;
-    background: #fff;
-    border-bottom: 1px solid #eee;
-}
-
-.form-panel .form-content {
-    padding: 20px 10px 5px 10px;
-}
-
-/* 表单的保存取消按钮右对齐 */
-.layui-form-item .layui-input-block {
-    text-align: right;
+.left-search {
     padding-bottom: 10px;
-    margin-right: 0px;
 }
 
-/* 表单 */
-.form-panel .layui-form {
-    padding-top: 15px;
-}
-
-/*树*/
-.tree-panel {
-    background-color: #ffffff;
-    padding: 10px;
-    border-radius: 6px;
-}
-
-.tree-panel .search-div {
-    border: 1px solid #e6e6e6;
-    border-radius: 4px;
-    margin-right: 0px;
-    margin-bottom: 10px;
-    margin-top: 5px;
-}
-
-.search-input {
-    height: 30px;
-    border-radius: 4px;
-    width: 190px;
-    border-style: none;
+.left-search input {
     display: inline;
+    width: 75%;
 }
 
-.site-h2 {
-    max-width: 100%;
-    overflow: hidden;
-    font-size: 16px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: block;
-    /*float: left;*/
-    margin: 0 10px 0 0;
-    line-height: 34px;
-    font-weight: 700;
+.left-search i {
+    font-size: 22px;
+    margin-left: 4px;
 }
 
-/*tag-it*/
-ul.tagit {
-    border-radius: 4px;
-    border-color: #e6e6e6 !important;
-    margin-right: 0px !important;
+.left-panel .left-search .layui-btn-group .layui-btn-sm {
+    padding: 0px 5px;
 }
 
-/*input*/
-input.no-border {
-    border-style: none;
+/*右侧面板*/
+.right-panel {
+    padding: 10px;
+    margin: 10px 10px 10px 0px;
+    background-color: white;
+}
+.left-panel .eleTree {
+    width: 100%;
+    height: 500px;
+    overflow-y: auto;
+    display: inline-block;
 }
 
-/*查询结果为空时显示的信息*/
-.blank-text-div {
-    display: none;
-    text-align: center;
-}
-
-.tree-panel .blank-text-div {
+.layui-input-block .eleTree{
+    width: 350px;
     height: 300px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    display: inline-block;
 }
 
-.tree-panel .blank-text-div span {
-    line-height: 300px;
+.layui-input-block .select-tree{
+    /*height: 300px;*/
+    overflow-y: auto;
+    width: 100%;
+    display: none;
+    position: absolute;
+    top:100%;
+    background-color: #fff;
+    z-index: 100;
 }
 
-.form-panel .blank-text-div {
-    height: 200px;
-}
 
-.form-panel .blank-text-div span {
-    line-height: 200px;
-}
-
-.layui-form-item .layui-input-inline {
-    width: auto;
-}

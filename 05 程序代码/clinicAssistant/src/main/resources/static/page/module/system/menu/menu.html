@@ -1,0 +1,82 @@
+<div class="layui-row">
+    <div class="layui-col-md3">
+        <div class="left-panel">
+            <div class="left-search">
+                <input type="text" placeholder="搜索" class="layui-input">
+                <div class="layui-btn-group">
+                    <button id="add-menu-btn" class="layui-btn layui-btn-normal layui-btn-sm" title="新增">
+                        <i class="layui-icon layui-icon-add-1"></i>
+                    </button>
+                    <button id="del-menu-btn" class="layui-btn layui-btn-normal layui-btn-sm" title="删除">
+                        <i class="layui-icon layui-icon-delete"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="eleTree ele1" lay-filter="eleTree-menu"></div>
+        </div>
+    </div>
+    <div class="layui-col-md9">
+        <div class="right-panel">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <h3><b>菜单详情</b></h3>
+                </div>
+                <div class="layui-card-body">
+                    <form id="menu-info" class="layui-form" action="" lay-filter="component-form-element">
+                        <input type="hidden" name="menuId" value="">
+                        <input type="hidden" name="parentMenuId" value="">
+                        <div class="layui-row layui-col-space10 layui-form-item">
+                            <div class="layui-col-lg6">
+                                <label class="layui-form-label">菜单名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="menuName" lay-verify="required"
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space10 layui-form-item">
+                            <div class="layui-col-lg6">
+                                <label class="layui-form-label">父级菜单</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="parentMenuName" required="" lay-verify="required"
+                                           readonly="" autocomplete="off" class="layui-input" value="">
+                                    <div class="eleTree select-tree" lay-filter="eleTree-parent-menu"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space10 layui-form-item">
+                            <div class="layui-col-lg6">
+                                <label class="layui-form-label">菜单URL</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="menuUrl" lay-verify="required"
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">是否可用</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" name="isUse" lay-skin="switch" lay-text="是|否" checked="">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">顺序号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="menuOrder" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button lay-filter="submit-btn" lay-submit class="layui-btn layui-btn-normal">提交</button>
+                                <button id="reset-btn" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script src="/jquery/jquery-1.8.3.js"></script>-->
+<script src="/page/module/system/menu/menu.js"></script>

@@ -11,4 +11,6 @@ public interface Message {
      * 数据表格 返回信息 提示信息
      */
     public static final String[] CONTROLLER_TABLE_MSG = {"暂无数据！","","数据查询异常，请联系管理员！"};
+
+    public static final String PARAMETER_IS_NULL = "入参为空！";
 }

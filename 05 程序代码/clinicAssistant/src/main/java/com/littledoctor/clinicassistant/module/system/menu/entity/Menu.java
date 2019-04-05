@@ -1,6 +1,7 @@
 package com.littledoctor.clinicassistant.module.system.menu.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @Auther: 周俊林
@@ -14,62 +15,97 @@ public class Menu {
      /** 主键ID */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID", nullable = false)
-    private int id;
+    @Column(name = "MENU_ID", nullable = false)
+    private Integer menuId;
 
     /** 父ID */
-    @Column(name = "PID", nullable = false)
-    private int pId;
+    @Column(name = "PARENT_MENU_ID", nullable = false)
+    private Integer parentMenuId;
+
+    /** 父级菜单名称 */
+    @Transient
+    private String parentMenuName;
 
     /** 菜单名称 */
-    @Column(name = "NAME", nullable = false, length = 10)
-    private String name;
+    @Column(name = "MENU_NAME", nullable = false, length = 500)
+    private String menuName;
 
     /** 排序号 */
-    @Column(name = "SORT")
-    private int sort;
+    @Column(name = "MENU_ORDER")
+    private Integer menuOrder;
 
     /** 菜单URL */
-    @Column(name = "URL", length = 255)
-    private String url;
+    @Column(name = "MENU_URL", length = 255)
+    private String menuUrl;
 
-    public int getId() {
-        return id;
+    /** 是否可用 off：不可用；on：可用 */
+    @Column(name = "IS_USE", length = 5)
+    private String isUse;
+
+    @Transient
+    private List<Menu> children;
+
+    public Integer getMenuId() {
+        return menuId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMenuId(Integer menuId) {
+        this.menuId = menuId;
     }
 
-    public int getpId() {
-        return pId;
+    public Integer getParentMenuId() {
+        return parentMenuId;
     }
 
-    public void setpId(int pId) {
-        this.pId = pId;
+    public void setParentMenuId(Integer parentMenuId) {
+        this.parentMenuId = parentMenuId;
     }
 
-    public String getName() {
-        return name;
+    public String getMenuName() {
+        return menuName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
     }
 
-    public int getSort() {
-        return sort;
+    public Integer getMenuOrder() {
+        return menuOrder;
     }
 
-    public void setSort(int sort) {
-        this.sort = sort;
+    public void setMenuOrder(Integer menuOrder) {
+        this.menuOrder = menuOrder;
     }
 
-    public String getUrl() {
-        return url;
+    public String getMenuUrl() {
+        return menuUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setMenuUrl(String menuUrl) {
+        this.menuUrl = menuUrl;
+    }
+
+    public String getIsUse() {
+        return isUse;
+    }
+
+    public void setIsUse(String isUse) {
+        this.isUse = isUse;
+    }
+
+    public List<Menu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Menu> children) {
+        this.children = children;
+    }
+
+    public String getParentMenuName() {
+        return parentMenuName;
+    }
+
+    public void setParentMenuName(String parentMenuName) {
+        this.parentMenuName = parentMenuName;
     }
 }
