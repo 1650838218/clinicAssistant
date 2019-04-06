@@ -1,17 +1,66 @@
 <div class="layui-row">
     <div class="layui-col-md3">
-        <div class="left-search">
-            <input type="text" placeholder="搜索" class="layui-input">
-            <i class="layui-icon" title="新增">&#xe654;</i>
-            <i class="layui-icon layui-icon-delete" title="删除"></i>
-        </div>
         <div class="left-panel">
-            <div class="eleTree ele1"></div>
+            <div class="left-search">
+                <input type="text" placeholder="搜索" autocomplete="off" class="layui-input eleTree-search">
+                <div class="layui-btn-group">
+                    <button id="add-btn" class="layui-btn layui-btn-normal layui-btn-sm" title="新增">
+                        <i class="layui-icon layui-icon-add-1"></i>
+                    </button>
+                    <button id="del-btn" class="layui-btn layui-btn-normal layui-btn-sm" title="删除">
+                        <i class="layui-icon layui-icon-delete"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="eleTree left-tree" lay-filter="eleTree-menu"></div>
         </div>
     </div>
     <div class="layui-col-md9">
-
+        <div class="right-panel">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <h3><b>字典信息</b></h3>
+                </div>
+                <div class="layui-card-body">
+                    <form id="dictionaryType-info" class="layui-form" action="" lay-filter="dictionaryType-form">
+                        <input type="hidden" name="dictionaryId" value="">
+                        <div class="layui-row layui-col-space10 layui-form-item">
+                            <div class="layui-col-lg4">
+                                <label class="layui-form-label">所属模块</label>
+                                <div class="layui-input-block">
+                                    <input type="hidden" name="menuId" value="">
+                                    <input type="text" name="menuName" readonly="" autocomplete="off" class="layui-input">
+                                    <div class="eleTree select-tree" lay-filter="menu-eleTree"></div>
+                                </div>
+                            </div>
+                            <div class="layui-col-lg4">
+                                <label class="layui-form-label">字典名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="dictionaryName" autocomplete="off" class="layui-input" maxlength="20">
+                                </div>
+                            </div>
+                            <div class="layui-col-lg4">
+                                <label class="layui-form-label">字典键</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="dictionaryKey" autocomplete="off" class="layui-input" maxlength="50">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table class="layui-hide" id="dict-item-table"></table>
+                    <button class="layui-btn">保存</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<!--</div>-->
+<!--layui table 是否启用-->
+<script type="text/html" id="is-use-switch">
+    <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.id == 10003 ? 'checked' : '' }}>
+</script>
+<!--layui table 操作列-->
+<script type="text/html" id="operate-column">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">新增</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script src="/page/module/system/dictionary/oneLevel.js"></script>

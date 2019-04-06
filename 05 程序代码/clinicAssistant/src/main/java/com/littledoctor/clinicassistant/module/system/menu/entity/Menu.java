@@ -38,12 +38,9 @@ public class Menu {
     @Column(name = "MENU_URL", length = 255)
     private String menuUrl;
 
-    /** 是否可用 off：不可用；on：可用 */
+    /** 是否可用 0：不可用；1：可用 */
     @Column(name = "IS_USE", length = 5)
     private String isUse;
-
-    @Transient
-    private List<Menu> children;
 
     public Integer getMenuId() {
         return menuId;
@@ -91,14 +88,6 @@ public class Menu {
 
     public void setIsUse(String isUse) {
         this.isUse = isUse;
-    }
-
-    public List<Menu> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Menu> children) {
-        this.children = children;
     }
 
     public String getParentMenuName() {

@@ -19,7 +19,7 @@ public interface MenuRepository extends JpaRepository<Menu,Integer> {
      * @return
      */
     @Query(value = "select new com.littledoctor.clinicassistant.common.plugin.tree.TreeEntity(t.menuName , t.menuId, t.parentMenuId) from Menu t order by t.menuOrder")
-    List<TreeEntity> findTree();
+    List<TreeEntity> findTreeEntity();
 
     /**
      * 查询下拉菜单树

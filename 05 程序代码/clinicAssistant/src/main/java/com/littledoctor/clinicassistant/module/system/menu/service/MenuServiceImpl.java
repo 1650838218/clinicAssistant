@@ -25,7 +25,11 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Menu save(Menu menu) {
-        return menuRepository.saveAndFlush(menu);
+        if (menu != null) {
+            if (menu.getParentMenuId() == null) menu.setParentMenuId(0);
+            return menuRepository.saveAndFlush(menu);
+        }
+        return new Menu();
     }
 
     /**
@@ -33,9 +37,9 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public List<TreeEntity> queryTree() throws Exception {
-        List<TreeEntity> list = menuRepository.findTree();
-        return TreeUtils.listToTree(list);
+    public List<TreeEntity> findTreeEntity() throws Exception {
+        List<TreeEntity> list = menuRepository.findTreeEntity();
+        return list;
     }
 
     /**
@@ -71,7 +75,7 @@ public class MenuServiceImpl implements MenuService {
             // 查询
             list  = menuRepository.findSelectTree(id);
         } else {
-            list = menuRepository.findTree();
+            list = menuRepository.findTreeEntity();
         }
         list = TreeUtils.listToTree(list);// list转tree
         return list;

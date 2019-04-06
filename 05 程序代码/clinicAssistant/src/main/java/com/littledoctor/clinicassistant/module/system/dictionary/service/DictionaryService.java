@@ -1,9 +1,11 @@
 package com.littledoctor.clinicassistant.module.system.dictionary.service;
 
-import com.littledoctor.clinicassistant.module.prescription.medicine.entity.Medicine;
-import com.littledoctor.clinicassistant.module.system.dictionary.entity.Dictionary;
+import com.littledoctor.clinicassistant.common.plugin.tree.TreeEntity;
+import com.littledoctor.clinicassistant.module.system.dictionary.entity.DictionaryType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 /**
  * @Auther: 周俊林
@@ -18,14 +20,14 @@ public interface DictionaryService {
      * @param page
      * @return
      */
-    Page<Dictionary> queryPage(String code, String text, Pageable page);
+    Page<DictionaryType> queryPage(String code, String text, Pageable page);
 
     /**
      * 保存数据字典
-     * @param dictionary
+     * @param dictionaryType
      * @return
      */
-    Dictionary save(Dictionary dictionary);
+    DictionaryType save(DictionaryType dictionaryType);
 
     /**
      * 删除数据字典
@@ -33,4 +35,10 @@ public interface DictionaryService {
      * @return
      */
     boolean delete(Integer id);
+
+    /**
+     * 获取字典树
+     * @return
+     */
+    List<TreeEntity> findTreeEntity() throws Exception;
 }

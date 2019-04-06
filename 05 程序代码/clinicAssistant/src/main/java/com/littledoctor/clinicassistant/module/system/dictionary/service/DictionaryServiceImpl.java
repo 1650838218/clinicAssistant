@@ -1,7 +1,9 @@
 package com.littledoctor.clinicassistant.module.system.dictionary.service;
 
+import com.littledoctor.clinicassistant.common.plugin.tree.TreeEntity;
 import com.littledoctor.clinicassistant.module.system.dictionary.dao.DictionaryRepository;
-import com.littledoctor.clinicassistant.module.system.dictionary.entity.Dictionary;
+import com.littledoctor.clinicassistant.module.system.dictionary.entity.DictionaryType;
+import com.littledoctor.clinicassistant.module.system.menu.service.MenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -31,6 +34,9 @@ public class DictionaryServiceImpl implements DictionaryService {
     @Autowired
     private DictionaryRepository dictionaryRepository;
 
+    @Autowired
+    private MenuService menuService;
+
     /**
      * 分页查询
      * @param code
@@ -39,10 +45,10 @@ public class DictionaryServiceImpl implements DictionaryService {
      * @return
      */
     @Override
-    public Page<Dictionary> queryPage(String code, String text, Pageable page) {
-        return dictionaryRepository.findAll(new Specification<Dictionary>() {
+    public Page<DictionaryType> queryPage(String code, String text, Pageable page) {
+        return dictionaryRepository.findAll(new Specification<DictionaryType>() {
             @Override
-            public Predicate toPredicate(Root<Dictionary> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+            public Predicate toPredicate(Root<DictionaryType> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> list = new ArrayList<>();
                 if (!StringUtils.isEmpty(code)) {
                     list.add(criteriaBuilder.like(root.get("key").get("code"), "%" + code + "%"));
@@ -57,12 +63,12 @@ public class DictionaryServiceImpl implements DictionaryService {
 
     /**
      * 保存数据字典
-     * @param dictionary
+     * @param dictionaryType
      * @return
      */
     @Override
-    public Dictionary save(Dictionary dictionary) {
-        return dictionaryRepository.saveAndFlush(dictionary);
+    public DictionaryType save(DictionaryType dictionaryType) {
+        return dictionaryRepository.saveAndFlush(dictionaryType);
     }
 
     /**
@@ -74,5 +80,21 @@ public class DictionaryServiceImpl implements DictionaryService {
     public boolean delete(Integer id) {
         dictionaryRepository.deleteById(id);
         return false;
+    }
+
+    /**
+     * 获取字典树
+     * @return
+     */
+    @Override
+    public List<TreeEntity> findTreeEntity() throws Exception {
+        List<TreeEntity> result = new ArrayList<>();
+        // 查询菜单
+        List<TreeEntity> menuList = menuService.findTreeEntity();
+        if (!CollectionUtils.isEmpty(menuList)) result.addAll(menuList);
+        // 查询字典类型
+        List<TreeEntity> dictionaryList = dictionaryRepository.findTreeEntity();
+        if (!CollectionUtils.isEmpty(dictionaryList)) result.addAll(dictionaryList);
+        return result;
     }
 }

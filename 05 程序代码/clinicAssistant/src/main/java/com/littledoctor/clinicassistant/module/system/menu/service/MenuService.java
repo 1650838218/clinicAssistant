@@ -21,7 +21,7 @@ public interface MenuService {
      * 查询所有菜单项
      * @return
      */
-    List<TreeEntity> queryTree() throws Exception;
+    List<TreeEntity> findTreeEntity() throws Exception;
 
     /**
      * 根据ID查询菜单

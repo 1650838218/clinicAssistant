@@ -1,8 +1,9 @@
 package com.littledoctor.clinicassistant.module.system.dictionary.controller;
 
+import com.littledoctor.clinicassistant.common.plugin.tree.TreeEntity;
+import com.littledoctor.clinicassistant.common.plugin.tree.TreeUtils;
 import com.littledoctor.clinicassistant.common.util.ControllerUtils;
-import com.littledoctor.clinicassistant.module.prescription.medicine.entity.Medicine;
-import com.littledoctor.clinicassistant.module.system.dictionary.entity.Dictionary;
+import com.littledoctor.clinicassistant.module.system.dictionary.entity.DictionaryType;
 import com.littledoctor.clinicassistant.module.system.dictionary.service.DictionaryService;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
@@ -16,19 +17,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @Auther: 周俊林
  * @Date: 2018/11/2
  * @Description: 数据字典
  */
 @RestController
-@RequestMapping(value = "/dictionary")
+@RequestMapping(value = "/system/dictionary")
 public class DictionaryController {
 
     private Logger log = LoggerFactory.getLogger(DictionaryController.class);
 
     @Autowired
     private DictionaryService dictionaryService;
+
+    /**
+     * 获取字典树
+     * @return
+     */
+    @RequestMapping(value = "/queryTree", method = RequestMethod.GET)
+    public Map<String, Object> queryTree() {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            List<TreeEntity> data = dictionaryService.findTreeEntity();
+            map.put("code", "200");
+            map.put("data", TreeUtils.listToTree(data));
+            return map;
+        } catch (Exception e) {
+            map.put("code", "500");
+            map.put("data", null);
+            log.error(e.getMessage(), e);
+        }
+        return map;
+    }
 
     /**
      * 分页查询
@@ -40,7 +65,7 @@ public class DictionaryController {
     @RequestMapping(value = "/queryPage")
     public JSONObject queryPage(String code, String text, Pageable page) {
         try {
-            Page<Dictionary> result = dictionaryService.queryPage(code,text,page);
+            Page<DictionaryType> result = dictionaryService.queryPage(code,text,page);
             return ControllerUtils.pageToJSON(result);
         } catch (Exception e) {
             log.error(e.getMessage(),e);
@@ -50,14 +75,14 @@ public class DictionaryController {
 
     /**
      * 保存数据字典
-     * @param dictionary
+     * @param dictionaryType
      * @return
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Dictionary save(Dictionary dictionary) {
+    public DictionaryType save(DictionaryType dictionaryType) {
         try {
-            Assert.notNull(dictionary,"保存数据字典时实体不能为空");
-            return dictionaryService.save(dictionary);
+            Assert.notNull(dictionaryType,"保存数据字典时实体不能为空");
+            return dictionaryService.save(dictionaryType);
         } catch (Exception e) {
             log.error(e.getMessage(),e);
             return null;

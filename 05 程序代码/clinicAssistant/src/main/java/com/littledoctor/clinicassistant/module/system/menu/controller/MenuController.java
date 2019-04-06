@@ -2,6 +2,7 @@ package com.littledoctor.clinicassistant.module.system.menu.controller;
 
 import com.littledoctor.clinicassistant.common.msg.Message;
 import com.littledoctor.clinicassistant.common.plugin.tree.TreeEntity;
+import com.littledoctor.clinicassistant.common.plugin.tree.TreeUtils;
 import com.littledoctor.clinicassistant.module.system.menu.entity.Menu;
 import com.littledoctor.clinicassistant.module.system.menu.service.MenuService;
 import net.sf.json.JSONArray;
@@ -54,9 +55,9 @@ public class MenuController {
     public Map<String, Object> queryTree() {
         Map<String, Object> map = new HashMap<>();
         try {
-            List<TreeEntity> data = menuService.queryTree();
+            List<TreeEntity> data = menuService.findTreeEntity();
             map.put("code", "200");
-            map.put("data", data);
+            map.put("data", TreeUtils.listToTree(data));
             return map;
         } catch (Exception e) {
             map.put("code", "500");
