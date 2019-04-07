@@ -37,20 +37,49 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
         if (!!leftTree) leftTree.search($(this).val());
     });
 
+    // 初始化表格
     table.render({
         elem: '#dict-item-table',
         cols: [[
-            {field: 'dictItemName', title: '字典项名称', width: '30%',edit:'text'},
-            {field: 'dictItemValue', title: '字典项值', width: '30%',edit:'text'},
-            {field: 'isUse', title: '是否可用', templet: '#is-use-switch', width: '15%',align:'center'},
-            {field: 'dictItemId',title: '操作', toolbar: '#operate-column', width: '25%',align:'center'}
+            {field: 'dictItemName', title: '字典项名称', width: '35%', edit: 'text'},
+            {field: 'dictItemValue', title: '字典项值', width: '35%', edit: 'text'},
+            {field: 'isUse', title: '是否可用', templet: '#is-use-switch', width: '15%', align: 'center'},
+            {field: 'dictItemId', title: '操作', toolbar: '#operate-column', align: 'center'}
         ]],
         data: [{
-            "dictItemName": "10001",
-            "dictItemValue": "杜甫",
+            "dictItemName": "",
+            "dictItemValue": "",
             "isUse": "1"
         }]
     });
+
+    //监听表格操作列
+    table.on('tool(dict-item-table)', function (obj) {
+        var data = obj.data;
+        console.log(obj);
+        if (obj.event === 'create') {
+            var dataBak = [];// 缓存表格已有的数据
+            var oldData = table.cache['dict-item-table'];
+            var newRow = {
+                "dictItemName": "",
+                "dictItemValue": "",
+                "isUse": "1"
+            };
+            for (var i = 0; i < oldData.length; i++) {
+                dataBak.push(oldData[i]);      //将之前的数组备份
+            }
+            dataBak.push(newRow);
+            table.reload("dict-item-table", {
+                data: dataBak   // 将新数据重新载入表格
+            });
+        } else if (obj.event === 'delete') {
+            layer.confirm('确认删除该字典项吗？', function (index) {
+                obj.del();
+                layer.close(index);
+            });
+        }
+    });
+
 
     // 左侧菜单树的点击事件 根据ID查询菜单详情
     function leftTreeClick(d) {
