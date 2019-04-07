@@ -118,7 +118,7 @@ layui.define(['element', 'sidebar', 'mockjs', 'menu', 'route', 'utils', 'compone
           name: '一级字典'
         }, {
           path: '/user',
-          component: 'views/user/index1.html',
+          component: 'views/user/index.html',
           name: '用户中心'
         }, {
           path: '/user/table2',
@@ -130,7 +130,7 @@ layui.define(['element', 'sidebar', 'mockjs', 'menu', 'route', 'utils', 'compone
           name: '数据表格3'
         }, {
           path: '/user/form',
-          component: 'components/form/index1.html',
+          component: 'components/form/index.html',
           name: 'Form'
         }, {
           path: '/docs/mockjs',
