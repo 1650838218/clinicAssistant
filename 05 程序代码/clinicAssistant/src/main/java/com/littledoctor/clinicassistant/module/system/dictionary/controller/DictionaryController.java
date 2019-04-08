@@ -1,5 +1,6 @@
 package com.littledoctor.clinicassistant.module.system.dictionary.controller;
 
+import com.littledoctor.clinicassistant.common.msg.Message;
 import com.littledoctor.clinicassistant.common.plugin.tree.TreeEntity;
 import com.littledoctor.clinicassistant.common.plugin.tree.TreeUtils;
 import com.littledoctor.clinicassistant.common.util.ControllerUtils;
@@ -90,7 +91,7 @@ public class DictionaryController {
     }
 
     /**
-     * 保存数据字典
+     * 删除数据字典
      * @param id
      * @return
      */
@@ -103,5 +104,16 @@ public class DictionaryController {
             log.error(e.getMessage(),e);
             return false;
         }
+    }
+
+    @RequestMapping(value = "/getById", method = RequestMethod.GET)
+    public DictionaryType getById(Integer dictionaryId) {
+        try {
+            Assert.notNull(dictionaryId, Message.PARAMETER_IS_NULL);
+            return dictionaryService.getById(dictionaryId);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return null;
     }
 }

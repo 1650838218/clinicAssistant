@@ -3,6 +3,7 @@ package com.littledoctor.clinicassistant.module.system.dictionary.service;
 import com.littledoctor.clinicassistant.common.plugin.tree.TreeEntity;
 import com.littledoctor.clinicassistant.module.system.dictionary.dao.DictionaryRepository;
 import com.littledoctor.clinicassistant.module.system.dictionary.entity.DictionaryType;
+import com.littledoctor.clinicassistant.module.system.menu.entity.Menu;
 import com.littledoctor.clinicassistant.module.system.menu.service.MenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,5 +97,24 @@ public class DictionaryServiceImpl implements DictionaryService {
         List<TreeEntity> dictionaryList = dictionaryRepository.findTreeEntity();
         if (!CollectionUtils.isEmpty(dictionaryList)) result.addAll(dictionaryList);
         return result;
+    }
+
+    /**
+     * 根据ID查询字典
+     * @param dictionaryId
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public DictionaryType getById(Integer dictionaryId) throws Exception {
+        if (dictionaryId != null) {
+            DictionaryType dt = dictionaryRepository.findById(dictionaryId).get();
+            if (dt.getMenuId() != null) {
+                Menu menu = menuService.getById(dt.getMenuId().toString());
+                dt.setMenuName(menu.getMenuName());
+            }
+            return dt;
+        }
+        return new DictionaryType();
     }
 }

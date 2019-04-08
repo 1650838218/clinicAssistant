@@ -11,7 +11,7 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
 
     $('#add-btn').on('click', resetForm);// 新增菜单
     $('#del-btn').on('click', delDictionaryFun);// 删除菜单
-    form.on('submit(submit-btn)', saveDictionary);// 保存菜单
+    $('#submit-btn').on('click', saveDictionary);// 保存菜单
     $('#reset-btn').on('click', resetForm);// 重置菜单
     $("#dictionary-info input[name='menuName']").on("click", loadSelectTree); // 加载下拉树
     eleTree.on("nodeClick(eleTree-menu)", leftTreeClick);// 左侧菜单树点击事件
@@ -89,38 +89,35 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
         } else if (obj.event === 'delete') {
             layer.confirm('确认删除该字典项吗？', function (index) {
                 obj.del();
-                var flag = false;// 表格行已全部被删除，默认添加一个空白行
                 var oldData = table.cache['dict-item-table'];
                 if (oldData.length > 0) {
                     for (var i = 0; i < oldData.length; i++) {
-                        if (!oldData[i]) {
-                            flag = true;// 表格行还存在，没有全部被删除
+                        if (!!oldData[i]) {
+                            layer.close(index);
                             return;
                         }
                     }
                 }
-                if (!false) {// 表格行已全部删除，默认添加空白行
-                    var newRow = [{
-                        "dictItemName": "",
-                        "dictItemValue": "",
-                        "isUse": "1",
-                        "dictItemId": ''
-                    }];
-                    table.reload("dict-item-table", {
-                        data: newRow   // 将新数据重新载入表格
-                    });
-                }
+                var newRow = [{
+                    "dictItemName": "",
+                    "dictItemValue": "",
+                    "isUse": "1",
+                    "dictItemId": ''
+                }];
+                table.reload("dict-item-table", {
+                    data: newRow   // 将新数据重新载入表格
+                });
                 layer.close(index);
             });
         }
     });
 
-    // 左侧菜单树的点击事件 根据ID查询菜单详情
+    // 左侧字典树的点击事件 根据ID查询字典
     function leftTreeClick(d) {
         var dictionaryId = d.data.currentData.id;
         $(".select-tree").hide();// 隐藏下拉树
         try {
-            $.getJSON('/system/menu/getById', {"dictionaryId": dictionaryId}, function (dictionaryData) {
+            $.getJSON('/system/dictionary/getById', {"dictionaryId": dictionaryId}, function (dictionaryData) {
                 if (!!dictionaryData && !!dictionaryData.dictionaryId) {
                     assigForm(dictionaryData);// 给表单赋值
                 } else {
@@ -147,6 +144,16 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
         });
         // 删除高亮
         leftTree.unHighLight();
+        // 重置表格
+        var newRow = [{
+            "dictItemName": "",
+            "dictItemValue": "",
+            "isUse": "1",
+            "dictItemId": ''
+        }];
+        table.reload("dict-item-table", {
+            data: newRow   // 将新数据重新载入表格
+        });
     }
 
     /**
@@ -156,11 +163,11 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
     function assigForm(data) {
         // 表单赋值
         form.val("dictionary-form", {
-            "menuId": data.dictionaryId,
-            "parentMenuId": data.menuId,
+            "dictionaryId": data.dictionaryId,
+            "menuId": data.menuId,
             "menuName": data.menuName,
-            "parentMenuName": data.dictionaryName,
-            "menuUrl": data.dictionaryKey
+            "dictionaryName": data.dictionaryName,
+            "dictionaryKey": data.dictionaryKey
         });
     }
 
@@ -206,17 +213,24 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
     function saveDictionary(data) {
         try {
             $(data.elem).attr({"disabled": "disabled"});// 按钮禁用，防止重复提交
-            data.field.isUse = data.field.isUse == "on" ? "1" : "0";
-            $.post('/system/menu/save', data.field, function (menu) {
-                if (!!menu && !!menu.menuId) {
-                    assigForm(menu);// 赋值
+            var dictionary = $('#dictionary-info').serialize();// 表单序列化
+            var dictItems = table.cache['dict-item-table'];// 获取表格数据
+            dictionary.dictItem = [];
+            for (var i = 0; i < dictItems.length; i++) {
+                if (!!dictItems[i]) { // 表格数据校验
+                    dictionary.dictItem.push(dictItems[i]);
+                }
+            }
+            $.post('/system/menu/save', dictionary, function (dictionary) {
+                if (!!dictionary && !!dictionary.dictionaryId) {
+                    assigForm(dictionary);// 赋值
                     $(data.elem).removeAttr('disabled');// 按钮可用
                     layer.msg('保存成功！');
                 } else {
                     layer.msg('保存失败！');
                 }
                 if (!!leftTree) leftTree.reload({async: false});
-                leftTree.setHighLight(menu.menuId);// 高亮显示当前菜单
+                leftTree.setHighLight(dictionary.dictionaryId);// 高亮显示当前菜单
             });
         } catch (e) {
             layer.msg('保存失败！');

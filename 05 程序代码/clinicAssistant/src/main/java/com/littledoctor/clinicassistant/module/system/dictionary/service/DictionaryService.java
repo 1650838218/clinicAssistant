@@ -41,4 +41,11 @@ public interface DictionaryService {
      * @return
      */
     List<TreeEntity> findTreeEntity() throws Exception;
+
+    /**
+     * 根据id查询字典
+     * @param dictionaryId
+     * @return
+     */
+    DictionaryType getById(Integer dictionaryId) throws Exception;
 }
