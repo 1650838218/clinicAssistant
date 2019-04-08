@@ -40,6 +40,7 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
     // 初始化表格
     table.render({
         elem: '#dict-item-table',
+        limit: 15,// 每个字典类型最多可以录入30个字典项
         cols: [[
             {field: 'dictItemName', title: '字典项名称', width: '35%', edit: 'text'},
             {field: 'dictItemValue', title: '字典项值', width: '35%', edit: 'text'},
@@ -56,30 +57,63 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
     //监听表格操作列
     table.on('tool(dict-item-table)', function (obj) {
         var data = obj.data;
-        console.log(obj);
         if (obj.event === 'create') {
             var dataBak = [];// 缓存表格已有的数据
             var oldData = table.cache['dict-item-table'];
             var newRow = {
                 "dictItemName": "",
                 "dictItemValue": "",
-                "isUse": "1"
+                "isUse": "1",
+                "dictItemId":''
             };
-            for (var i = 0; i < oldData.length; i++) {
-                dataBak.push(oldData[i]);      //将之前的数组备份
+            // 获取当前行的位置
+            var rowIndex = -1;
+            try {
+                rowIndex = obj.tr[0].rowIndex;
+            } catch (e) {
+                layer.alert('系统异常，请联系系统管理员！', {icon: 2});
             }
-            dataBak.push(newRow);
+            //将之前的数组备份
+            for (var i = 0; i < oldData.length; i++) {
+                dataBak.push(oldData[i]);
+            }
+            // 插入空白行
+            if (rowIndex != -1) {
+                dataBak.splice(rowIndex + 1, 0, newRow);
+            } else {
+                dataBak.push(newRow);
+            }
             table.reload("dict-item-table", {
                 data: dataBak   // 将新数据重新载入表格
             });
         } else if (obj.event === 'delete') {
             layer.confirm('确认删除该字典项吗？', function (index) {
                 obj.del();
+                var flag = false;// 表格行已全部被删除，默认添加一个空白行
+                var oldData = table.cache['dict-item-table'];
+                if (oldData.length > 0) {
+                    for (var i = 0; i < oldData.length; i++) {
+                        if (!oldData[i]) {
+                            flag = true;// 表格行还存在，没有全部被删除
+                            return;
+                        }
+                    }
+                }
+                if (!false) {// 表格行已全部删除，默认添加空白行
+                    var newRow = [{
+                        "dictItemName": "",
+                        "dictItemValue": "",
+                        "isUse": "1",
+                        "dictItemId": ''
+                    }];
+                    table.reload("dict-item-table", {
+                        data: newRow   // 将新数据重新载入表格
+                    });
+                }
                 layer.close(index);
             });
         }
     });
-
 
     // 左侧菜单树的点击事件 根据ID查询菜单详情
     function leftTreeClick(d) {
