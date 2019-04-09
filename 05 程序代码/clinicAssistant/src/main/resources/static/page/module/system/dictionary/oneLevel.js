@@ -206,33 +206,41 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
     };
 
     /**
-     * 保存菜单
+     * 保存字典
      * @param data
      * @returns {boolean}
      */
-    function saveDictionary(data) {
+    function saveDictionary(e) {
         try {
-            $(data.elem).attr({"disabled": "disabled"});// 按钮禁用，防止重复提交
+            $(e.target).attr({"disabled": "disabled"});// 按钮禁用，防止重复提交
             var dictionary = $('#dictionary-info').serialize();// 表单序列化
             var dictItems = table.cache['dict-item-table'];// 获取表格数据
             dictionary.dictItem = [];
             for (var i = 0; i < dictItems.length; i++) {
                 if (!!dictItems[i]) { // 表格数据校验
-                    dictionary.dictItem.push(dictItems[i]);
+                    if (!!dictItems[i].dictItemName && !!dictItems[i].dictItemValue) {
+                        dictionary.dictItem.push(dictItems[i]);
+                    } else {
+                        layer.alert('请将表格数据补充完整！', {icon: 0});
+                        return;
+                    }
                 }
             }
-            $.post('/system/menu/save', dictionary, function (dictionary) {
-                if (!!dictionary && !!dictionary.dictionaryId) {
-                    assigForm(dictionary);// 赋值
-                    $(data.elem).removeAttr('disabled');// 按钮可用
+            console.log(dictionary);
+            $.post('/system/dictionary/save', dictionary, function (dict) {
+                if (!!dict && !!dict.dictionaryId) {
+                    assigForm(dict);// 赋值
+                    table.reload('dict-item-table',{data:dict.dictItem});
+                    if (!!leftTree) leftTree.reload({async: false});
+                    leftTree.setHighLight(dictionary.dictionaryId);// 高亮显示当前菜单
                     layer.msg('保存成功！');
                 } else {
                     layer.msg('保存失败！');
                 }
-                if (!!leftTree) leftTree.reload({async: false});
-                leftTree.setHighLight(dictionary.dictionaryId);// 高亮显示当前菜单
+                $(e.target).removeAttr('disabled');// 按钮可用
             });
         } catch (e) {
+            $(e.target).removeAttr('disabled');// 按钮可用
             layer.msg('保存失败！');
             console.log(e);
         }

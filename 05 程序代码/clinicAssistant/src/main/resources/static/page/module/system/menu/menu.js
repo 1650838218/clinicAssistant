@@ -139,15 +139,16 @@ layui.use(['form', 'eleTree', 'jquery', 'layer'], function () {
             $.post('/system/menu/save', data.field, function (menu) {
                 if (!!menu && !!menu.menuId) {
                     assigForm(menu);// 赋值
-                    $(data.elem).removeAttr('disabled');// 按钮可用
+                    if (!!leftMenuTree) leftMenuTree.reload({async:false});
+                    leftMenuTree.setHighLight(menu.menuId);// 高亮显示当前菜单
                     layer.msg('保存成功！');
                 } else {
                     layer.msg('保存失败！');
                 }
-                if (!!leftMenuTree) leftMenuTree.reload({async:false});
-                leftMenuTree.setHighLight(menu.menuId);// 高亮显示当前菜单
+                $(data.elem).removeAttr('disabled');// 按钮可用
             });
         } catch (e) {
+            $(data.elem).removeAttr('disabled');// 按钮可用
             layer.msg('保存失败！');
             console.log(e);
         }
