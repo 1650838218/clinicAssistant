@@ -23,7 +23,7 @@
                 </div>
                 <div class="layui-card-body">
                     <form id="dictionary-info" class="layui-form" action="" lay-filter="dictionary-form">
-                        <input type="hidden" name="dictionaryId" value="">
+                        <input type="hidden" name="dictTypeId" value="">
                         <div class="layui-row layui-col-space10 layui-form-item">
                             <div class="layui-col-lg4">
                                 <label class="layui-form-label">所属模块</label>
@@ -36,19 +36,19 @@
                             <div class="layui-col-lg4">
                                 <label class="layui-form-label">字典名称</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="dictionaryName" autocomplete="off" class="layui-input" maxlength="20">
+                                    <input type="text" name="dictTypeName" autocomplete="off" class="layui-input" maxlength="20">
                                 </div>
                             </div>
                             <div class="layui-col-lg4">
                                 <label class="layui-form-label">字典键</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="dictionaryKey" autocomplete="off" class="layui-input" maxlength="50">
+                                    <input type="text" name="dictTypeKey" autocomplete="off" class="layui-input" maxlength="50">
                                 </div>
                             </div>
                         </div>
+                        <table class="layui-hide" lay-filter="dict-item-table" id="dict-item-table"></table>
+                        <button lay-filter="submit-btn" lay-submit class="layui-btn">保存</button>
                     </form>
-                    <table class="layui-hide" lay-filter="dict-item-table" id="dict-item-table"></table>
-                    <button id="submit-btn" class="layui-btn">保存</button>
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
 </div>
 <!--layui table 是否启用-->
 <script type="text/html" id="is-use-switch">
-    <input type="checkbox" name="isUse" value="{{d.isUse}}" lay-skin="switch" lay-text="是|否" lay-filter="is-use" {{ d.isUse == 1 ? 'checked' : '' }}>
+    <input type="checkbox" name="isUse" lay-skin="switch" lay-text="是|否" lay-filter="is-use" {{ d.isUse == 1 ? 'checked' : '' }}>
 </script>
 <!--layui table 操作列-->
 <script type="text/html" id="operate-column">

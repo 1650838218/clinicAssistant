@@ -134,7 +134,7 @@ layui.use(['form', 'eleTree', 'jquery', 'layer'], function () {
      */
     function saveMenu(data) {
         try {
-            $(data.elem).attr({"disabled":"disabled"});// 按钮禁用，防止重复提交
+            $(data.elem).addClass('layui-btn-disabled');// 按钮禁用，防止重复提交
             data.field.isUse = data.field.isUse == "on" ? "1" : "0";
             $.post('/system/menu/save', data.field, function (menu) {
                 if (!!menu && !!menu.menuId) {
@@ -145,10 +145,10 @@ layui.use(['form', 'eleTree', 'jquery', 'layer'], function () {
                 } else {
                     layer.msg('保存失败！');
                 }
-                $(data.elem).removeAttr('disabled');// 按钮可用
+                $(data.elem).removeClass('layui-btn-disabled');// 按钮可用
             });
         } catch (e) {
-            $(data.elem).removeAttr('disabled');// 按钮可用
+            $(data.elem).removeClass('layui-btn-disabled');// 按钮可用
             layer.msg('保存失败！');
             console.log(e);
         }

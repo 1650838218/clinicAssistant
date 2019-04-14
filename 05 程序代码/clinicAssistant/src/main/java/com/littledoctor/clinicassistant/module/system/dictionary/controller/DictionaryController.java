@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -80,7 +77,7 @@ public class DictionaryController {
      * @return
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public DictionaryType save(DictionaryType dictionaryType) {
+    public DictionaryType save(@RequestBody DictionaryType dictionaryType) {
         try {
             Assert.notNull(dictionaryType,"保存数据字典时实体不能为空");
             return dictionaryService.save(dictionaryType);

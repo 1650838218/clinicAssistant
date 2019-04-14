@@ -9,9 +9,10 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
     var leftTree;// 左侧菜单树
     form.render();
 
-    $('#add-btn').on('click', resetForm);// 新增菜单
-    $('#del-btn').on('click', delDictionaryFun);// 删除菜单
-    $('#submit-btn').on('click', saveDictionary);// 保存菜单
+    $('#add-btn').on('click', resetForm);// 新增字典
+    $('#del-btn').on('click', delDictionaryFun);// 删除字典
+    form.on('submit(submit-btn)', saveDictionary);// 保存字典
+    // $('#submit-btn').on('click', saveDictionary);// 保存菜单
     $('#reset-btn').on('click', resetForm);// 重置菜单
     $("#dictionary-info input[name='menuName']").on("click", loadSelectTree); // 加载下拉树
     eleTree.on("nodeClick(eleTree-menu)", leftTreeClick);// 左侧菜单树点击事件
@@ -108,6 +109,20 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
                     data: newRow   // 将新数据重新载入表格
                 });
                 layer.close(index);
+            });
+        }
+    });
+
+    // 监听switch开关
+    form.on('switch(is-use)', function(obj){
+        var selectIfKey=obj.othis;// 获取当前控件
+        var parentTr = selectIfKey.parents("tr");// 获取当前所在行
+        var parentTrIndex = parentTr.attr("data-index");// 获取当前所在行的索引
+        var tableData = table.cache['dict-item-table'];
+        if (tableData.length > parentTrIndex) {
+            tableData[parentTrIndex].isUse = obj.elem.checked ? 1 : 0;
+            table.reload("dict-item-table", {
+                data: tableData   // 将新数据重新载入表格
             });
         }
     });
@@ -210,37 +225,45 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
      * @param data
      * @returns {boolean}
      */
-    function saveDictionary(e) {
+    function saveDictionary(obj) {
         try {
-            $(e.target).attr({"disabled": "disabled"});// 按钮禁用，防止重复提交
-            var dictionary = $('#dictionary-info').serialize();// 表单序列化
+            $(obj.elem).addClass('layui-btn-disabled');// 按钮禁用，防止重复提交
+            var dictionary = obj.field;// 表单值
             var dictItems = table.cache['dict-item-table'];// 获取表格数据
-            dictionary.dictItem = [];
             for (var i = 0; i < dictItems.length; i++) {
-                if (!!dictItems[i]) { // 表格数据校验
-                    if (!!dictItems[i].dictItemName && !!dictItems[i].dictItemValue) {
-                        dictionary.dictItem.push(dictItems[i]);
-                    } else {
-                        layer.alert('请将表格数据补充完整！', {icon: 0});
-                        return;
-                    }
+                if (!dictItems[i].dictItemName || !dictItems[i].dictItemValue) {// 表格数据校验
+                    layer.alert('请将表格数据补充完整！', {icon: 0});
+                    $(e.target).removeClass('layui-btn-disabled');// 按钮可用
+                    return;
                 }
             }
+            dictionary.dictItem = dictItems;
             console.log(dictionary);
-            $.post('/system/dictionary/save', dictionary, function (dict) {
-                if (!!dict && !!dict.dictionaryId) {
-                    assigForm(dict);// 赋值
-                    table.reload('dict-item-table',{data:dict.dictItem});
-                    if (!!leftTree) leftTree.reload({async: false});
-                    leftTree.setHighLight(dictionary.dictionaryId);// 高亮显示当前菜单
-                    layer.msg('保存成功！');
-                } else {
+            $.ajax({
+                url:'/system/dictionary/save',
+                type:'post',
+                data:JSON.stringify(dictionary),
+                dataType:'json',
+                contentType:'application/json',
+                success:function (dict) {
+                    if (!!dict && !!dict.dictTypeId) {
+                        assigForm(dict);// 赋值
+                        table.reload('dict-item-table',{data:dict.dictItem});
+                        if (!!leftTree) leftTree.reload({async: false});
+                        leftTree.setHighLight(dictionary.dictTypeId);// 高亮显示当前菜单
+                        layer.msg('保存成功！');
+                    } else {
+                        layer.msg('保存失败！');
+                    }
+                    $(obj.elem).removeClass('layui-btn-disabled');// 按钮可用
+                },
+                error: function () {
+                    $(obj.elem).removeClass('layui-btn-disabled');// 按钮可用
                     layer.msg('保存失败！');
                 }
-                $(e.target).removeAttr('disabled');// 按钮可用
             });
         } catch (e) {
-            $(e.target).removeAttr('disabled');// 按钮可用
+            $(obj.elem).removeClass('layui-btn-disabled');// 按钮可用
             layer.msg('保存失败！');
             console.log(e);
         }
