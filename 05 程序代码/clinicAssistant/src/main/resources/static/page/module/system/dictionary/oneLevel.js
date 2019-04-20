@@ -8,6 +8,7 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
     var table = layui.table;
     var leftTree;// 左侧菜单树
     var dictItemTableId = 'dict-item-table';
+    var currentDictTypeId = '';
     form.render();
 
     $('#add-btn').on('click', resetForm);// 新增字典
