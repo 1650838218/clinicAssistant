@@ -50,30 +50,20 @@ public class DictionaryControllerTest {
             dt.setMenuId(1);
             dt.setDictTypeKey("CDGL");
             dt.setDictTypeName("测试数据");
-            dt.setDictTypeId(26);
 
             DictionaryItem di1 = new DictionaryItem();
             di1.setDictItemName("aaa");
-            di1.setDictItemValue("2");
+            di1.setDictItemValue("1");
             di1.setIsUse(1);
-            di1.setDictItemId(29);
 
             DictionaryItem di2 = new DictionaryItem();
             di2.setDictItemName("bbb");
-            di2.setDictItemValue("3");
+            di2.setDictItemValue("2");
             di2.setIsUse(1);
-            di2.setDictItemId(30);
-
-            DictionaryItem di3 = new DictionaryItem();
-            di3.setDictItemName("ccc");
-            di3.setDictItemValue("4");
-            di3.setIsUse(1);
-            di3.setDictItemId(31);
 
             List<DictionaryItem> diList = new ArrayList<>();
             diList.add(di1);
             diList.add(di2);
-            diList.add(di3);
 
             dt.setDictItem(diList);
 
