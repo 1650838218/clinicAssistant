@@ -1,7 +1,6 @@
 package com.littledoctor.clinicassistant.module.system.dictionary.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,13 +76,5 @@ public class DictionaryType {
 
     public void setMenuName(String menuName) {
         this.menuName = menuName;
-    }
-
-    public List<DictionaryItem> getDictItem() {
-        return dictItem;
-    }
-
-    public void setDictItem(List<DictionaryItem> dictItem) {
-        this.dictItem = dictItem;
     }
 }

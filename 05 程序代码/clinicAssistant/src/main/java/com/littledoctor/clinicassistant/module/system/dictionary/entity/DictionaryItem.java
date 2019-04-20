@@ -1,7 +1,6 @@
 package com.littledoctor.clinicassistant.module.system.dictionary.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * @Auther: 周俊林

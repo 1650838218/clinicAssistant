@@ -7,7 +7,6 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
     var layer = layui.layer;
     var table = layui.table;
     var leftTree;// 左侧菜单树
-    var dictItemTableId = 'dict-item-table';
     form.render();
 
     $('#add-btn').on('click', resetForm);// 新增字典
@@ -57,11 +56,11 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
     });
 
     //监听表格操作列
-    table.on('tool(dictItemTableId)', function (obj) {
+    table.on('tool(dict-item-table)', function (obj) {
         var data = obj.data;
         if (obj.event === 'create') {
             var dataBak = [];// 缓存表格已有的数据
-            var oldData = table.cache[dictItemTableId];
+            var oldData = table.cache['dict-item-table'];
             var newRow = {
                 "dictItemName": "",
                 "dictItemValue": "",
@@ -85,13 +84,13 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
             } else {
                 dataBak.push(newRow);
             }
-            table.reload(dictItemTableId, {
+            table.reload("dict-item-table", {
                 data: dataBak   // 将新数据重新载入表格
             });
         } else if (obj.event === 'delete') {
             layer.confirm('确认删除该字典项吗？', function (index) {
                 obj.del();
-                var oldData = table.cache[dictItemTableId];
+                var oldData = table.cache['dict-item-table'];
                 if (oldData.length > 0) {
                     for (var i = 0; i < oldData.length; i++) {
                         if (!!oldData[i]) {
@@ -106,7 +105,7 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
                     "isUse": "1",
                     "dictItemId": ''
                 }];
-                table.reload(dictItemTableId, {
+                table.reload("dict-item-table", {
                     data: newRow   // 将新数据重新载入表格
                 });
                 layer.close(index);
@@ -119,10 +118,10 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
         var selectIfKey=obj.othis;// 获取当前控件
         var parentTr = selectIfKey.parents("tr");// 获取当前所在行
         var parentTrIndex = parentTr.attr("data-index");// 获取当前所在行的索引
-        var tableData = table.cache[dictItemTableId];
+        var tableData = table.cache['dict-item-table'];
         if (tableData.length > parentTrIndex) {
             tableData[parentTrIndex].isUse = obj.elem.checked ? 1 : 0;
-            table.reload(dictItemTableId, {
+            table.reload("dict-item-table", {
                 data: tableData   // 将新数据重新载入表格
             });
         }
@@ -167,7 +166,7 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
             "isUse": "1",
             "dictItemId": ''
         }];
-        table.reload(dictItemTableId, {
+        table.reload("dict-item-table", {
             data: newRow   // 将新数据重新载入表格
         });
     }
@@ -230,7 +229,7 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
         try {
             $(obj.elem).addClass('layui-btn-disabled');// 按钮禁用，防止重复提交
             var dictionary = obj.field;// 表单值
-            var dictItems = table.cache[dictItemTableId];// 获取表格数据
+            var dictItems = table.cache['dict-item-table'];// 获取表格数据
             for (var i = 0; i < dictItems.length; i++) {
                 if (!dictItems[i].dictItemName || !dictItems[i].dictItemValue) {// 表格数据校验
                     layer.alert('请将表格数据补充完整！', {icon: 0});
@@ -249,7 +248,7 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table'], function () {
                 success:function (dict) {
                     if (!!dict && !!dict.dictTypeId) {
                         assigForm(dict);// 赋值
-                        table.reload(dictItemTableId,{data:dict.dictItem});
+                        table.reload('dict-item-table',{data:dict.dictItem});
                         if (!!leftTree) leftTree.reload({async: false});
                         leftTree.setHighLight(dictionary.dictTypeId);// 高亮显示当前菜单
                         layer.msg('保存成功！');
