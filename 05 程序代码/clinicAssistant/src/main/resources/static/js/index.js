@@ -117,9 +117,9 @@ layui.define(['element', 'sidebar', 'mockjs', 'menu', 'route', 'utils', 'compone
           component: 'page/module/system/dictionary/oneLevel.html',
           name: '一级字典'
         }, {
-          path: '/user',
-          component: 'views/user/index.html',
-          name: '用户中心'
+          path: '/system/manyLevel',
+          component: 'page/module/system/dictionary/manyLevel.html',
+          name: '多级字典'
         }, {
           path: '/user/table2',
           component: 'components/table/teble2.html',

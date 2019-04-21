@@ -1,6 +1,7 @@
 package com.littledoctor.clinicassistant.module.system.dictionary.service;
 
 import com.littledoctor.clinicassistant.common.plugin.tree.TreeEntity;
+import com.littledoctor.clinicassistant.common.plugin.tree.TreeNodeType;
 import com.littledoctor.clinicassistant.module.system.dictionary.dao.DictionaryRepository;
 import com.littledoctor.clinicassistant.module.system.dictionary.entity.DictionaryType;
 import com.littledoctor.clinicassistant.module.system.menu.entity.Menu;
@@ -68,8 +69,14 @@ public class DictionaryServiceImpl implements DictionaryService {
      * @return
      */
     @Override
-    public DictionaryType save(DictionaryType dictionaryType) {
-        return dictionaryRepository.saveAndFlush(dictionaryType);
+    public DictionaryType save(DictionaryType dictionaryType) throws Exception {
+        DictionaryType dt = dictionaryRepository.saveAndFlush(dictionaryType);
+        // 设置菜单名称
+        if (dt.getMenuId() != null) {
+            Menu menu = menuService.getById(dt.getMenuId().toString());
+            dt.setMenuName(menu.getMenuName());
+        }
+        return dt;
     }
 
     /**
@@ -78,9 +85,9 @@ public class DictionaryServiceImpl implements DictionaryService {
      * @return
      */
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(Integer id) throws Exception {
         dictionaryRepository.deleteById(id);
-        return false;
+        return true;
     }
 
     /**
@@ -95,7 +102,13 @@ public class DictionaryServiceImpl implements DictionaryService {
         if (!CollectionUtils.isEmpty(menuList)) result.addAll(menuList);
         // 查询字典类型
         List<TreeEntity> dictionaryList = dictionaryRepository.findTreeEntity();
-        if (!CollectionUtils.isEmpty(dictionaryList)) result.addAll(dictionaryList);
+        if (!CollectionUtils.isEmpty(dictionaryList)) {
+            // 设置节点类型
+            for (int i = 0; i < dictionaryList.size(); i++) {
+                dictionaryList.get(i).setNodeType(TreeNodeType.DICTIONARY_TYPE);
+            }
+            result.addAll(dictionaryList);
+        }
         return result;
     }
 

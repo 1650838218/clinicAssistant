@@ -1303,14 +1303,14 @@ layui.define(["jquery", "laytpl"], function (exports) {
         },
         // 设置高亮
         setHighLight: function (key) {
-            this.keySearchToOpera(key, function (d, obj) {
-                var options = this.config;
-                var _self = this;
-                // 添加active背景
-                if (_self.prevClickEle) _self.prevClickEle.removeClass("eleTree-node-content-active");
-                if (options.highlightCurrent) d.addClass("eleTree-node-content-active");
-                _self.prevClickEle = d;
-            });
+            var options = this.config;
+            var _self = this;
+            var node = options.elem.find("[data-" + options.request.key + "='" + key + "']");
+            var nodeContent = node.children('.eleTree-node-content').first();
+            // 添加active背景
+            if (_self.prevClickEle) _self.prevClickEle.removeClass("eleTree-node-content-active");
+            if (options.highlightCurrent) nodeContent.addClass("eleTree-node-content-active");
+            _self.prevClickEle = nodeContent;
         }
     }
 

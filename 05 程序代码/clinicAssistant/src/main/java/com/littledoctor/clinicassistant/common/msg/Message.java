@@ -13,4 +13,8 @@ public interface Message {
     public static final String[] CONTROLLER_TABLE_MSG = {"暂无数据！","","数据查询异常，请联系管理员！"};
 
     public static final String PARAMETER_IS_NULL = "入参为空！";
+
+    public static final String QUERY_SUCCESS = "查询成功！";
+
+    public static final String QUERY_FAILED = "查询失败！";
 }

@@ -27,14 +27,14 @@ public interface DictionaryService {
      * @param dictionaryType
      * @return
      */
-    DictionaryType save(DictionaryType dictionaryType);
+    DictionaryType save(DictionaryType dictionaryType) throws Exception;
 
     /**
      * 删除数据字典
      * @param id
      * @return
      */
-    boolean delete(Integer id);
+    boolean delete(Integer id) throws Exception;
 
     /**
      * 获取字典树

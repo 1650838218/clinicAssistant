@@ -25,7 +25,7 @@ import java.util.Map;
  * @Description: 数据字典
  */
 @RestController
-@RequestMapping(value = "/system/dictionary")
+@RequestMapping(value = "/system/dictionary/oneLevel")
 public class DictionaryController {
 
     private Logger log = LoggerFactory.getLogger(DictionaryController.class);

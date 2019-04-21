@@ -29,25 +29,28 @@
                                 <label class="layui-form-label">所属模块</label>
                                 <div class="layui-input-block">
                                     <input type="hidden" name="menuId" value="">
-                                    <input type="text" name="menuName" readonly="" autocomplete="off" class="layui-input">
+                                    <input type="text" name="menuName" readonly="" autocomplete="off" class="layui-input"
+                                           lay-verify="required">
                                     <div class="eleTree select-tree" lay-filter="menu-eleTree"></div>
                                 </div>
                             </div>
                             <div class="layui-col-lg4">
                                 <label class="layui-form-label">字典名称</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="dictTypeName" autocomplete="off" class="layui-input" maxlength="20">
+                                    <input type="text" name="dictTypeName" autocomplete="off" class="layui-input"
+                                           maxlength="20" lay-verify="required|repeat">
                                 </div>
                             </div>
                             <div class="layui-col-lg4">
                                 <label class="layui-form-label">字典键</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="dictTypeKey" autocomplete="off" class="layui-input" maxlength="50">
+                                    <input type="text" name="dictTypeKey" autocomplete="off" class="layui-input"
+                                           maxlength="50" lay-verify="required|repeat|regExp">
                                 </div>
                             </div>
                         </div>
                         <table class="layui-hide" lay-filter="dict-item-table" id="dict-item-table"></table>
-                        <button lay-filter="submit-btn" lay-submit class="layui-btn">保存</button>
+                        <button type="button" lay-filter="submit-btn" lay-submit class="layui-btn">保存</button>
                     </form>
                 </div>
             </div>

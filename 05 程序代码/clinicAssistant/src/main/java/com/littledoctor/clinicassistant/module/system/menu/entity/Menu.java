@@ -1,6 +1,9 @@
 package com.littledoctor.clinicassistant.module.system.menu.entity;
 
+import com.littledoctor.clinicassistant.common.plugin.tree.TreeNodeType;
+
 import javax.persistence.*;
+import javax.swing.tree.TreeNode;
 import java.util.List;
 
 /**
