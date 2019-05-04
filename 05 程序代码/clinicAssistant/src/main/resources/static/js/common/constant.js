@@ -20,6 +20,7 @@ var BTN = {
 };
 
 var TABLE_COLUMN = {
+    numbers: '序号',
     operation: '操作'
 }
 

@@ -103,6 +103,11 @@ public class DictionaryController {
         }
     }
 
+    /**
+     * 根据ID查询字典
+     * @param dictionaryId
+     * @return
+     */
     @RequestMapping(value = "/getById", method = RequestMethod.GET)
     public DictionaryType getById(Integer dictionaryId) {
         try {
@@ -112,5 +117,39 @@ public class DictionaryController {
             log.error(e.getMessage(), e);
         }
         return null;
+    }
+
+    /**
+     * 检查字典名称是否重复
+     * @param dictTypeId
+     * @param dictTypeName
+     * @return false 重复 true 不重复
+     */
+    @RequestMapping(value = "/repeatTypeName", method = RequestMethod.GET)
+    public boolean repeatTypeName(String dictTypeId, String dictTypeName) {
+        try {
+            Assert.notNull(dictTypeName, Message.PARAMETER_IS_NULL);
+            return dictionaryService.repeatTypeName(dictTypeId, dictTypeName);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return false;
+    }
+
+    /**
+     * 检查字典名称是否重复
+     * @param dictTypeId
+     * @param dictTypeKey
+     * @return false 重复 true 不重复
+     */
+    @RequestMapping(value = "/repeatTypeKey", method = RequestMethod.GET)
+    public boolean repeatTypeKey(String dictTypeId, String dictTypeKey) {
+        try {
+            Assert.notNull(dictTypeKey, Message.PARAMETER_IS_NULL);
+            return dictionaryService.repeatTypeKey(dictTypeId, dictTypeKey);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return false;
     }
 }

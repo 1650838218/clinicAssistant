@@ -14,6 +14,6 @@ import java.util.List;
  */
 public interface DictManyLevelRepository extends JpaRepository<DictManyLevelType, Integer>, JpaSpecificationExecutor<DictManyLevelType> {
 
-    @Query(value = "select t.manyLevelTypeId, t.manyLevelTypeName from DictManyLevelType t")
+    @Query(value = "select new DictManyLevelType (t.dictTypeId, t.dictTypeName, t.dictTypeKey) from DictManyLevelType t")
     List<DictManyLevelType> selectAllLazy();
 }

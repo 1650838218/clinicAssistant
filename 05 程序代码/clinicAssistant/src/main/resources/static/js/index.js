@@ -121,9 +121,9 @@ layui.define(['element', 'sidebar', 'mockjs', 'menu', 'route', 'utils', 'compone
           component: 'page/module/system/dictionary/manyLevel.html',
           name: '多级字典'
         }, {
-          path: '/user/table2',
-          component: 'components/table/teble2.html',
-          name: '数据表格2'
+          path: '/pharmacy/supplier',
+          component: 'page/module/pharmacy/supplier/supplier.html',
+          name: '供货商'
         }, {
           path: '/user/table3',
           component: 'components/table/teble3.html',

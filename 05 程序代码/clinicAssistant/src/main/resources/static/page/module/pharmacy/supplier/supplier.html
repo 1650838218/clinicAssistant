@@ -1,0 +1,21 @@
+<div class="layui-row">
+    <div class="layui-col-md12">
+        <div class="center-panel">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <h3><b>供应商信息</b></h3>
+                </div>
+                <div class="layui-card-body">
+                    <table class="layui-hide" lay-filter="supplier-table" id="supplier-table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--layui table 操作列-->
+<script type="text/html" id="operate-column">
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="create">新增</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="save">保存</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="delete">删除</a>
+</script>
+<script src="/page/module/pharmacy/supplier/supplier.js"></script>

@@ -1,3 +1,127 @@
-/** kitadmin-v2.1.6 MIT License By http://kit.zhengjinfan.cn Author Van Zheng */
-;"use strict";var _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t};layui.define(["lodash","axios"],function(t){var r=layui.lodash,u=layui.axios;t("utils",{error:function(t){console.error(t)},oneOf:function(o,t){var e=!1;return r.forEach(t,function(t,n){t===o&&(e=!0)}),e},localStorage:{getItem:function(t){return JSON.parse(localStorage.getItem(t))},setItem:function(t,n){var o="object"===(void 0===n?"undefined":_typeof(n))||"array"==typeof n?JSON.stringify(n):n;localStorage.setItem(t,o)},removeItem:function(t){localStorage.removeItem(t)},clear:function(){localStorage.clear()}},find:function(t,n){return t[r.findKey(t,n)]},tplLoader:function(t,n,e){var a=this,i="";u.get(t+"?v="+(new Date).getTime()).then(function(t){i=t.data;var n=[],o=i.match(/id=\"\w*\"/g);null!==o&&r.forEach(o,function(t){n.push(t)});var e=i.match(/lay-filter=\"\w*\"/g);null!==e&&r.forEach(e,function(t){n.push(t)}),0<n.length&&r.forEach(n,function(t){var n=t.match(/\"\w*\"/);if(void 0!==n&&null!=n&&0<n.length){var o=n[0],e=o.substring(1,o.length-1),r=new RegExp(e,"g");i=i.replace(r,a.randomCode())}})}).catch(function(t){var n=t.request,o="读取模板出现异常，异常代码："+n.status+"、 异常信息："+n.statusText;console.log(o),"function"==typeof e&&e(o)});var o=setInterval(function(){""!==i&&(clearInterval(o),n(i))},50)},setUrlState:function(t,n){history.pushState({},t,n)},randomCode:function(){return"r"+Math.random().toString(36).substr(2)},isFunction:function(t){return"function"==typeof t},isString:function(t){return"string"==typeof t},isObject:function(t){return"object"===(void 0===t?"undefined":_typeof(t))}})});
-//# sourceMappingURL=utils.js.map
+layui.define(['lodash', 'axios'], function (exports) {
+    var _ = layui.lodash,
+        axios = layui.axios;
+    var utils = {
+        error: function (msg) {
+            console.error(msg);
+        },
+        oneOf: function (value, validList) {
+            var flag = false;
+            _.forEach(validList, function (item, index) {
+                if (item === value) {
+                    flag = true;
+                }
+            })
+            return flag;
+        },
+        // 本地存储相关
+        localStorage: {
+            getItem: function (key) {
+                return JSON.parse(localStorage.getItem(key));
+            },
+            setItem: function (key, data) {
+                var d = (typeof data === 'object' || typeof data === 'array') ?
+                    JSON.stringify(data) : data;
+                localStorage.setItem(key, d);
+            },
+            removeItem: function (key) {
+                localStorage.removeItem(key);
+            },
+            clear: function () {
+                localStorage.clear();
+            }
+        },
+        /**
+         * 在一个数组里面查询一个对象
+         * var r = 1;
+         * var arr = [{name:'a',id:1},{name:'b',id:2}]
+         * var result = utils.find(arr,function(item){
+         *   return r === item.id;
+         * });
+         *  // result : {name:'a',id:1}
+         */
+        find: function (arr, callback) {
+            return arr[_.findKey(arr, callback)];
+        },
+        // 读取模板
+        tplLoader: function (url, callback, onerror) {
+            var that = this;
+            var data = '';
+            // TODO 跨域未实现
+            axios.get(url + '?v=' + new Date().getTime())
+                .then(function (res) {
+                    data = res.data;
+                    var regList = [];
+                    // 重置id 防止冲突
+                    var ids = data.match(/id=\"\w*\"/g);
+                    ids !== null && _.forEach(ids, function (item) {
+                        regList.push(item);
+                    });
+                    // 重置lay-filter 防止冲突
+                    var filters = data.match(/lay-filter=\"\w*\"/g);
+                    filters !== null && _.forEach(filters, function (item) {
+                        regList.push(item);
+                    });
+
+                    if (regList.length > 0) {
+                        // 循环替换
+                        _.forEach(regList, function (item) {
+                            var matchResult = item.match(/\"\w*\"/);
+                            if (matchResult !== undefined && matchResult != null && matchResult.length > 0) {
+                                var result = matchResult[0];
+                                var regStr = result.substring(1, result.length - 1);
+                                var reg = new RegExp(regStr, 'g');
+                                data = data.replace(reg, that.randomCode());
+                            }
+                        });
+                    }
+                })
+                .catch(function (error) {
+                    var request = error.request;
+                    var errorMsg = '读取模板出现异常，异常代码：' + request.status + '、 异常信息：' + request.statusText;
+                    console.log(errorMsg);
+                    typeof onerror === 'function' && onerror(errorMsg);
+                });
+
+            var interval = setInterval(function () {
+                if (data !== '') {
+                    clearInterval(interval);
+                    callback(data);
+                }
+            }, 50);
+        },
+        setUrlState: function (title, url) {
+            history.pushState({}, title, url);
+        },
+        // 获取随机字符
+        randomCode: function () {
+            return 'r' + Math.random().toString(36).substr(2);
+        },
+        isFunction: function (obj) {
+            return typeof obj === 'function';
+        },
+        isString: function (obj) {
+            return typeof obj === 'string';
+        },
+        isObject: function (obj) {
+            return typeof obj === 'object';
+        },
+        isNotNull: function (obj) {
+            // 判断字符串不为空
+            return obj !== null && obj !== undefined && obj !== '';
+        },
+        isNotEmpty: function (obj) {
+            // 判断数组不空
+            return obj !== null && obj !== undefined && obj.length > 0;
+        },
+        clearForm: function (elem) {
+            $(elem).find(":input[type!='button'][type!='file'][type!='image'][type!='radio'][type!='checkbox'][type!='reset'][type!='submit']").val("");
+            $(elem).find(":checkbox,:radio").prop("checked",false);
+            $(elem).filter(":input[type!='button'][type!='file'][type!='image'][type!='radio'][type!='checkbox'][type!='reset'][type!='submit']").val("");
+            $(elem).filter(":checkbox,:radio").prop("checked",false);
+        }
+    };
+
+    //输出utils接口
+    exports('utils', utils);
+});

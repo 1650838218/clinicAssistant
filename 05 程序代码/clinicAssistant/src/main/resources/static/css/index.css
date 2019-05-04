@@ -67,10 +67,28 @@
     padding: 0px 5px;
 }
 
+/** 左侧单列表格样式 */
+.left-panel .layui-table tbody tr:hover {
+    background-color: white!important;
+}
+
+.left-panel .layui-table tbody tr div.select,
+.left-panel .layui-table tbody tr div:hover {
+    color: cornflowerblue;
+    font-size: 15px;
+}
+
 /*右侧面板*/
 .right-panel {
     padding: 10px;
     margin: 10px 10px 10px 0px;
+    background-color: white;
+}
+
+/*右侧面板*/
+.center-panel {
+    padding: 10px;
+    margin: 10px;
     background-color: white;
 }
 
@@ -91,5 +109,3 @@
     background-color: #fff;
     z-index: 100;
 }
-
-

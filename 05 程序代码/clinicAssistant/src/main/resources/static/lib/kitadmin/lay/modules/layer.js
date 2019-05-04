@@ -137,7 +137,7 @@ var layer = {
     if(type) end = options;
     return layer.open($.extend({
       content: content,
-      time: 3000,
+      time: 2000,
       shade: false,
       skin: skin,
       title: false,
@@ -171,7 +171,7 @@ var layer = {
       type: 4,
       content: [content, follow],
       closeBtn: false,
-      time: 3000,
+      time: 2000,
       shade: false,
       resize: false,
       fixed: false,
@@ -1260,7 +1260,7 @@ layer.photos = function(options, loop, key){
   }, function(){
     layer.close(dict.loadi);
     layer.msg('&#x5F53;&#x524D;&#x56FE;&#x7247;&#x5730;&#x5740;&#x5F02;&#x5E38;<br>&#x662F;&#x5426;&#x7EE7;&#x7EED;&#x67E5;&#x770B;&#x4E0B;&#x4E00;&#x5F20;&#xFF1F;', {
-      time: 30000, 
+      time: 30000,
       btn: ['&#x4E0B;&#x4E00;&#x5F20;', '&#x4E0D;&#x770B;&#x4E86;'], 
       yes: function(){
         data.length > 1 && dict.imgnext(true,true);

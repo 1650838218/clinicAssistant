@@ -48,4 +48,21 @@ public interface DictionaryService {
      * @return
      */
     DictionaryType getById(Integer dictionaryId) throws Exception;
+
+
+    /**
+     * 检查字典名称是否重复
+     * @param dictTypeId
+     * @param dictTypeName
+     * @return
+     */
+    boolean repeatTypeName(String dictTypeId, String dictTypeName);
+
+    /**
+     * 检查字典键是否重复
+     * @param dictTypeId
+     * @param dictTypeKey
+     * @return
+     */
+    boolean repeatTypeKey(String dictTypeId, String dictTypeKey);
 }

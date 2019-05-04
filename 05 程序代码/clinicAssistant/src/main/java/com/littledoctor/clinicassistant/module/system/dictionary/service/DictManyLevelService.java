@@ -16,4 +16,41 @@ public interface DictManyLevelService {
      * @return
      */
     List<DictManyLevelType> selectAllLazy() throws Exception;
+
+    /**
+     * 保存多级字典
+     * @param dictManyLevelType
+     * @return
+     */
+    DictManyLevelType save(DictManyLevelType dictManyLevelType) throws Exception;
+
+    /**
+     * 删除 多级字典
+     * @param dictTypeId
+     * @return
+     */
+    boolean delete(String dictTypeId) throws Exception;
+
+    /**
+     * 根据ID查询多级字典
+     * @param dictTypeId
+     * @return
+     */
+    DictManyLevelType getById(String dictTypeId) throws Exception;
+
+    /**
+     * 检查多级字典名称是否重复
+     * @param dictTypeId
+     * @param dictTypeName
+     * @return
+     */
+    boolean repeatTypeName(String dictTypeId, String dictTypeName);
+
+    /**
+     * 检查多级字典键是否重复
+     * @param dictTypeId
+     * @param dictTypeKey
+     * @return
+     */
+    boolean repeatTypeKey(String dictTypeId, String dictTypeKey);
 }

@@ -34,6 +34,12 @@ layui.define(["jquery", "layer"], function (exports) {
                 callback = data;
                 data = undefined;
             }
+            
+            if (!(elem instanceof $)) {
+                elem = $(elem);
+            }
+            elem.addClass('layui-btn-disabled');// 按钮禁用，防止重复提交
+            elem.attr('disabled', 'disabled');
 
             return $.ajax({
                 type: 'POST',
@@ -43,9 +49,12 @@ layui.define(["jquery", "layer"], function (exports) {
                 dataType: "JSON",
                 contentType: 'application/json',
                 error: function (e) {
-                    $(elem).removeClass('layui-btn-disabled');// 按钮可用
                     layer.msg(MSG.save_fail);
                     console.log(e);
+                },
+                complete: function () {
+                    elem.removeClass('layui-btn-disabled');// 按钮可用
+                    elem.removeAttr('disabled');
                 }
             });
         },

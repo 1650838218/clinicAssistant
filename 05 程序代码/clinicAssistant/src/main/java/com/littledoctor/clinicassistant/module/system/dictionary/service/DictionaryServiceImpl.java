@@ -3,6 +3,7 @@ package com.littledoctor.clinicassistant.module.system.dictionary.service;
 import com.littledoctor.clinicassistant.common.plugin.tree.TreeEntity;
 import com.littledoctor.clinicassistant.common.plugin.tree.TreeNodeType;
 import com.littledoctor.clinicassistant.module.system.dictionary.dao.DictionaryRepository;
+import com.littledoctor.clinicassistant.module.system.dictionary.entity.DictManyLevelType;
 import com.littledoctor.clinicassistant.module.system.dictionary.entity.DictionaryType;
 import com.littledoctor.clinicassistant.module.system.menu.entity.Menu;
 import com.littledoctor.clinicassistant.module.system.menu.service.MenuService;
@@ -70,6 +71,8 @@ public class DictionaryServiceImpl implements DictionaryService {
      */
     @Override
     public DictionaryType save(DictionaryType dictionaryType) throws Exception {
+        dictionaryType.setDictTypeKey(dictionaryType.getDictTypeKey().trim());
+        dictionaryType.setDictTypeName(dictionaryType.getDictTypeName().trim());
         DictionaryType dt = dictionaryRepository.saveAndFlush(dictionaryType);
         // 设置菜单名称
         if (dt.getMenuId() != null) {
@@ -129,5 +132,53 @@ public class DictionaryServiceImpl implements DictionaryService {
             return dt;
         }
         return new DictionaryType();
+    }
+
+    /**
+     * 检查多级字典名称是否重复
+     * @param dictTypeId
+     * @param dictTypeName
+     * @return false 重复 true 不重复
+     */
+    @Override
+    public boolean repeatTypeName(String dictTypeId, String dictTypeName) {
+        if (org.apache.commons.lang.StringUtils.isNotBlank(dictTypeName)) {
+            return dictionaryRepository.count(new Specification<DictionaryType>() {
+                @Override
+                public Predicate toPredicate(Root<DictionaryType> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                    List<Predicate> list = new ArrayList<>();
+                    list.add(criteriaBuilder.equal(root.get("dictTypeName"), dictTypeName));
+                    if (org.apache.commons.lang.StringUtils.isNotBlank(dictTypeId)) {
+                        list.add(criteriaBuilder.notEqual(root.get("dictTypeId"), dictTypeId));
+                    }
+                    return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
+                }
+            }) <= 0;
+        }
+        return false;
+    }
+
+    /**
+     * 检查多级字典键是否重复
+     * @param dictTypeId
+     * @param dictTypeKey
+     * @return false 重复 true 不重复
+     */
+    @Override
+    public boolean repeatTypeKey(String dictTypeId, String dictTypeKey) {
+        if (org.apache.commons.lang.StringUtils.isNotBlank(dictTypeKey)) {
+            return dictionaryRepository.count(new Specification<DictionaryType>() {
+                @Override
+                public Predicate toPredicate(Root<DictionaryType> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                    List<Predicate> list = new ArrayList<>();
+                    list.add(criteriaBuilder.equal(root.get("dictTypeKey"), dictTypeKey));
+                    if (org.apache.commons.lang.StringUtils.isNotBlank(dictTypeId)) {
+                        list.add(criteriaBuilder.notEqual(root.get("dictTypeId"), dictTypeId));
+                    }
+                    return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
+                }
+            }) <= 0;
+        }
+        return false;
     }
 }

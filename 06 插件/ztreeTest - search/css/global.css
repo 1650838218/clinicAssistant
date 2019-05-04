@@ -1,0 +1,191 @@
+.test{
+    min-width:500px;
+
+        min-height:300px;
+    background:#fff;
+}
+.test h2{
+    background:#0380ee;
+    color:#f0f0f0;
+    line-height:40px;
+    font-size:20px;
+    padding-left:30px;
+}
+.ztree li{
+    line-height:30px!important;
+    outline: 0;
+    list-style: none;
+    text-decoration: none;
+}
+.ztree:before{
+    display: inline-block;
+    content: "";
+    top: 0;
+    bottom: 0px;
+    left: 0px;
+    z-index: 1;
+    border: 1px dotted #67B2DD;
+    border-width: 0 0 0 1px;
+}
+.ztree ul{
+    position: relative!important;
+    margin: 0;
+    padding-left: 10px;
+    margin-left: 6px;
+    top: -6px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.ztree li{
+    position:relative!important;
+    padding-left: 4px;
+    margin-top:1px;
+}
+.ztree ul:before,.ztree li:before{
+    position:absolute!important;
+}
+
+.ztree{
+    padding:0;
+}
+span.icon-folder {
+    margin-left: 7px;
+    position: absolute!important;
+    top: 10px;
+}
+/* 复选框样式 */
+.ztree .chk.fa.fa-check{
+    background-color: #F9A021;
+    border-color: #F9A021;
+    color: #FFF;
+}
+.ico_close,.a_docu{
+    margin-right: 6px;
+    font-size: 14px;
+    top: 2px;
+    position: relative;
+}
+/* 折叠时文件夹的颜色 */
+.ftclose{
+    color:#FF892A!important;
+}
+/* 打开时文件夹的颜色 */
+.ftopen{
+    color:brown!important;
+}
+/* 最后一项开头图标颜色 */
+.a_docu{
+    color:#478FCA!important;
+}
+.node_name{
+    position: relative;
+    top: 1px;
+}
+.node_name input{
+    height:18px;
+}
+.ztree li:before{
+    display: inline-block;
+    content: "";
+    top: 16px;
+    left: -2px;
+    width: 26px;
+    height: 0;
+    border-top: 1px dotted #67B2DD;
+    z-index: 1;
+}
+.ztree ul:before{
+    display: inline-block;
+    content: "";
+    top: -9px;
+    bottom: 24px;
+    left: 7px;
+    z-index: 1;
+    border: 1px dotted #67B2DD;
+    border-width: 0 0 0 1px;
+}
+.ztree li a{
+    cursor: pointer;
+}
+.activeLiClick{
+    background:rgba(98,168,209,.1);
+}
+.activeLiMouse{
+    background:rgba(98,168,209,.1);
+} 
+.curSelectedNode{
+    background:rgba(98,168,209,.1);
+}
+.ztree li span.button.add {
+    margin-left: 2px;
+    margin-right: -1px;
+    background-position: -144px 0;
+    vertical-align: top;
+}
+.ztree .chk{
+    color: #F9E8CE;
+    width: 13px;
+    height: 13px;
+    line-height: 13px;
+    font-size: 11px;
+    border-radius: 3px;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    background-color: #FAFAFA;
+    border: 1px solid #CCC;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    margin:0 6px 0 25px;
+    text-align: center;
+}
+.ztree .chk.focus{
+    border:solid 1px #ff7c34;
+}
+.ztree .chk.fa-check {
+    background-color: #F9A021;
+    border-color: #F9A021;
+    color: #FFF;
+}
+.ztree li a span:first-child{
+    position: relative;
+    top: 2px;
+    margin-right: 2px;
+    margin-left: -1px;
+}
+.searchAreaBox{
+    margin-left:50px;
+    width:300px;
+}
+.searchAreaBox{
+    min-height:56px;
+    padding-right: 12px;
+}
+.searchAreaBox span,.searchAreaBox .searchArea{
+    display:block;
+    float:left;
+}
+.searchAreaBox .searchArea{
+    position:relative;
+    margin-top:11px;
+    margin-bottom:11px;
+    width:100%;
+}
+.searchAreaBox .searchArea input{
+    width:100%;
+}
+.searchAreaBox .searchArea i{
+    display: block;
+    position: absolute;
+    right: 5px;
+    top: 7px;
+    font-size: 20px;
+    color:#d5d5d5;
+    cursor:pointer;
+}
+.searchAreaBox .searchArea i:hover{
+    color:#669fc7;
+}
+.searchAreaBox span{
+    line-height:64px;
+    width:30%;
+}

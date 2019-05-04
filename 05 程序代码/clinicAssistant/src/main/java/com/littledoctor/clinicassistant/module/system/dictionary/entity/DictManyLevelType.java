@@ -13,54 +13,64 @@ import java.util.List;
 @Table(name = "DICT_MANY_LEVEL_TYPE")
 public class DictManyLevelType {
 
-    /**
-     * 主键ID
-     */
+    /** 主键ID */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "MANY_LEVEL_TYPE_ID", nullable = false)
-    private Integer manyLevelTypeId;
+    @Column(name = "DICT_TYPE_ID", nullable = false)
+    private Integer dictTypeId;
 
-    /**
-     * 类型名称
-     */
-    @Column(name = "MANY_LEVEL_TYPE_NAME", nullable = false, length = 500)
-    private String manyLevelTypeName;
+    /** 多级字典字典类型名称 */
+    @Column(name = "DICT_TYPE_NAME", nullable = false, length = 500)
+    private String dictTypeName;
+
+    /** 多级字典字典键 */
+    @Column(name = "DICT_TYPE_KEY", nullable = false, length = 50)
+    private String dictTypeKey;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "MANY_LEVEL_TYPE_ID")
-    private List<DictManyLevelNode> manyLevelNodeList = new ArrayList<>();
+    @JoinColumn(name = "DICT_TYPE_ID")
+    @OrderBy("sequenceNumber")
+    private List<DictManyLevelItem> manyLevelNodeList = new ArrayList<>();
 
     public DictManyLevelType() {
 
     }
 
-    public DictManyLevelType(Integer manyLevelTypeId, String manyLevelTypeName) {
-        this.manyLevelTypeId = manyLevelTypeId;
-        this.manyLevelTypeName = manyLevelTypeName;
+    public DictManyLevelType(Integer dictTypeId, String dictTypeName, String dictTypeKey) {
+        this.dictTypeId = dictTypeId;
+        this.dictTypeName = dictTypeName;
+        this.dictTypeKey = dictTypeKey;
     }
 
-    public Integer getManyLevelTypeId() {
-        return manyLevelTypeId;
+    public Integer getDictTypeId() {
+        return dictTypeId;
     }
 
-    public void setManyLevelTypeId(Integer manyLevelTypeId) {
-        this.manyLevelTypeId = manyLevelTypeId;
+    public void setDictTypeId(Integer dictTypeId) {
+        this.dictTypeId = dictTypeId;
     }
 
-    public String getManyLevelTypeName() {
-        return manyLevelTypeName;
+    public String getDictTypeName() {
+        return dictTypeName;
     }
 
-    public void setManyLevelTypeName(String manyLevelTypeName) {
-        this.manyLevelTypeName = manyLevelTypeName;
+    public void setDictTypeName(String dictTypeName) {
+        this.dictTypeName = dictTypeName;
     }
 
-    public List<DictManyLevelNode> getManyLevelNodeList() {
+    public String getDictTypeKey() {
+        return dictTypeKey;
+    }
+
+    public void setDictTypeKey(String dictTypeKey) {
+        this.dictTypeKey = dictTypeKey;
+    }
+
+    public List<DictManyLevelItem> getManyLevelNodeList() {
         return manyLevelNodeList;
     }
 
-    public void setManyLevelNodeList(List<DictManyLevelNode> manyLevelNodeList) {
+    public void setManyLevelNodeList(List<DictManyLevelItem> manyLevelNodeList) {
         this.manyLevelNodeList = manyLevelNodeList;
     }
 }

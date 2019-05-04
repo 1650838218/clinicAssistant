@@ -17,4 +17,9 @@ public interface Message {
     public static final String QUERY_SUCCESS = "查询成功！";
 
     public static final String QUERY_FAILED = "查询失败！";
+
+    public static final String QUERY_EXCEPTION = "数据查询异常，请联系管理员！";
+
+    public static final String NO_DATA = "暂无数据！";
+
 }

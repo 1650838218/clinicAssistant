@@ -7,6 +7,7 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table', 'ajax'], function () {
     var layer = layui.layer;
     var table = layui.table;
     var ajax = layui.ajax;
+    var rootMappint = '/system/dictionary/oneLevel';
     var leftTree;// 左侧菜单树
     var dictItemTableId = 'dict-item-table';
     var currentDictTypeId = '';
@@ -21,7 +22,7 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table', 'ajax'], function () {
     // 加载左侧菜单树
     leftTree = eleTree.render({
         elem: '.left-tree',
-        url: "/system/dictionary/oneLevel/queryTree",
+        url: rootMappint + "/queryTree",
         method: "get",
         highlightCurrent: true,// 高亮显示当前节点
         defaultExpandAll: true,// 默认展开所有节点
@@ -30,7 +31,7 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table', 'ajax'], function () {
         showCheckbox: false,// 是否显示复选框
         searchNodeMethod: function (value, data) {
             if (!value) return true;
-            return data.label.indexOf(value) !== -1;
+            return data.label.indeeleTree-menuxOf(value) !== -1;
         },
         done: function (res) {
             console.log(res);
@@ -143,7 +144,7 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table', 'ajax'], function () {
             var dictionaryId = d.data.currentData.id;
             currentDictTypeId = dictionaryId;
             try {
-                $.getJSON('/system/dictionary/oneLevel/getById', {"dictionaryId": dictionaryId}, function (dictionaryData) {
+                $.getJSON(rootMappint + '/getById', {"dictionaryId": dictionaryId}, function (dictionaryData) {
                     if (!!dictionaryData && !!dictionaryData.dictTypeId) {
                         assigForm(dictionaryData);// 给表单赋值
                         table.reload(dictItemTableId, {data: dictionaryData.dictItem})// 加载表格
@@ -206,17 +207,21 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table', 'ajax'], function () {
             var url = '';
             var msg = '';
             var data = {};
-            data[inputName] = value;
+            data[inputName] = value.trim();
+            data.dictTypeId = $('#dictionary-info input[name="dictTypeId"]').val();
             if (inputName === 'dictTypeName') {
-                url = '';
+                url = rootMappint + '/repeatTypeName';
                 msg = '字典名称已被占用，请重新填写！';
             } else if (inputName === 'dictTypeKey') {
-                url = '';
+                url = rootMappint + '/repeatTypeKey';
                 msg = '字典键已被占用，请重新填写！';
             }
-            ajax.getJSONAsync(url, data, function (result) {
-                if (!!msg && !result) return msg;
-            }, false);
+            if (utils.isNotNull(url)) {
+                ajax.getJSONAsync(url, data, function (result) {
+                    if (result) msg = '';
+                }, false);
+            }
+            return msg;
         },
         regExp: function (value, item) {
             var inputName = $(item).attr('name');
@@ -238,7 +243,7 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table', 'ajax'], function () {
     function delDictionaryFun() {
         if (!!currentDictTypeId) {
             layer.confirm(MSG.delete_confirm + '此字典吗？', {icon: 3, title: '提示'}, function (index) {
-                ajax.delete('/system/dictionary/oneLevel/delete/' + currentDictTypeId, function (data, textStatus, jqXHR) {
+                ajax.delete(rootMappint + '/delete/' + currentDictTypeId, function (data, textStatus, jqXHR) {
                     if (data) {
                         layer.msg(MSG.delete_success);
                         if (!!leftTree) leftTree = leftTree.reload();
@@ -309,7 +314,7 @@ layui.use(['form', 'eleTree', 'jquery', 'layer', 'table', 'ajax'], function () {
             return false;
         }
         dictionary.dictItem = dictItems;
-        ajax.postJSON('/system/dictionary/oneLevel/save', dictionary, function (dict) {
+        ajax.postJSON(rootMappint + '/save', dictionary, function (dict) {
             if (!!dict && !!dict.dictTypeId) {
                 assigForm(dict);// 赋值
                 table.reload(dictItemTableId, {data: dict.dictItem});

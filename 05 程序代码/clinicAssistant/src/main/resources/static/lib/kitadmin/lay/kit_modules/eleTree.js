@@ -92,11 +92,17 @@ layui.define(["jquery", "laytpl"], function (exports) {
             },
             // 根据key设置高亮
             setHighLight: function (key) {
-                if (!key) return;
+                if (options.data.length === 0) return;
                 _self.setHighLight.call(_self, key);
             },
+            // 取消高亮（也可以用做取消选中）
             unHighLight: function () {
                 if (_self.prevClickEle) _self.prevClickEle.removeClass("eleTree-node-content-active");
+            },
+            // 获取在不显示复选框的情况下选中的节点，即获取高亮的节点
+            getSelectedNodes: function () {
+                if (options.data.length === 0) return;
+                return _self.prevClickEle;
             }
         }
     }
