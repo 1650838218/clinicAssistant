@@ -1,7 +1,7 @@
-package com.littledoctor.clinicassistant.module.pharmacy.order.service;
+package com.littledoctor.clinicassistant.module.pharmacy.purchasebill.service;
 
-import com.littledoctor.clinicassistant.module.pharmacy.order.dao.OrderRepository;
-import com.littledoctor.clinicassistant.module.pharmacy.order.entity.Order;
+import com.littledoctor.clinicassistant.module.pharmacy.purchasebill.dao.PurchaseBillRepository;
+import com.littledoctor.clinicassistant.module.pharmacy.purchasebill.entity.PurchaseBill;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,13 +19,13 @@ import java.util.List;
 /**
  * @Auther: 周俊林
  * @Date: 2019-05-04 16:42
- * @Description: 药房管理 订单
+ * @Description: 采购单
  */
 @Service
-public class OrderServiceImpl implements OrderService{
+public class PurchaseBillServiceImpl implements PurchaseBillService {
 
     @Autowired
-    private OrderRepository orderRepository;
+    private PurchaseBillRepository purchaseBillRepository;
 
     /**
      * 分页查询订单
@@ -37,10 +37,10 @@ public class OrderServiceImpl implements OrderService{
      * @throws Exception
      */
     @Override
-    public Page<Order> queryPage(Pageable page, String dateRange, String supplierId, String orderType) throws Exception {
-        return orderRepository.findAll(new Specification<Order>() {
+    public Page<PurchaseBill> queryPage(Pageable page, String dateRange, String supplierId, String orderType) throws Exception {
+        return purchaseBillRepository.findAll(new Specification<PurchaseBill>() {
             @Override
-            public Predicate toPredicate(Root<Order> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+            public Predicate toPredicate(Root<PurchaseBill> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicateList = new ArrayList<>();
                 if (StringUtils.isNotBlank(dateRange)) {
                     String[] dates = dateRange.split(" - ");

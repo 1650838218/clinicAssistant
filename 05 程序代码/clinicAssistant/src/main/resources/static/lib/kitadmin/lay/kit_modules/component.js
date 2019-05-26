@@ -1,3 +1,93 @@
-/** kitadmin-v2.1.6 MIT License By http://kit.zhengjinfan.cn Author Van Zheng */
-;"use strict";layui.define(["layer"],function(i){layui.layer;var t=layui.jquery,l="component",r={NAV:".kit-nav",ITEM:".kit-item",SHOW:"layui-show",THIS:"layui-this"},n=function(){this.version="1.0.1"};n.prototype.render=function(i,n){if(void 0===i)e.renderNav(n);else switch(i){case"nav":e.renderNav(n)}return this},n.prototype.init=function(){return this.render(),this},n.prototype.on=function(i,n){return layui.onevent.call(this,l,i,n)};var e={renderNav:function(i){t(void 0===i?r.NAV:".kit-nav[lay-filter="+i+"]").find(r.ITEM).each(function(){var e=t(this),i=e.find("ul.kit-nav-child"),a=0<i.length;a&&(e.children("a").addClass("child"),i.addClass("layui-anim").addClass("layui-anim-upbit")),e.off("click").on("click",function(i){if(layui.stope(i),a)e.addClass(r.SHOW),t(document).one("click",function(){e.removeClass(r.SHOW)});else{e.parents(r.NAV).find(r.ITEM).removeClass("layui-this"),e.addClass(r.THIS),e.parent(".kit-nav-child").parent(".layui-show").removeClass(r.SHOW);var n=e.parents(r.NAV).attr("lay-filter");layui.event.call(this,l,"nav("+n+")",{elem:e})}})})}},a=new n;a.init(),i("component",a)});
-//# sourceMappingURL=component.js.map
+// 处理组件的渲染和操作
+layui.define(['layer'], function (exports) {
+  var layer = layui.layer,
+    $ = layui.jquery;
+
+  var MOD_NAME = 'component';
+  var classNames = {
+    nav: {
+      NAV: '.kit-nav',
+      ITEM: '.kit-item',
+      SHOW: 'layui-show',
+      THIS: 'layui-this'
+    }
+  };
+  var Component = function () {
+    this.version = '1.0.1';
+  };
+  Component.prototype.render = function (modName, filterName) {
+    var that = this;
+    if (modName === undefined) {
+      _private.renderNav(filterName);
+    } else {
+      switch (modName) {
+        case 'nav':
+          _private.renderNav(filterName);
+          break;
+      }
+    }
+    return that;
+  };
+
+  Component.prototype.init = function () {
+    this.render();
+    return this;
+  };
+  Component.prototype.on = function (events, callback) {
+    return layui.onevent.call(this, MOD_NAME, events, callback);
+  }
+
+  var _private = {
+    renderNav: function (filterName) {
+      var _nav = filterName === undefined ?
+        $(classNames.nav.NAV) : $('.kit-nav[lay-filter=' + filterName + ']');
+
+      var navs = _nav.find(classNames.nav.ITEM).each(function () {
+        var _that = $(this);
+        var _child = _that.find('ul.kit-nav-child');
+        // 是否拥有二级
+        var hasChild = _child.length > 0;
+        if (hasChild) {
+          _that.children('a').addClass('child');
+          _child.addClass('layui-anim').addClass('layui-anim-upbit');
+        }
+        // 绑定点击事件
+        _that.off('click').on('click', function (e) {
+          layui.stope(e);
+          _that.parents('.kit-nav').children().removeClass(classNames.nav.SHOW);
+          // 如果拥有二级则显示二级
+          if (hasChild) {
+            _that.addClass(classNames.nav.SHOW);
+            $(document).one('click', function () {
+              _that.removeClass(classNames.nav.SHOW);
+              // $(this).off('click');
+            });
+          } else {
+            // 切换选中状态
+            _that.parents(classNames.nav.NAV)
+              .find(classNames.nav.ITEM)
+              .removeClass('layui-this');
+            _that.addClass(classNames.nav.THIS);
+            // 隐藏二级
+            _that.parent('.kit-nav-child')
+              .parent('.layui-show')
+              .removeClass(classNames.nav.SHOW);
+
+            //获取过滤器名称
+            var filter = _that.parents(classNames.nav.NAV).attr('lay-filter');
+            //执行事件
+            layui.event.call(this, MOD_NAME, 'nav(' + filter + ')', {
+              elem: _that
+            });
+          }
+        });
+      });
+    }
+  };
+
+  var component = new Component();
+  component.init();
+
+  //输出component接口
+  exports('component', component);
+});

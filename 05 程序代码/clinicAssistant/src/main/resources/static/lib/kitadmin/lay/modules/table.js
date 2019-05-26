@@ -1913,7 +1913,11 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
     delete data[table.config.indexName];
     return data;
   };
-  
+
+  // 把thisTable和Class透漏出去，方便拓展
+  table.thisTable = thisTable;
+  table.Class = Class;
+
   //自动完成渲染
   table.init();
   

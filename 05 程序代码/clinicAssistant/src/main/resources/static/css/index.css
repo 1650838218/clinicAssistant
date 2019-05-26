@@ -78,11 +78,16 @@
     font-size: 15px;
 }
 
+.left-panel .layui-table-view {
+    margin: 0px;
+}
+
 /*右侧面板*/
 .right-panel {
     padding: 10px;
     margin: 10px 10px 10px 0px;
     background-color: white;
+    border-radius: 6px;
 }
 
 /*右侧面板*/
@@ -108,4 +113,19 @@
     top:100%;
     background-color: #fff;
     z-index: 100;
+}
+
+/*必填项的红*号*/
+.layui-form-label span.required {
+    color: red;
+    /*text-align: center;*/
+}
+
+.layui-textarea {
+    min-height: 0px;
+}
+
+.layui-form-label {
+    padding: 9px 0px;
+    width: 100px;
 }

@@ -1,0 +1,144 @@
+<div class="layui-row">
+    <div class="layui-col-md3">
+        <div class="left-panel">
+            <div class="left-search">
+                <input type="text" placeholder="药品名称/全拼/简拼/条形码" autocomplete="off" class="layui-input">
+                <div class="layui-btn-group">
+                    <button id="add-btn" class="layui-btn layui-btn-normal layui-btn-sm" title="新增">
+                        <i class="layui-icon layui-icon-add-1"></i>
+                    </button>
+                    <button id="del-btn" class="layui-btn layui-btn-normal layui-btn-sm layui-btn-disabled" title="删除" disabled="disabled">
+                        <i class="layui-icon layui-icon-delete"></i>
+                    </button>
+                </div>
+            </div>
+            <table class="layui-hide" lay-filter="left-table" id="left-table"></table>
+        </div>
+    </div>
+    <div class="layui-col-md9">
+        <div class="right-panel">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <h3><b>药品信息</b></h3>
+                </div>
+                <div class="layui-card-body">
+                    <form id="medicinelist-form" class="layui-form" lay-filter="medicinelist-form">
+                        <input type="hidden" name="medicineListId" value="">
+                        <div class="layui-row layui-col-space10 layui-form-item">
+                            <div class="layui-col-lg4">
+                                <label class="layui-form-label"><span class="required">*</span>药品名称：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="medicineName" autocomplete="off" class="layui-input"
+                                           maxlength="50" placeholder="请输入药品名称" lay-verify="required|repeat">
+                                </div>
+                            </div>
+                            <div class="layui-col-lg4">
+                                <label class="layui-form-label"><span class="required">*</span>药品分类：</label>
+                                <div class="layui-input-block">
+                                    <select name="medicineType" lay-verify="required" placeholder="请选择药品分类"></select>
+                                </div>
+                            </div>
+                            <div class="layui-col-lg4">
+                                <label class="layui-form-label"><span class="required">*</span>库存预警：</label>
+                                <div class="layui-input-block">
+                                    <input name="stockWarn" class="layui-input" placeholder="请输入库存预警"
+                                           autocomplete="off" maxlength="10" ay-verify="required|number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space10 layui-form-item">
+                            <div class="layui-col-lg4">
+                                <label class="layui-form-label">条形码：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="barcode" class="layui-input" placeholder="请输入条形码"
+                                           autocomplete="off" maxlength="50" ay-verify="repeat|regExp">
+                                </div>
+                            </div>
+                            <div class="layui-col-lg4">
+                                <label class="layui-form-label"><span class="required">*</span>全拼：</label>
+                                <div class="layui-input-block">
+                                    <input name="fullPinyin" autocomplete="off" class="layui-input"
+                                           maxlength="50" placeholder="请输入全拼" lay-verify="required">
+                                </div>
+                            </div>
+                            <div class="layui-col-lg4">
+                                <label class="layui-form-label"><span class="required">*</span>简拼：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="abbreviation" autocomplete="off" class="layui-input"
+                                           maxlength="50" placeholder="请输入简拼" lay-verify="required">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space10 layui-form-item">
+                            <div class="layui-col-lg6">
+                                <label class="layui-form-label">成分：</label>
+                                <div class="layui-input-block">
+                                    <textarea name="component" autocomplete="off" class="layui-textarea" rows="3"
+                                           maxlength="200" placeholder="请输入成分"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-col-lg6">
+                                <label class="layui-form-label">功能主治：</label>
+                                <div class="layui-input-block">
+                                    <textarea name="functionAttending" autocomplete="off" class="layui-textarea" rows="3"
+                                              maxlength="300" placeholder="请输入功能主治"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space10 layui-form-item">
+                            <div class="layui-col-lg6">
+                                <label class="layui-form-label">规格：</label>
+                                <div class="layui-input-block">
+                                    <input name="specifications" autocomplete="off" class="layui-input"
+                                              maxlength="100" placeholder="请输入规格">
+                                </div>
+                            </div>
+                            <div class="layui-col-lg6">
+                                <label class="layui-form-label">用法用量：</label>
+                                <div class="layui-input-block">
+                                    <input name="usageAndDosage" autocomplete="off" class="layui-input"
+                                           maxlength="100" placeholder="请输入用法用量">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space10 layui-form-item">
+                            <div class="layui-col-lg6">
+                                <label class="layui-form-label">禁忌：</label>
+                                <div class="layui-input-block">
+                                    <textarea name="taboo" autocomplete="off" class="layui-textarea" rows="3"
+                                              maxlength="300" placeholder="请输入禁忌"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-col-lg4">
+                                <label class="layui-form-label">是否有毒：</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="poisonous" value="true" title="是">
+                                    <input type="radio" name="poisonous" value="false" title="否" checked>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space10 layui-form-item">
+                            <div class="layui-col-lg8">
+                                <label class="layui-form-label">制造商：</label>
+                                <div class="layui-input-block">
+                                    <input name="manufacturer" autocomplete="off" class="layui-input"
+                                           maxlength="50" placeholder="请输入制造商">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space10">
+                            <div class="layui-col-lg-offset10 layui-col-lg2">
+                                <button type="button" lay-filter="submit-btn" lay-submit class="layui-btn">保存</button>
+                                <button type="button" id="cancel-btn" class="layui-btn layui-btn-primary">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/page/module/pharmacy/medicinelist/medicineList.js"></script>
+<script src="/js/pinyin/pinyin_dict_withtone.js"></script>
+<script src="/js/pinyin/pinyin_dict_polyphone.js"></script>
+<script src="/js/pinyin/pinyinUtil.js"></script>

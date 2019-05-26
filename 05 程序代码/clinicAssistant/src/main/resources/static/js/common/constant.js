@@ -39,3 +39,8 @@ var MSG = {
     query_success: '查询成功！',
     query_fail: '查询失败！'
 };
+
+// 用来计算右侧面板高度，右侧面板高度与窗口高度的差值
+var RIGHT_PANEL_HIGHT_DIFF = 92;
+// 用来计算左侧表格高度，左侧表格高度与窗口高度的差值
+var LEFT_TABLE_HIGHT_DIFF = 140;

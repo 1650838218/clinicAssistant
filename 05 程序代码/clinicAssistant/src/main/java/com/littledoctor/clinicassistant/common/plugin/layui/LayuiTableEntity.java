@@ -28,7 +28,10 @@ public class LayuiTableEntity<T> {
     private List<T> data;
 
     public LayuiTableEntity() {
-
+        this.code = 1;
+        this.msg = Message.NO_DATA;
+        this.count = 0;
+        this.data = new ArrayList<>();
     }
 
     public LayuiTableEntity(List<T> data) {

@@ -4,6 +4,7 @@ import com.littledoctor.clinicassistant.common.msg.Message;
 import com.littledoctor.clinicassistant.common.plugin.tree.TreeEntity;
 import com.littledoctor.clinicassistant.common.plugin.tree.TreeUtils;
 import com.littledoctor.clinicassistant.common.util.ControllerUtils;
+import com.littledoctor.clinicassistant.module.system.dictionary.entity.DictionaryItem;
 import com.littledoctor.clinicassistant.module.system.dictionary.entity.DictionaryType;
 import com.littledoctor.clinicassistant.module.system.dictionary.service.DictionaryService;
 import net.sf.json.JSONObject;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,6 +122,37 @@ public class DictionaryController {
     }
 
     /**
+     * 根据字典键查询字典，常用于下拉框
+     * @param dictTypeKey
+     * @return
+     */
+    @RequestMapping(value = "/getByKey", method = RequestMethod.GET)
+    public DictionaryType getByKey(@RequestParam String dictTypeKey) {
+        try {
+//            Assert.notNull(dictionaryId, Message.PARAMETER_IS_NULL);
+            return dictionaryService.getByKey(dictTypeKey);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return null;
+    }
+
+    /**
+     * 根据字典键查询字典，常用于下拉框
+     * @param dictTypeKey
+     * @return
+     */
+    @RequestMapping(value = "/getItemByKey", method = RequestMethod.GET)
+    public List<DictionaryItem> getItemByKey(@RequestParam String dictTypeKey) {
+        try {
+            return dictionaryService.getByKey(dictTypeKey).getDictItem();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return new ArrayList<>();
+    }
+
+    /**
      * 检查字典名称是否重复
      * @param dictTypeId
      * @param dictTypeName
@@ -137,7 +170,7 @@ public class DictionaryController {
     }
 
     /**
-     * 检查字典名称是否重复
+     * 检查字典键是否重复
      * @param dictTypeId
      * @param dictTypeKey
      * @return false 重复 true 不重复

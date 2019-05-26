@@ -20,4 +20,12 @@ public interface DictionaryRepository extends JpaRepository<DictionaryType, Inte
      */
     @Query(value = "select new com.littledoctor.clinicassistant.common.plugin.tree.TreeEntity(t.dictTypeName , t.dictTypeId, t.menuId) from DictionaryType t")
     List<TreeEntity> findTreeEntity();
+
+    /**
+     * 根据字典键查询字典
+     * @param dictTypeKey
+     * @return
+     */
+    @Query(value = "select t from DictionaryType t where t.dictTypeKey = ?1")
+    DictionaryType getByKey(String dictTypeKey);
 }

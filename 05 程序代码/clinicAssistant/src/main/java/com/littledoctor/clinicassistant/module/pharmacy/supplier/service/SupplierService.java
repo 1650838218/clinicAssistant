@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @Auther: 周俊林
  * @Date: 2019-05-04 12:58
- * @Description:
+ * @Description: 供应商
  */
 public interface SupplierService {
     /**

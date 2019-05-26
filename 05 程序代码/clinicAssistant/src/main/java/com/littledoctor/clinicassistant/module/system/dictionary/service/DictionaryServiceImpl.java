@@ -3,7 +3,6 @@ package com.littledoctor.clinicassistant.module.system.dictionary.service;
 import com.littledoctor.clinicassistant.common.plugin.tree.TreeEntity;
 import com.littledoctor.clinicassistant.common.plugin.tree.TreeNodeType;
 import com.littledoctor.clinicassistant.module.system.dictionary.dao.DictionaryRepository;
-import com.littledoctor.clinicassistant.module.system.dictionary.entity.DictManyLevelType;
 import com.littledoctor.clinicassistant.module.system.dictionary.entity.DictionaryType;
 import com.littledoctor.clinicassistant.module.system.menu.entity.Menu;
 import com.littledoctor.clinicassistant.module.system.menu.service.MenuService;
@@ -180,5 +179,18 @@ public class DictionaryServiceImpl implements DictionaryService {
             }) <= 0;
         }
         return false;
+    }
+
+    /**
+     * 根据字典键查询字典，常用于下拉框
+     * @param dictTypeKey
+     * @return
+     */
+    @Override
+    public DictionaryType getByKey(String dictTypeKey) throws Exception {
+        if (!StringUtils.isEmpty(dictTypeKey)) {
+            return dictionaryRepository.getByKey(dictTypeKey);
+        }
+        return null;
     }
 }

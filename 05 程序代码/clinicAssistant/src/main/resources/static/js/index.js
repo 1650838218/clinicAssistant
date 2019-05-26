@@ -125,9 +125,13 @@ layui.define(['element', 'sidebar', 'mockjs', 'menu', 'route', 'utils', 'compone
           component: 'page/module/pharmacy/supplier/supplier.html',
           name: '供货商'
         }, {
-          path: '/user/table3',
-          component: 'components/table/teble3.html',
-          name: '数据表格3'
+            path: '/pharmacy/medicinelist',
+            component: 'page/module/pharmacy/medicinelist/medicineList.html',
+            name: '药品清单'
+        }, {
+          path: '/pharmacy/purchasebill',
+          component: 'page/module/pharmacy/purchasebill/purchaseBillForm.html',
+          name: '采购单'
         }, {
           path: '/user/form',
           component: 'components/form/index.html',

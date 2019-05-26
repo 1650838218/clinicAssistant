@@ -37,7 +37,9 @@ public class TreeUtils {
                 }
                 // 找每个节点的子节点
                 for (TreeEntity it : source) {
-                    if (it.getpId() == treeEntity.getId()) {
+                    /*1. Integer 类型的值在[-128,127] 期间,Integer 用 “==”是可以的   ， Integer  与 int 类型比较（==）比较的是值。
+                      2. 如果要比较Integer的值，比较靠谱的是通过Integer.intValue();这样出来的就是int值，就可以直接比较了；或者equals()比较*/
+                    if (it.getpId().equals(treeEntity.getId())) {
                         if (treeEntity.getChildren() == null) {
                             treeEntity.setChildren(new ArrayList<>());
                         }

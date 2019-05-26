@@ -27,12 +27,18 @@
         <div class="layui-layout-left">
             <ul class="kit-nav">
                 <li class="kit-item"><a href="">控制台</a></li>
-                <li class="kit-item"><a href="">商品管理</a></li>
+                <li class="kit-item"><a href="javascript:;">财务管理</a>
+                    <ul class="kit-nav-child">
+                        <li class="kit-item"><a href="#/pharmacy/supplier">药品清单</a></li>
+                        <li class="kit-item"><a href="#/system/oneLevel">进货单</a></li>
+                    </ul>
+                </li>
                 <li class="kit-item">
                     <a href="javascript:;">药房管理</a>
                     <ul class="kit-nav-child">
+                        <li class="kit-item"><a href="#/pharmacy/medicinelist">药品清单</a></li>
                         <li class="kit-item"><a href="#/pharmacy/supplier">供货商</a></li>
-                        <li class="kit-item"><a href="#/system/oneLevel">进货单</a></li>
+                        <li class="kit-item"><a href="#/pharmacy/purchasebill">采购单</a></li>
                     </ul>
                 </li>
                 <li class="kit-item">
@@ -125,6 +131,12 @@
     layui.config({
         base: 'js/'
     }).use('index');
+
+    layui.config({
+        base: 'js/' //假设这是你存放拓展模块的根目录
+    }).extend({ //设定模块别名
+        optimizeSelectOption: 'tablePlug/optimizeSelectOption/optimizeSelectOption' //如果 mymod.js 是在根目录，也可以不用设定别名
+    });
 </script>
 <!-- endbuild -->
 </body>

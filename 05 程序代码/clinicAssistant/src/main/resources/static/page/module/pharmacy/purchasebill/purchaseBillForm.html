@@ -1,0 +1,102 @@
+<style>
+    .center-panel form .layui-inline {
+        margin-right: 0px;
+    }
+    .center-panel form .layui-form-label {
+        width: 60px;
+    }
+    .center-panel form .layui-input-inline {
+        width: 150px;
+        margin-right: 0px;
+    }
+    /* 防止下拉框的下拉列表被隐藏---必须设置--- */
+    .layui-table-cell {
+        overflow: visible;
+    }
+    .layui-table-box {
+        overflow: visible;
+    }
+    .layui-table-body {
+        overflow: visible;
+    }
+    /* 使得下拉框与单元格刚好合适 */
+    td .layui-form-select {
+        margin-top: -10px;
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+</style>
+<div class="layui-row">
+    <div class="layui-col-md12">
+        <div class="center-panel">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <h3><b>新建采购单</b></h3>
+                </div>
+                <div class="layui-card-body">
+                    <form id="purchasebill-form" class="layui-form" lay-filter="purchasebill-form">
+                        <input type="hidden" name="purchaseBillId" value="">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">单号：</label>
+                                <div class="layui-input-inline">
+                                    <input name="purchaseBillCode" readonly class="layui-input" lay-verify="required" placeholder="请填写采购单号">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">类型：</label>
+                                <div class="layui-input-inline" style="width: 160px;">
+                                    <select name="purchaseBillType" lay-verify="required"></select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">日期：</label>
+                                <div class="layui-input-inline">
+                                    <input name="purchaseBillDate" readonly class="layui-input" placeholder="请选择采购单日期" lay-verify="required">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">供应商：</label>
+                                <div class="layui-input-inline">
+                                    <select name="supplierId" lay-verify="required"></select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">电话：</label>
+                                <div class="layui-input-inline">
+                                    <input name="supplierPhone" class="layui-input" lay-verify="phone" placeholder="请填写联系方式">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">总价：</label>
+                                <div class="layui-input-inline">
+                                    <input type="number" name="totalPrice" class="layui-input" placeholder="请填写总价" lay-verify="required">
+                                </div>
+                            </div>
+                        </div>
+                        <table class="layui-hide" lay-filter="purchasebill-table" id="purchasebill-table"></table>
+                        <div class="layui-row layui-col-space10">
+                            <div class="layui-col-lg-offset10 layui-col-lg2">
+                                <button type="button" lay-filter="submit-btn" lay-submit class="layui-btn">保存</button>
+                                <button type="button" lay-filter="cancel-btn" class="layui-btn layui-btn-primary">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--单位下拉框-->
+<script type="text/html" id="count-unit-select">
+    <select name="countUnit" lay-filter="count-unit">
+        <option value="1">公斤(千克)</option>
+        <option value="2">箱</option>
+    </select>
+</script>
+<!--layui table 操作列-->
+<script type="text/html" id="operate-column">
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="create">新增</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="delete">删除</a>
+</script>
+<script src="/page/module/pharmacy/purchasebill/purchaseBillForm.js"></script>

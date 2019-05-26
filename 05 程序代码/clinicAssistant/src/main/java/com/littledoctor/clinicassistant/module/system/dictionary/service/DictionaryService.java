@@ -65,4 +65,11 @@ public interface DictionaryService {
      * @return
      */
     boolean repeatTypeKey(String dictTypeId, String dictTypeKey);
+
+    /**
+     * 根据字典键查询字典，常用于下拉框
+     * @param dictTypeKey
+     * @return
+     */
+    DictionaryType getByKey(String dictTypeKey) throws Exception;
 }
