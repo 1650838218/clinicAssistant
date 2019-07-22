@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50557
 File Encoding         : 65001
 
-Date: 2019-07-21 22:23:24
+Date: 2019-07-22 21:54:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -83,12 +83,14 @@ INSERT INTO `dictionary_item` VALUES ('114', 'bbb', '2', '1', '112');
 INSERT INTO `dictionary_item` VALUES ('116', '试试', '3 ', '1', '115');
 INSERT INTO `dictionary_item` VALUES ('161', '中草药', '1', '1', '160');
 INSERT INTO `dictionary_item` VALUES ('162', '中成药', '2', '1', '160');
-INSERT INTO `dictionary_item` VALUES ('163', '其他', '3', '1', '160');
+INSERT INTO `dictionary_item` VALUES ('163', '其他', '99', '1', '160');
 INSERT INTO `dictionary_item` VALUES ('169', '公斤（千克）', '1', '1', '168');
 INSERT INTO `dictionary_item` VALUES ('170', '箱', '2', '1', '168');
 INSERT INTO `dictionary_item` VALUES ('172', '药品', '1', '1', '171');
 INSERT INTO `dictionary_item` VALUES ('173', '医疗器械', '2', '1', '171');
 INSERT INTO `dictionary_item` VALUES ('174', '日常用品', '3', '1', '171');
+INSERT INTO `dictionary_item` VALUES ('195', '中药饮片', '3', '1', '160');
+INSERT INTO `dictionary_item` VALUES ('197', '克（g）', '1', '1', '196');
 
 -- ----------------------------
 -- Table structure for `dictionary_type`
@@ -111,6 +113,7 @@ INSERT INTO `dictionary_type` VALUES ('115', 'CSA', '测试2', '52');
 INSERT INTO `dictionary_type` VALUES ('160', 'YPFL', '药品分类', '158');
 INSERT INTO `dictionary_type` VALUES ('168', 'SLDW', '数量单位', '167');
 INSERT INTO `dictionary_type` VALUES ('171', 'CGDLX', '采购单类型', '167');
+INSERT INTO `dictionary_type` VALUES ('196', 'KCDW', '库存单位', '158');
 
 -- ----------------------------
 -- Table structure for `dict_many_level_item`
@@ -165,7 +168,7 @@ CREATE TABLE `hibernate_sequence` (
 -- ----------------------------
 -- Records of hibernate_sequence
 -- ----------------------------
-INSERT INTO `hibernate_sequence` VALUES ('195');
+INSERT INTO `hibernate_sequence` VALUES ('201');
 
 -- ----------------------------
 -- Table structure for `menu`
@@ -188,7 +191,7 @@ INSERT INTO `menu` VALUES ('51', '1', '系统管理', '1', '', '0');
 INSERT INTO `menu` VALUES ('52', '0', '菜单管理', '1', '#/system/menu', '51');
 INSERT INTO `menu` VALUES ('53', '1', '一级字典', '2', '#/system/oneLevel', '51');
 INSERT INTO `menu` VALUES ('157', '1', '药房管理', '1', '', '0');
-INSERT INTO `menu` VALUES ('158', '1', '药品清单', '1', '#/pharmacy/medicinelist', '157');
+INSERT INTO `menu` VALUES ('158', '1', '药房品目', '1', '#/pharmacy/pharmacyitem', '157');
 INSERT INTO `menu` VALUES ('166', '1', '供货商', '2', '#/pharmacy/supplier', '157');
 INSERT INTO `menu` VALUES ('167', '1', '采购单', '3', '#/pharmacy/purchasebill', '157');
 
@@ -218,6 +221,9 @@ CREATE TABLE `pharmacy_item` (
 -- ----------------------------
 -- Records of pharmacy_item
 -- ----------------------------
+INSERT INTO `pharmacy_item` VALUES ('198', '三七', '1', '', '', 'SQ', 'sanqi', '', '', '', '', '', '', '500.00', '1');
+INSERT INTO `pharmacy_item` VALUES ('199', '当归', '1', '', '', 'DG', 'danggui', '', '', '', '', '', '', '1000.00', '1');
+INSERT INTO `pharmacy_item` VALUES ('200', '麻黄', '1', '', '', 'MH', 'mahuang', '', '', '', '', '', '', '1000.00', '1');
 
 -- ----------------------------
 -- Table structure for `purchase_order`
