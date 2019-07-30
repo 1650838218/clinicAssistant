@@ -1,0 +1,25 @@
+
+*.xml
+*.xml
+*.log
+03 页面原型/apache-tomcat-9.0.13/
+05 程序代码/clinicAssistant-easyui/
+05 程序代码/
+06 插件/
+*.txt
+*.png
+*.html
+*.json
+*.js
+*.css
+*.gif
+*.less
+*.scss
+*.jpg
+*.php
+*.db
+*.java
+*.class
+*.data
+*.backup
+*.jar
