@@ -2,6 +2,7 @@ package com.littledoctor.clinicassistant.module.pharmacy.medicinelist.controller
 
 import com.littledoctor.clinicassistant.common.msg.Message;
 import com.littledoctor.clinicassistant.common.plugin.layui.LayuiTableEntity;
+import com.littledoctor.clinicassistant.common.plugin.select.SelectOption;
 import com.littledoctor.clinicassistant.common.util.ControllerUtils;
 import com.littledoctor.clinicassistant.module.pharmacy.medicinelist.entity.MedicineList;
 import com.littledoctor.clinicassistant.module.pharmacy.medicinelist.service.MedicineListService;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.*;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -143,5 +145,19 @@ public class MedicineListController {
             log.error(e.getMessage(), e);
         }
         return null;
+    }
+
+    /**
+     * 获取下拉框的option list
+     * @return
+     */
+    @RequestMapping(value = "/getSelectOption", method = RequestMethod.GET)
+    public List<SelectOption> getSelectOption() {
+        try {
+            return medicineListService.getSelectOption();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return new ArrayList<>();
     }
 }

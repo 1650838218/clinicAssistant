@@ -294,13 +294,44 @@ layui.define('layer', function(exports){
             }
           });
           
+          var myFilter = function (value, text, id) {
+              var result;
+              if (escape(value).indexOf("%u") != -1) {// 汉字
+                result = text.indexOf(value) > -1;
+              } else {
+                var len = value.length;
+                var convertPinyin = pinyinUtil.getPinyin(text, '', false, true);
+                var makePy = pinyinUtil.getFirstLetter(text, true);
+                var f1 = false, f2 = false;
+                  for (var i = 0; i < convertPinyin.length; i++) {
+                      if (convertPinyin[i].indexOf(value) > -1) {
+                        f1 = true;
+                        break;
+                      }
+                  }
+                  for (var i = 0; i < makePy.length; i++) {
+                      if (makePy[i].toLowerCase().indexOf(value) > -1) {
+                          f2 = true;
+                          break;
+                      }
+                  }
+                  result = f1 || f2 || text.toLowerCase().indexOf(value) > -1 || (id === undefined ? false : id.indexOf(value) > -1);
+              }
+              return !result;
+          }
+          
           //检测值是否不属于 select 项
           var notOption = function(value, callback, origin){
             var num = 0;
             layui.each(dds, function(){
               var othis = $(this)
               ,text = othis.text()
-              ,not = text.indexOf(value) === -1;
+              ,id = othis.attr('layui-value')
+              ,not = myFilter(value, text, id);
+              // value 为当前input框输入的值
+              // text 是当前dd的值，即当前被遍历到的选项
+              // id 为当前dd的layui-value属性
+              // ,not = text.indexOf(value) === -1;
               if(value === '' || (origin === 'blur') ? value !== text : not) num++;
               origin === 'keyup' && othis[not ? 'addClass' : 'removeClass'](HIDE);
             });

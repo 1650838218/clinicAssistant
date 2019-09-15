@@ -1,5 +1,6 @@
 package com.littledoctor.clinicassistant.module.pharmacy.medicinelist.service;
 
+import com.littledoctor.clinicassistant.common.plugin.select.SelectOption;
 import com.littledoctor.clinicassistant.module.pharmacy.medicinelist.entity.MedicineList;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,4 +67,10 @@ public interface MedicineListService {
      * @return
      */
     List<MedicineList> queryByName(String name);
+
+    /**
+     * 获取下拉框的option list
+     * @return
+     */
+    List<SelectOption> getSelectOption() throws Exception;
 }

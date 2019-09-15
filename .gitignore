@@ -4,6 +4,7 @@
 *.log
 03 页面原型/apache-tomcat-9.0.13/
 05 程序代码/clinicAssistant-easyui/
+05 程序代码/clinicAssistant/
 05 程序代码/
 06 插件/
 *.txt
@@ -23,3 +24,4 @@
 *.data
 *.backup
 *.jar
+*.java

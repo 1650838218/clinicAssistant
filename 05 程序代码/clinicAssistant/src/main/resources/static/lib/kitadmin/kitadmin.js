@@ -19,7 +19,8 @@ if (layui === undefined) {
     select:'kit_modules/select',
     echarts:'kit_modules/echarts',
     eleTree:'kit_modules/eleTree',
-    ajax: 'kit_modules/ajax'
+    ajax: 'kit_modules/ajax',
+    optimizeSelectOption: 'tablePlug/optimizeSelectOption/optimizeSelectOption'
   };
 
   layui.injectModules(modules);

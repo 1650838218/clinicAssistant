@@ -61,6 +61,9 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
       ,resize: function(){ //重置表格尺寸/结构
         that.resize.call(that);
       }
+      ,addRow:function(record,index){
+        that.addRow.call(that,record, index);
+      }
       ,config: options
     }
   }
@@ -1680,6 +1683,147 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
     _WIN.on('resize', function(){
       that.resize();
     });
+  };
+
+  // 表格添加行
+  Class.prototype.addRow = function(record, index){
+      var that = this
+          ,options = that.config;
+      var dataBak = [];// 缓存表格已有的数据
+      that.key = options.id || options.index;
+      var oldData = table.cache[that.key];
+      var newRow = record||{};
+      // 获取当前行的位置
+      var rowIndex = (index != null && typeof index === 'number') ? index : -1;
+      //将之前的数组备份
+      for (var i = 0; i < oldData.length; i++) {
+          dataBak.push(oldData[i]);
+      }
+      // 插入空白行
+      if (rowIndex != -1) {
+          dataBak.splice(rowIndex + 1, 0, newRow);
+      } else {
+          dataBak.push(newRow);
+      }
+      that.reload({url: '',data: dataBak});// 将新数据重新载入表格
+      /*record=record||{};  //!**********1 无参数时，默认增加空白行
+      var that = this
+          ,curr=that.page
+          ,options = that.config;
+      var trs = []
+          ,trs_fixed = []
+          ,trs_fixed_r = [];
+      var tds = [], tds_fixed = [], tds_fixed_r = []
+          ,numbers = 1 + options.limit*(curr - 1) + 1; //序号
+
+      that.key = options.id || options.index;
+      if(!table.cache[that.key]){  //!**********2 表格打开时如果没有加载到数据，则创建数据缓存对象，避免后面无法增加新数据
+          table.cache[that.key]=[];
+      }
+      var i1=table.cache[that.key].length; //!********** 3 行索引,加载了数据且数据不为空才会设置 table.cache[that.key]，设置为已有数据记录数
+
+      record[table.config.indexName] = i1; //数据中加入行索引属性
+      that.eachCols(function(i3, item3){
+          var field = item3.field || i3
+              ,key = options.index + '-' + item3.key
+              ,content = record[field];
+
+          if(content === undefined || content === null) content = '';
+          if(item3.colGroup) return;
+
+          //td内容
+          var td = ['<td data-field="'+ field +'" data-key="'+ key +'" '+ function(){ //追加各种属性
+              var attr = [];
+              if(item3.edit) attr.push('data-edit="'+ item3.edit +'"'); //是否允许单元格编辑
+              if(item3.align) attr.push('align="'+ item3.align +'"'); //对齐方式
+              if(item3.templet) attr.push('data-content="'+ content +'"'); //自定义模板
+              if(item3.toolbar) attr.push('data-off="true"'); //行工具列关闭单元格事件
+              if(item3.event) attr.push('lay-event="'+ item3.event +'"'); //自定义事件
+              if(item3.style) attr.push('style="'+ item3.style +'"'); //自定义样式
+              if(item3.minWidth) attr.push('data-minwidth="'+ item3.minWidth +'"'); //单元格最小宽度
+              return attr.join(' ');
+          }() +' class="'+ function(){ //追加样式
+              var classNames = [];
+              if(item3.hide) classNames.push(HIDE); //插入隐藏列样式
+              if(!item3.field) classNames.push('layui-table-col-special'); //插入特殊列样式
+              return classNames.join(' ');
+          }() +'">'
+              ,'<div class="layui-table-cell laytable-cell-'+ function(){ //返回对应的CSS类标识
+                  return item3.type === 'normal' ? key
+                      : (key + ' laytable-cell-' + item3.type);
+              }() +'">' + function(){
+                  var tplData = $.extend(true, {
+                      LAY_INDEX: numbers
+                  }, record)
+                      ,checkName = table.config.checkName;
+
+                  //渲染不同风格的列
+                  switch(item3.type){
+                      case 'checkbox':
+                          return '<input type="checkbox" name="layTableCheckbox" lay-skin="primary" '+ function(){
+                              //如果是全选
+                              if(item3[checkName]){
+                                  item1[checkName] = item3[checkName];
+                                  return item3[checkName] ? 'checked' : '';
+                              }
+                              return tplData[checkName] ? 'checked' : '';
+                          }() +'>';
+                          break;
+                      case 'radio':
+                          /!*if(tplData[checkName]){
+                              // thisCheckedRowIndex = i1;
+                          }*!/
+                          return '<input type="radio" name="layTableRadio_'+ options.index +'" '
+                              + (tplData[checkName] ? 'checked' : '') +' lay-type="layTableRadio">';
+                          break;
+                      case 'numbers':
+                          return numbers;
+                          break;
+                  };
+
+                  //解析工具列模板
+                  if(item3.toolbar){
+                      return laytpl($(item3.toolbar).html()||'').render(tplData);
+                  }
+                  return item3.templet ? function(){
+                      return typeof item3.templet === 'function'
+                          ? item3.templet(tplData)
+                          : laytpl($(item3.templet).html() || String(content)).render(tplData)
+                  }() : content;
+              }()
+              ,'</div></td>'].join('');
+
+          tds.push(td);
+          if(item3.fixed && item3.fixed !== 'right') tds_fixed.push(td);
+          if(item3.fixed === 'right') tds_fixed_r.push(td);
+      });
+      trs.push('<tr data-index="'+ i1 +'">'+ tds.join('') + '</tr>');
+      trs_fixed.push('<tr data-index="'+ i1 +'">'+ tds_fixed.join('') + '</tr>');
+      trs_fixed_r.push('<tr data-index="'+ i1 +'">'+ tds_fixed_r.join('') + '</tr>');
+      if(that.layMain.find('tbody').length==0){ //!********** 5 表格没有加载到数据时，不会有<table><tbody>节点,该节点使用原有的模板渲染：TPL_BODY，入参必须有data属性，模板中会用到
+          that.layMain.html($(laytpl(TPL_BODY).render({data:{}})));
+      }
+      that.layMain.find('tbody').append(trs.join(''));
+      that.layFixLeft.find('tbody').append(trs_fixed.join(''));
+      that.layFixRight.find('tbody').append(trs_fixed_r.join(''));
+      that.renderForm();
+      //typeof thisCheckedRowIndex === 'number' && that.setThisRowChecked(thisCheckedRowIndex);
+      that.syncCheckAll();
+
+      //滚动条补丁
+      that.haveInit ? that.scrollPatch() : setTimeout(function(){
+          that.scrollPatch();
+      }, 50);
+      that.haveInit = true;
+
+      layer.close(that.tipsIndex);
+
+      //同步表头父列的相关值
+      options.HAS_SET_COLS_PATCH || that.setColsPatch();
+      options.HAS_SET_COLS_PATCH = true;
+
+
+      table.cache[that.key].push(record); //!********** 5 最后将新增的记录加入数据缓存中*/
   };
   
   //初始化

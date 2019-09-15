@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/lib/easyui/themes/default/easyui.css">
+<link rel="stylesheet" href="/lib/easyui/themes/icon.css">
 <style>
     .center-panel form .layui-inline {
         margin-right: 0px;
@@ -11,12 +13,6 @@
     }
     /* 防止下拉框的下拉列表被隐藏---必须设置--- */
     .layui-table-cell {
-        overflow: visible;
-    }
-    .layui-table-box {
-        overflow: visible;
-    }
-    .layui-table-body {
         overflow: visible;
     }
     /* 使得下拉框与单元格刚好合适 */
@@ -43,12 +39,12 @@
                                     <input name="purchaseBillCode" readonly class="layui-input" lay-verify="required" placeholder="请填写采购单号">
                                 </div>
                             </div>
-                            <div class="layui-inline">
+                            <!--<div class="layui-inline">
                                 <label class="layui-form-label">类型：</label>
                                 <div class="layui-input-inline" style="width: 160px;">
-                                    <select name="purchaseBillType" lay-verify="required"></select>
+                                    <select name="purchaseBillType" lay-verify="required" lay-filter="purchase-bill-type"></select>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="layui-inline">
                                 <label class="layui-form-label">日期：</label>
                                 <div class="layui-input-inline">
@@ -74,11 +70,18 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="layui-hide" lay-filter="purchasebill-table" id="purchasebill-table"></table>
+                        <!--<div class="layui-row layui-col-space10">-->
+                            <table id="purchasebill-table"></table>
+                        <!--</div>-->
                         <div class="layui-row layui-col-space10">
-                            <div class="layui-col-lg-offset10 layui-col-lg2">
-                                <button type="button" lay-filter="submit-btn" lay-submit class="layui-btn">保存</button>
-                                <button type="button" lay-filter="cancel-btn" class="layui-btn layui-btn-primary">取消</button>
+                            <!--<div class="layui-col-lg3">
+                                <select id="search-medicine" lay-filter="search-medicine" lay-search="">
+                                    <option value="">药品搜索</option>
+                                </select>
+                            </div>-->
+                            <div class="layui-col-lg-offset10 layui-col-lg2" style="text-align: right;">
+                                <button type="button" lay-filter="submit-btn" lay-submit class="layui-btn layui-btn-sm">保存</button>
+                                <button type="button" lay-filter="cancel-btn" class="layui-btn layui-btn-primary layui-btn-sm">取消</button>
                             </div>
                         </div>
                     </form>
@@ -99,4 +102,8 @@
     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="create">新增</a>
     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="delete">删除</a>
 </script>
+<script src="/lib/easyui/jquery.min.js"></script>
+<script src="/js/pinyin/pinyin_dict_withtone.js"></script>
+<script src="/js/pinyin/pinyinUtil.js"></script>
+<script src="/lib/easyui/jquery.easyui.min.js"></script>
 <script src="/page/module/pharmacy/purchasebill/purchaseBillForm.js"></script>

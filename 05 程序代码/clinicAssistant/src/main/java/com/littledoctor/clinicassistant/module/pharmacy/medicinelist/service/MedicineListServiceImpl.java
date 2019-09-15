@@ -1,5 +1,6 @@
 package com.littledoctor.clinicassistant.module.pharmacy.medicinelist.service;
 
+import com.littledoctor.clinicassistant.common.plugin.select.SelectOption;
 import com.littledoctor.clinicassistant.module.pharmacy.medicinelist.dao.MedicineListRepository;
 import com.littledoctor.clinicassistant.module.pharmacy.medicinelist.entity.MedicineList;
 import org.apache.commons.lang.StringUtils;
@@ -162,5 +163,14 @@ public class MedicineListServiceImpl implements MedicineListService {
             });
         }
         return null;
+    }
+
+    /**
+     * 获取下拉框的option list
+     * @return
+     */
+    @Override
+    public List<SelectOption> getSelectOption() throws Exception {
+        return medicineListRepository.getSelectOption();
     }
 }

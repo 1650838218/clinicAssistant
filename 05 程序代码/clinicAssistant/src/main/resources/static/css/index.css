@@ -1,13 +1,18 @@
-.kit-theme-default .layui-layout-admin .layui-body {
+/*.kit-theme-default .layui-layout-admin .layui-body {
     bottom: 0px;
-}
+}*/
 
-.layui-body {
+/*.layui-body {
     left: 0px;
-}
+}*/
 
 .layui-card {
     box-shadow: 0 0 0 0 rgba(0,0,0,0.0);
+    border-radius: 6px;
+}
+
+.layui-card-header {
+    border-bottom: 1px solid #eee;
 }
 
 .layui-header .layui-nav .layui-this:after, .layui-layout-admin .layui-header .layui-nav-bar {
@@ -92,7 +97,7 @@
 
 /*右侧面板*/
 .center-panel {
-    padding: 10px;
+    padding: 0px 10px;
     margin: 10px;
     background-color: white;
 }
@@ -129,3 +134,22 @@
     padding: 9px 0px;
     width: 100px;
 }
+
+.datagrid .panel-body {
+    border-color: #E6E6E6;
+}
+
+.datagrid-header td, .datagrid-body td, .datagrid-footer td {
+    border-color: #E6E6E6 !important;
+    /*border-style: solid !important;*/
+}
+/*
+.datagrid-cell, .datagrid-cell-group, .datagrid-header-rownumber, .datagrid-cell-rownumber {
+    height: 28px !important;
+    line-height: 28px !important;
+    padding: 0px 10px !important;
+}
+
+.datagrid-header-rownumber, .datagrid-cell-rownumber {
+    width: 40px !important;
+}*/

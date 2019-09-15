@@ -61,7 +61,7 @@
 			// 如果导入了 pinyin_dict_notone.js
 			if(window.pinyin_dict_notone)
 			{
-				dict.notone = {};
+				dict.notone = {};getPinyin
 				dict.py2hz = pinyin_dict_notone; // 拼音转汉字
 				for(var i in pinyin_dict_notone)
 				{

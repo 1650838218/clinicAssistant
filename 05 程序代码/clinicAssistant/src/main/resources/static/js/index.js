@@ -15,7 +15,7 @@ layui.define(['element', 'sidebar', 'mockjs', 'menu', 'route', 'utils', 'compone
   var Admin = function() {
     this.config = {
       elem: '#app',
-      loadType: 'SPA'// 单页面
+      loadType: 'TABS'// 单页面
     };
     this.version = '1.0.0';
   };
