@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80017
 File Encoding         : 65001
 
-Date: 2019-12-13 14:05:24
+Date: 2019-12-13 18:21:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -300,7 +300,7 @@ CREATE TABLE `pur_item` (
   `unit_convert` int(10) unsigned DEFAULT NULL COMMENT '单位换算',
   `stock_warn` decimal(16,6) unsigned DEFAULT NULL COMMENT '库存预警值，保留6位小数可以精确到微克',
   PRIMARY KEY (`pur_item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='采购品目';
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COMMENT='采购品目';
 
 -- ----------------------------
 -- Records of pur_item
@@ -330,6 +330,14 @@ INSERT INTO `pur_item` VALUES ('24', '当归饮片', '3', '', 'DGYP', 'dangguiyi
 INSERT INTO `pur_item` VALUES ('25', '蕲大妈十年陈艾柱', '4', '51755830293', 'QDMSNCAZ', 'qidamashinianchenaizhu', null, null, null, '54柱/盒', null, null, '蕲大妈', null, '17', '5', '50', '50.000000');
 INSERT INTO `pur_item` VALUES ('26', '中号购物袋', '5', null, null, null, null, null, null, '中号', null, null, '陈林', null, null, null, null, null);
 INSERT INTO `pur_item` VALUES ('27', '包药纸', '5', null, null, null, null, null, null, '30*30', null, null, '淘宝', null, null, null, null, null);
+INSERT INTO `pur_item` VALUES ('28', '体温计', '4', '', 'TWJ', 'tiwenji', null, null, null, '', null, null, '', null, '6', '9', '1', '5.000000');
+INSERT INTO `pur_item` VALUES ('29', '睡衣', '5', null, null, null, null, null, null, '', null, null, '', null, null, null, null, null);
+INSERT INTO `pur_item` VALUES ('30', '床单', '5', null, null, null, null, null, null, '', null, null, '', null, null, null, null, null);
+INSERT INTO `pur_item` VALUES ('31', '一次性纸杯', '5', null, null, null, null, null, null, '', null, null, '', null, null, null, null, null);
+INSERT INTO `pur_item` VALUES ('32', '一次性拖鞋', '5', null, null, null, null, null, null, '', null, null, '', null, null, null, null, null);
+INSERT INTO `pur_item` VALUES ('33', '针灸针', '4', '', 'ZJZ', 'zhenjiuzhen', null, null, null, '', null, null, '', null, '', '', null, null);
+INSERT INTO `pur_item` VALUES ('34', '酒精', '4', '', 'JJ', 'jiujing', null, null, null, '', null, null, '', null, '', '', null, null);
+INSERT INTO `pur_item` VALUES ('35', '棉球', '4', '', 'MQ', 'mianqiu', null, null, null, '', null, null, '', null, '', '', null, null);
 
 -- ----------------------------
 -- Table structure for pur_order
